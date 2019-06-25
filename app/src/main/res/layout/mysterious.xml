@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="#999999a3"
+    android:clickable="true"
+    >
+
+    <LinearLayout
+        android:background="@drawable/juanzeng_bodor"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!--标题-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:orientation="horizontal"
+            android:background="#eee">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="信息"
+                android:textSize="20sp"
+                android:layout_weight="1"
+                android:layout_marginLeft="5dp"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxWidth="20dp"
+                android:maxHeight="20dp"
+                android:layout_marginRight="5dp"
+                android:layout_gravity="center_vertical"
+                android:layout_centerVertical="true"
+                android:src="@drawable/close"
+                android:id="@+id/close"/>
+        </LinearLayout>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="请作者喝杯茶,继续开发吧！"
+            android:layout_marginLeft="5dp"
+            android:textSize="15sp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="软件完善需要抽出业余时间来搞,捐赠纯属自愿！"
+            android:layout_marginLeft="5dp"
+            android:textSize="15sp"/>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="或者点击下面的框,再点击复制,"
+                android:layout_marginLeft="5dp"
+                android:textSize="15sp"/>
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="630785197"
+            android:selectAllOnFocus="true"
+
+            android:id="@+id/red_bag_code"
+            android:layout_marginLeft="5dp"
+            android:textSize="15sp"
+            android:background="@drawable/feedback_input_border"
+            />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=",打开支付宝即可领取红包。3秒即可完成"
+            android:layout_marginLeft="5dp"
+            android:textSize="15sp"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="点击"
+            android:layout_marginLeft="5dp"
+            android:textSize="15sp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="快速打开支付宝"
+            android:id="@+id/aliPay"
+            android:clickable="true"
+            android:layout_marginLeft="5dp"
+            android:textSize="15sp"
+            android:background="#0f8a1f"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="3秒即可完成"
+            android:layout_marginLeft="5dp"
+            android:textSize="15sp"/>
+
+        </LinearLayout>
+        <!--二维码-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textAlignment="center"
+                android:text="微信"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textAlignment="center"
+                android:text="支付宝"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="200dp"
+            android:layout_marginLeft="5dp"
+            android:layout_margin="5dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/weixin"
+                android:layout_marginRight="2dp"
+                android:id="@+id/weChatCodeImg"
+
+                android:layout_weight="1"
+                android:background="@drawable/pay_code_bodor"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/zhifubao"
+                android:layout_marginLeft="2dp"
+                android:layout_weight="1"
+                android:id="@+id/aliPayCodeImg"
+
+                android:background="@drawable/pay_code_bodor"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</FrameLayout>

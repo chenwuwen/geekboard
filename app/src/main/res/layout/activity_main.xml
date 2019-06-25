@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="16dp"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/change_button"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:onClick="changeButton"
+            android:text="更改键盘"
+            android:visibility="visible" />
+
+        <EditText
+            android:id="@+id/hint_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:hint="重新打开键盘查看是否更改" />
+
+        <CheckBox
+            android:id="@+id/check_no_arrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:checked="false"
+            android:onClick="arrowToggle"
+            android:text="用剪切、复制、粘贴的快捷方式,来替换箭头" />
+
+        <CheckBox
+            android:id="@+id/check_preview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:checked="false"
+            android:onClick="previewToggle"
+            android:text="按键气泡" />
+
+        <CheckBox
+            android:id="@+id/check_sound"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:checked="true"
+            android:onClick="soundToggle"
+            android:text="按键声音" />
+
+        <CheckBox
+            android:id="@+id/check_vibrator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:checked="true"
+            android:onClick="vibratorToggle"
+            android:text="按键振动" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="24dp"
+            android:text="键盘尺寸"
+            android:textSize="20sp" />
+
+
+        <SeekBar
+            android:id="@+id/size_seekbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:max="3"
+            android:onClick="closeKeyboard"
+            android:progress="2" />
+
+        <RelativeLayout
+            android:id="@+id/relative_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/smallest"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:text="小" />
+
+
+
+               <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:text="大" />
+
+        </RelativeLayout>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="24dp"
+            android:text="颜色"
+            android:textSize="20sp" />
+
+
+        <RadioGroup
+            android:id="@+id/radiogroupcolour"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:layout_marginTop="8dp">
+
+            <RadioButton
+                android:id="@+id/material_dark_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:button="@drawable/selectmd"
+                android:onClick="closeKeyboard"
+                android:text=" Material Dark"
+
+                />
+
+            <RadioButton
+                android:id="@+id/material_light_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:button="@drawable/selectml"
+                android:onClick="closeKeyboard"
+                android:text=" Material Light" />
+
+            <RadioButton
+                android:id="@+id/black_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:button="@drawable/selectblack"
+                android:onClick="closeKeyboard"
+                android:text=" Pure Black" />
+
+            <RadioButton
+                android:id="@+id/white_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:button="@drawable/selectwhite"
+                android:onClick="closeKeyboard"
+                android:text=" White" />
+
+            <RadioButton
+                android:id="@+id/blue_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:button="@drawable/selectblue"
+                android:onClick="closeKeyboard"
+                android:text=" Blue" />
+
+            <RadioButton
+                android:id="@+id/purple_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="16dp"
+                android:button="@drawable/selectpurple"
+                android:checked="false"
+                android:onClick="closeKeyboard"
+                android:text=" Purple" />
+
+        </RadioGroup>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+
+            android:text="布局"
+            android:textSize="20sp" />
+        <!--todolater-->
+        <!--<CheckBox-->
+            <!--android:id="@+id/editrow"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="Replace arrow keys with edit options (select/cut/copy/paste)"-->
+            <!--/>-->
+
+        <RadioGroup
+            android:id="@+id/radiogrouplayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:layout_marginTop="8dp">
+
+            <RadioButton
+                android:id="@+id/qwertylayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:onClick="closeKeyboard"
+                android:text="Qwerty"
+
+                />
+            <RadioButton
+                android:id="@+id/azertylayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:onClick="closeKeyboard"
+                android:text="Azerty"
+                android:checked="false"
+                />
+            <!--<RadioButton-->
+                <!--android:id="@+id/dvoraklayout"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_margin="16dp"-->
+                <!--android:onClick="closeKeyboard"-->
+                <!--android:text="  Dvorak"-->
+
+                <!--/>-->
+
+
+        </RadioGroup>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Pay if you can :)"
+            android:visibility="gone" />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:onClick="openTutorial"
+            android:text="使用教程" />
+
+
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:onClick="openUserHome"
+            android:text="个人主页" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="该软件本人仅提供汉化,及BUG修复,原作者貌似不更新了"/>
+
+        <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="48dp"
+        android:onClick="feedback"
+        android:text="意见与反馈" />
+
+
+    </LinearLayout>
+</ScrollView>
