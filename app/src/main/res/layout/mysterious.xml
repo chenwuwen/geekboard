@@ -147,22 +147,22 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/weixin"
+                android:src="@drawable/wechat"
                 android:layout_marginRight="2dp"
                 android:id="@+id/weChatCodeImg"
 
                 android:layout_weight="1"
-                android:background="@drawable/pay_code_bodor"/>
+                android:background="@drawable/pay_code_border"/>
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/zhifubao"
+                android:src="@drawable/alipay"
                 android:layout_marginLeft="2dp"
                 android:layout_weight="1"
                 android:id="@+id/aliPayCodeImg"
 
-                android:background="@drawable/pay_code_bodor"/>
+                android:background="@drawable/pay_code_border"/>
 
         </LinearLayout>
 

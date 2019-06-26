@@ -12,7 +12,7 @@ public class QQEmailFactory implements IEmailFactory {
     //发送方的邮箱
     private static final String FROM_EMAIL = "949955482@qq.com";
     //发送方姓名
-    private static final String FROM_NAME = "CodeBoard";
+    private static final String FROM_NAME = "GeekBoard";
     @Override
     public AbstractProtocolSmtp getProtocolSmtp() {
         return new QQProtocolSmtp(EmailService.create(USER_NAME, AUTH_CODE, FROM_EMAIL, FROM_NAME));

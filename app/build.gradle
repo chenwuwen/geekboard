@@ -1,23 +1,77 @@
+//模块级构建文件 —— build.gradle
+//模块级 build.gradle 文件位于每个 <project>/<module>/ 目录
+
 apply plugin: 'com.android.application'
 //apply plugin: 'com.jakewharton.butterknife'
 
+//android {}块配置所有Android特定的构建选项
 android {
+//    添加签名文件配置
     signingConfigs {
         release {
+            keyAlias 'geekboard'
+            keyPassword '123456'
+            storeFile file('geekboard.jks')
+            storePassword '123456'
         }
     }
-    compileSdkVersion 27
+
+    /**
+     * compileSdkVersion指定Gradle应该使用的Android API级别
+     * 编译您的应用程序。 这意味着您的应用可以使用的API等于
+     * 或低于这个API。
+     *
+     * buildToolsVersion指定SDK构建工具的版本，命令行
+     * 以及Gradle用来构建应用程序的编译器。 你需要
+     * 使用SDK管理器下载构建工具。
+     */
+    compileSdkVersion 28
     buildToolsVersion '28.0.3'
+
+    /**
+     * defaultConfig {}块封装了所有构建variants的默认设置，
+     * 并可以覆盖AndroidManifest.xml中的某些属性例如包名、
+     * minSdkVersion 、versionCode扥
+     */
     defaultConfig {
+
+        flavorDimensions "default"
+//        applicationId唯一，等同于AndroidManifest.xml文件中的package属性。
         applicationId "cn.kanyun.geekboard"
-        minSdkVersion 24
+        // 最小API版本
+        minSdkVersion 26
+        // 项目测试运行的版本
         targetSdkVersion 27
+        // 版本号
         versionCode 14
-        versionName "4.1.0"
+        // 在app中显示的版本名称
+        versionName "1.0.0"
+
     }
+
+//    默认生成的release版apk名为app-release.apk
+    android.applicationVariants.all {
+        variant ->
+            variant.outputs.all {
+                // 此处指定生成的apk文件名
+                outputFileName = "geekboard.apk"
+            }
+    }
+
+    /**
+     * buildTypes {}块可以配置多个构建类型。
+     * 默认情况下，构建系统定义了两种构建类型：debug和release。
+     */
     buildTypes {
+
+        /**
+         * 默认情况下，Android Studio会配置发布版本类型以启用缩减
+         * 代码，使用minifyEnabled，并指定Proguard设置文件。
+         */
         release {
+            // 启用缩减代码
             minifyEnabled true
+//            代码混淆
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             shrinkResources true
             useProguard true
@@ -26,34 +80,99 @@ android {
             signingConfig signingConfigs.release
         }
     }
+
+    /**
+     * productFlavors {}块是您可以配置不同定制的产品，例如免费和付费
+     */
+    productFlavors {
+        free {
+            applicationId 'com.example.myapp.free'
+        }
+
+        paid {
+            applicationId 'com.example.myapp.paid'
+        }
+    }
+
+    /**
+     * split {}块中配置不同的APK版本，用于分包
+     */
+    splits {
+        // 屏幕密度分割设置
+        density {
+            // 启用或禁用密度分割机制
+            enable false
+            // 不包含以下密度
+            exclude "ldpi", "tvdpi", "xxxhdpi", "400dpi", "560dpi"
+        }
+    }
+
+
     lintOptions {
-
         checkReleaseBuilds false
-
     }
+
+//    编译设置
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility 1.8
+        sourceCompatibility 1.8
     }
+
+    //排除掉中间生成的DEPENDENCIES.txt文件
+    packagingOptions {
+        exclude 'LICENSE.txt'
+        exclude 'META-INF/DEPENDENCIES.txt'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/notice.txt'
+        exclude 'META-INF/license.txt'
+        exclude 'META-INF/dependencies.txt'
+        exclude 'META-INF/rxjava.properties'
+    }
+
+//    默认情况下src/mian/res/xx 下不能添加子文件夹(如果添加了子文件夹那么R.id将找不到对应资源),那么就会导致布局/图片/样式文件都堆在一块,通过设置
+//    sourceSets 设置来解决这个问题，同时需要注意该代码块的位置,其应在 android{}块内
+//    https://www.jianshu.com/p/787a90c9b042
+    sourceSets {
+        main {
+            res.srcDirs = [
+                    'src/main/res/drawable/donation',
+                    'src/main/res/drawable/foot_tab',
+                    'src/main/res/drawable/skin_preview',
+                    'src/main/res/drawable',
+                    'src/main/res'
+            ]
+            assets.srcDirs = ['src/main/assets', 'src/main/assets/']
+        }
+    }
+
 }
 
-repositories {
-    mavenLocal()
-    mavenCentral()
-    jcenter()
-    maven { url 'https://jitpack.io' }
-}
 
+/**
+ * dependencies {}块指定模块需要添加的依赖
+ */
 dependencies {
-    api 'com.android.support:appcompat-v7:27.1.1'
-    api 'com.android.support:support-v13:27.1.1'
+    api 'androidx.appcompat:appcompat:1.0.0'
+    api 'androidx.legacy:legacy-support-v13:1.0.0'
     implementation 'com.github.apl-devs:appintro:v4.2.3'
-    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     implementation 'com.getbase:floatingactionbutton:1.10.1'
-    implementation 'com.jakewharton:butterknife:8.8.1'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
+    implementation 'com.jakewharton:butterknife:10.1.0'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:10.1.0'
     implementation 'com.github.louisgeek:LouisJavaMail:1.0.1'
     implementation 'org.apache.httpcomponents:httpclient:4.5.6'
     implementation 'commons-codec:commons-codec:1.11'
     implementation 'org.apache.commons:commons-lang3:3.8.1'
+    implementation 'androidx.annotation:annotation:1.0.0'
+    implementation group: 'com.google.guava', name: 'guava', version: '28.0-android'
+//    implementation group: 'javax.mail', name: 'javax.mail-api', version: '1.6.2'
+//    邮件依赖,不能使用上面的依赖,会导致冲突Duplicate class javax.mail.Address found in modules
+//    https://blog.csdn.net/richiezhu/article/details/79578483
+    implementation 'com.sun.mail:android-mail:1.6.2'
+    implementation 'com.sun.mail:android-activation:1.6.2'
+
 }

@@ -1,22 +1,26 @@
-package cn.kanyun.geekboard;
+package cn.kanyun.geekboard.activity;
 
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.AppCompatButton;
+
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
 import com.github.paolorotolo.appintro.AppIntro;
 import com.github.paolorotolo.appintro.AppIntroFragment;
 
+import cn.kanyun.geekboard.fragment.GeekBoardIntro;
+import cn.kanyun.geekboard.R;
+
 /**
- * Created by Ruby on 05/12/2016.
+ * 使用向导
  */
-public class IntroActivity extends AppIntro {
+public class GuideActivity extends AppIntro {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,8 +29,8 @@ public class IntroActivity extends AppIntro {
 
         // Add your slide fragments here.
         // AppIntro will automatically generate the dots indicator and buttons.
-        addSlide(CodeboardIntro.newInstance(R.layout.codeboard_intro1));
-        addSlide(CodeboardIntro.newInstance(R.layout.codeboard_intro2));
+        addSlide(GeekBoardIntro.newInstance(R.layout.geekboard_intro1));
+        addSlide(GeekBoardIntro.newInstance(R.layout.geekboard_intro2));
         addSlide(AppIntroFragment.newInstance("所有快捷方式!", "点击 'ctrl' 当 选择 全部, 剪切, 复制, 粘贴, 或者 撤销." +
                 "\nCtrl+Shift+Z 回退" + "\n 长按空格键更改键盘 \n 更多的符号",
                 R.drawable.intro3, Color.parseColor("#3F51B5")));

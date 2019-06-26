@@ -1,1 +1,3 @@
+//该文件指明了项目包含哪些模块
+//https://www.jianshu.com/p/5a5323136c2e
 include ':app'

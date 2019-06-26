@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:textColor="@android:color/background_light"
-        android:text="下一步, 选择 CodeBoard 作为你的键盘"/>
+        android:text="下一步, 选择 GeekBoard 作为你的键盘"/>
 
         <Button
             android:id="@+id/change_button_intro"

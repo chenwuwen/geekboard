@@ -1,4 +1,6 @@
-package cn.kanyun.geekboard;
+package cn.kanyun.geekboard.activity;
+
+
 
 import android.Manifest;
 import android.content.ClipData;
@@ -13,7 +15,6 @@ import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -21,7 +22,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.gazlaws.codeboard.mail.EmailUtil;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -37,7 +42,14 @@ import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import cn.kanyun.geekboard.R;
+import cn.kanyun.geekboard.mail.EmailUtil;
 
+/**
+ * 意见反馈Activity
+ */
 public class FeedBackActivity extends AppCompatActivity {
 
     @BindView(R.id.feedback)
@@ -112,7 +124,7 @@ public class FeedBackActivity extends AppCompatActivity {
             }
             if (state) {
                 Toast.makeText(context,"已发送",Toast.LENGTH_SHORT).show();
-                feedback.setText("",TextView.BufferType.NORMAL);
+                feedback.setText("", TextView.BufferType.NORMAL);
                 view.setEnabled(true);
             } else {
                 Toast.makeText(context,"发送失败",Toast.LENGTH_SHORT).show();
@@ -222,7 +234,7 @@ public class FeedBackActivity extends AppCompatActivity {
             boolean sdState = Environment.getExternalStorageState().endsWith(Environment.MEDIA_MOUNTED);
             if (sdState) {
                 File file = Environment.getExternalStorageDirectory();
-                String storagePath = file.getPath() + "/com.gazlaws.codeboard/"+UUID.randomUUID().toString()+".png";
+                String storagePath = file.getPath() + "/cn.kanyun.geekboard/"+UUID.randomUUID().toString()+".png";
                 if (!new File(storagePath).getParentFile().exists()) {
                     new File(storagePath).getParentFile().mkdirs();
                 }

@@ -1,5 +1,7 @@
 package cn.kanyun.geekboard.mail;
 
+
+
 import com.louisgeek.javamail.EmailMessage;
 import com.louisgeek.javamail.interfaces.IEmailFactory;
 
@@ -9,6 +11,8 @@ import javax.mail.Address;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 
+
+
 public class EmailUtil {
 
     /**
@@ -16,10 +20,10 @@ public class EmailUtil {
      * @param context
      */
     public static boolean sendNormalEmail(String context,String address) {
-        IEmailFactory qqEmailFactory = new com.gazlaws.codeboard.mail.QQEmailFactory();
+        IEmailFactory qqEmailFactory = new QQEmailFactory();
         try {
             EmailMessage emailMessage = EmailMessage.newBuilder()
-                    .setTitle("codeboard反馈")
+                    .setTitle("GeekBoard反馈")
                     .setText("哇陈搜有限公司1")
                     .setContent(context)
                     .setTOAddresses(new Address[]{new InternetAddress(address)})

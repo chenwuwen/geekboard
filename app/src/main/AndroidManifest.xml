@@ -16,8 +16,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <service
-            android:name=".CodeBoardIME"
-            android:label="@string/codeboard_ime"
+            android:name=".GeekBoardIME"
+            android:label="@string/geekboard_ime"
             android:permission="android.permission.BIND_INPUT_METHOD">
             <meta-data
                 android:name="android.view.im"
@@ -38,9 +38,9 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".IntroActivity"
+            android:name=".activity.GuideActivity"
             android:label="@string/app_intro" />
-        <activity android:name=".FeedBackActivity" />
+        <activity android:name=".activity.FeedBackActivity" />
 
 
     </application>

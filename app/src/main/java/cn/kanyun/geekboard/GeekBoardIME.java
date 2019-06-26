@@ -27,13 +27,7 @@ import static android.view.KeyEvent.KEYCODE_SHIFT_LEFT;
 import static android.view.KeyEvent.META_CTRL_ON;
 import static android.view.KeyEvent.META_SHIFT_ON;
 
-
-
-/*Created by Ruby(aka gazlaws) on 13/02/2016.
- */
-
-
-public class CodeBoardIME extends InputMethodService
+public class GeekBoardIME extends InputMethodService
         implements KeyboardView.OnKeyboardActionListener {
     private KeyboardView kv;
     private Keyboard keyboard;
@@ -263,7 +257,7 @@ public class CodeBoardIME extends InputMethodService
                         shift = false;
                         ic.sendKeyEvent(new KeyEvent(nowS, nowS, KeyEvent.ACTION_UP, KeyEvent.KEYCODE_SHIFT_LEFT, 0, META_SHIFT_ON));
 
-                        //Log.e("CodeboardIME", "Unshifted b/c no lock");
+                        //Log.e("GeekBoardIME", "Unshifted b/c no lock");
                     }
                     shiftKeyUpdateView();
                 }
@@ -357,7 +351,7 @@ public class CodeBoardIME extends InputMethodService
                 break;
 
             case 16:
-                // Log.e("CodeBoardIME", "onKey" + Boolean.toString(shiftLock));
+                // Log.e("GeekBoardIME", "onKey" + Boolean.toString(shiftLock));
                 //Shift - runs after long press, so shiftlock may have just been activated
                 long nowShift = System.currentTimeMillis();
                 if (shift)
@@ -416,7 +410,7 @@ public class CodeBoardIME extends InputMethodService
                         shift = false;
                         ic.sendKeyEvent(new KeyEvent(nowS, nowS, KeyEvent.ACTION_UP, KeyEvent.KEYCODE_SHIFT_LEFT, 0, META_SHIFT_ON));
 
-                        //Log.e("CodeboardIME", "Unshifted b/c no lock");
+                        //Log.e("GeekBoardIME", "Unshifted b/c no lock");
                     }
 
                     shiftKeyUpdateView();
@@ -470,10 +464,10 @@ public class CodeBoardIME extends InputMethodService
 
                             try {
 
-                                CodeBoardIME.this.onKeyLongPress(primaryCode);
+                                GeekBoardIME.this.onKeyLongPress(primaryCode);
 
                             } catch (Exception e) {
-                                Log.e(CodeBoardIME.class.getSimpleName(), "uiHandler.run: " + e.getMessage(), e);
+                                Log.e(GeekBoardIME.class.getSimpleName(), "uiHandler.run: " + e.getMessage(), e);
                             }
 
                         }
@@ -482,7 +476,7 @@ public class CodeBoardIME extends InputMethodService
                     uiHandler.post(runnable);
 
                 } catch (Exception e) {
-                    Log.e(CodeBoardIME.class.getSimpleName(), "Timer.run: " + e.getMessage(), e);
+                    Log.e(GeekBoardIME.class.getSimpleName(), "Timer.run: " + e.getMessage(), e);
                 }
             }
 
@@ -501,7 +495,7 @@ public class CodeBoardIME extends InputMethodService
         // Process long-click here
         if (keyCode == 16) {
             shiftLock = !shiftLock;
-            //Log.e("CodeBoardIME", "long press" + Boolean.toString(shiftLock));
+            //Log.e("GeekBoardIME", "long press" + Boolean.toString(shiftLock));
             //and onKey will now happen
         }
 

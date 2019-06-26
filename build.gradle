@@ -1,19 +1,40 @@
-// Top-level build file where you can add configuration options common to all sub-projects/modules.
+//顶级构建文件 —— build.gradle
+// gradle顶层构建文件，您可以在其中添加所有子项目/模块通用的配置选项。
+//buildscript{}块是配置仓库和Gradle本身的依赖
 buildscript {
+
+//    配置依赖仓库
     repositories {
+        mavenLocal()
+        mavenCentral()
         jcenter()
+        maven { url "http://dl.bintray.com/populov/maven" }
+        maven { url "https://jitpack.io" }
         google()
     }
+
+//    gradle需要使用的依赖
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.2.1'
-        classpath 'com.jakewharton:butterknife-gradle-plugin:8.8.1'
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
+//        不要将应用程序依赖项放在此处；它们属于在单个模块build.gradle文件中
+        classpath 'com.android.tools.build:gradle:3.4.1'
+        classpath 'com.jakewharton:butterknife-gradle-plugin:10.1.0'
     }
+
+
 }
+
+
+
+/**
+ * allprojects{} 块是配置项目中所有模块使用的依赖,例如第三方插件或者库
+ */
 allprojects {
     repositories {
+        mavenLocal()
+        mavenCentral()
         jcenter()
+        maven { url "http://dl.bintray.com/populov/maven" }
+        maven { url "https://jitpack.io" }
         google()
     }
 }
@@ -22,5 +43,6 @@ task clean(type: Delete) {
 }
 
 dependencies {
+
 }
 

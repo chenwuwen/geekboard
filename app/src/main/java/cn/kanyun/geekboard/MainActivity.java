@@ -1,104 +1,118 @@
 package cn.kanyun.geekboard;
 
-import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.SeekBar;
-import android.widget.Toast;
 
-import java.lang.reflect.InvocationTargetException;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+
+import cn.kanyun.geekboard.activity.GuideActivity;
+import cn.kanyun.geekboard.fragment.SettingFragment;
+import cn.kanyun.geekboard.fragment.SkinFragment;
 
 
 /**
- * Created by Ruby on 02/06/2016.
+ * 入口Activity
+ * 在MainActivity中，实现Tab主要的技术就是利用FragmentTransaction，开启一个事务。
+ * 在这个事务中，将我们的fragment加入进来，并嵌套在中间的布局FrameLayout上。
+ * 然后通过事务控制隐藏和显示每一个fragment来达到切换的目的
+ * 所以我们需要MainActivity去继承FragmentActivity 而不是传统的AppCompatActivity了
+ * 注意：继承的类Fragment一定导入androidx.fragment.app.FragmentActivity;这个包，而不能是其他包下的
  */
-public class MainActivity extends AppCompatActivity {
-    RadioGroup radioGroupColour,radioGroupLayout;
+public class MainActivity extends FragmentActivity implements View.OnClickListener {
+    RadioGroup radioGroupColour, radioGroupLayout;
     SeekBar seekBar;
     Context context;
 
 
+    final String RADIO_INDEX_COLOUR = "RADIO_INDEX_COLOUR";
+    final String RADIO_INDEX_LAYOUT = "RADIO_INDEX_LAYOUT";
+    /**
+     * fragment
+     */
+    Fragment settingFragment;
+    Fragment skinFragment;
+    /**
+     * tab按钮
+     */
+    ImageButton skinImgButton;
+    ImageButton setImgButton;
+    /**
+     * 按钮文字布局
+     */
+    LinearLayout skinLayout;
+    LinearLayout setLayout;
 
-   final String RADIO_INDEX_COLOUR = "RADIO_INDEX_COLOUR";
-   final String RADIO_INDEX_LAYOUT = "RADIO_INDEX_LAYOUT";
-
+    /**
+     * 事务
+     */
+    FragmentTransaction transaction;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         context = this;
+        //用来初始化数据控件
+        initView();
+        //初始化事件
+        initEvent();
+        //进入界面，先让其显示 第一个
+        setSelected(0);
 
-        //  Declare a new thread to do a preference check
+
+        //  声明一个新线程以进行首选项检查
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
-                //  Initialize SharedPreferences
+                //  初始化 SharedPreferences
                 SharedPreferences getPrefs = PreferenceManager
                         .getDefaultSharedPreferences(getBaseContext());
 
-                //  Create a new boolean and preference and set it to true
-                boolean isFirstStart = getPrefs.getBoolean("firstStart1", true);
+//                创建新的布尔值(boolean)和首选项(preference)并将其设置为true
+//                getBoolean()参数:key检索，defValue：存在值就返回该值否则返回defValue，如果第一次使用getBoolean()通过key检索不到，直接返回 defValue
+                boolean isFirstStart = getPrefs.getBoolean("firstEnter", true);
 
-                //  If the activity has never started before...
+//                如果activity以前从未开始过(从来没有进入过该activity),那么进入使用向导activity
                 if (isFirstStart) {
-
-
-                    Button change = (Button) findViewById(R.id.change_button);
+                    Button change = findViewById(R.id.change_button);
                     change.setVisibility(View.GONE);
-
-                    //  Launch app intro
-                    Intent i = new Intent(MainActivity.this, IntroActivity.class);
+//                    转到使用向导activity
+                    Intent i = new Intent(MainActivity.this, GuideActivity.class);
                     startActivity(i);
 
-                    //  Make a new preferences editor
+//                    创建新的 SharedPreferences editor
                     SharedPreferences.Editor e = getPrefs.edit();
 
-                    //  Edit preference to make it false because we don't want this to run again
-                    e.putBoolean("firstStart1", false);
+//                     编辑SharedPreferences文件并且使变量boolean值为false,这样以后再次进入主界面就不会跳到使用向导了
+                    e.putBoolean("firstEnter", false);
 
-                    //  Apply changes
+//                      应用更改
                     e.apply();
 
-                } else {
-                    //Dev
-                    //SharedPreferences.Editor e = getPrefs.edit();
-                    //
-                    //e.putBoolean("firstStart1", true);
-                    //REMOVE BEFORE PUBLISHING ^
-                    //
-                    //e.apply();
                 }
 
             }
         });
 
-        // Start the thread
+//        开启线程
         t.start();
 
-        //debug only
-//        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-
-
-
-
-        seekBar = (SeekBar) findViewById(R.id.size_seekbar);
+        seekBar = findViewById(R.id.size_seekbar);
         // perform seek bar change listener event used for getting the progress value
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             int progressChangedValue = seekBar.getProgress();
@@ -120,10 +134,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        radioGroupColour = (RadioGroup) findViewById(R.id.radiogroupcolour);
+        radioGroupColour = findViewById(R.id.radiogroupcolour);
         radioGroupColour.setOnCheckedChangeListener(radioGroupOnCheckedChangeListenerColour);
 
-        radioGroupLayout = (RadioGroup) findViewById(R.id.radiogrouplayout);
+        radioGroupLayout = findViewById(R.id.radiogrouplayout);
         radioGroupLayout.setOnCheckedChangeListener(radioGroupOnCheckedChangeListenerLayout);
 
 
@@ -131,6 +145,80 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * 设定布局中间的FrameLayout的选择状态
+     *
+     * @param i
+     */
+    private void setSelected(int i) {
+//        需要将按钮变亮，且需要切换fragment的状体
+//        获取事务
+        FragmentManager fragmentManager = getSupportFragmentManager();
+//        开启一个事务
+        transaction = fragmentManager.beginTransaction();
+//        自定义一个方法，来隐藏所有的fragment
+        hideTransaction(transaction);
+        switch (i) {
+            case 0:
+                if (skinFragment == null) {
+//                    实例化每一个fragment
+                    skinFragment = new SkinFragment();
+//                    千万别忘记将该fragment加入到transaction中
+                    transaction.add(R.id.main_frame, skinFragment);
+                }
+                transaction.show(skinFragment);
+//                设置图片按钮的图片(选中状态图片)
+                skinImgButton.setImageResource(R.drawable.skin_light);
+                break;
+            default:
+                if (settingFragment == null) {
+                    settingFragment = new SettingFragment();
+                    transaction.add(R.id.main_frame, settingFragment);
+                }
+                transaction.show(settingFragment);
+                setImgButton.setImageResource(R.drawable.setting_light);
+                break;
+        }
+//        最后千万别忘记提交事务
+        transaction.commit();
+    }
+
+    /**
+     * 隐藏fragment
+     *
+     * @param transaction
+     */
+    private void hideTransaction(FragmentTransaction transaction) {
+        if (skinFragment != null) {
+//            隐藏该fragment
+            transaction.hide(skinFragment);
+        }
+        if (settingFragment != null) {
+            transaction.hide(settingFragment);
+        }
+    }
+
+    /**
+     * 设定点击事件
+     */
+    private void initEvent() {
+        setImgButton.setOnClickListener(this);
+        skinImgButton.setOnClickListener(this);
+    }
+
+    /**
+     * 用来初始化的方法
+     */
+    private void initView() {
+
+        //获得按钮
+        skinImgButton = findViewById(R.id.btn_skin);
+        setImgButton = findViewById(R.id.btn_set);
+
+        //获得底部的线性布局
+        skinLayout = findViewById(R.id.lay_skin);
+        setLayout = findViewById(R.id.lay_set);
+    }
 
 
     RadioGroup.OnCheckedChangeListener radioGroupOnCheckedChangeListenerColour =
@@ -163,6 +251,7 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * 保存配置到配置文件
+     *
      * @param key
      * @param value
      */
@@ -188,7 +277,7 @@ public class MainActivity extends AppCompatActivity {
 //                Settings.Secure.DEFAULT_INPUT_METHOD
 //        );
 //
-//        if(!(id.equals("com.gazlaws.codeboard/.CodeBoardIME"))){
+//        if(!(id.equals("cn.kanyun.geekboard/.GeekBoardIME"))){
 //            InputMethodManager imm = (InputMethodManager)
 //                    getSystemService(Context.INPUT_METHOD_SERVICE);
 //            imm.showInputMethodPicker();
@@ -197,7 +286,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void previewToggle(View v) {
-        CheckBox preview = (CheckBox) findViewById(R.id.check_preview);
+        CheckBox preview =  findViewById(R.id.check_preview);
         if (preview.isChecked()) {
             SavePreferences("PREVIEW", 1);
         } else SavePreferences("PREVIEW", 0);
@@ -206,7 +295,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void soundToggle(View v) {
-        CheckBox preview = (CheckBox) findViewById(R.id.check_sound);
+        CheckBox preview =  findViewById(R.id.check_sound);
         if (preview.isChecked()) {
             SavePreferences("SOUND", 1);
         } else SavePreferences("SOUND", 0);
@@ -215,10 +304,11 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * 振动开关
+     *
      * @param v
      */
     public void vibratorToggle(View v) {
-        CheckBox preview = (CheckBox) findViewById(R.id.check_vibrator);
+        CheckBox preview =  findViewById(R.id.check_vibrator);
         if (preview.isChecked()) {
             SavePreferences("VIBRATE", 1);
         } else SavePreferences("VIBRATE", 0);
@@ -226,7 +316,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void arrowToggle(View v) {
-        CheckBox preview = (CheckBox) findViewById(R.id.check_no_arrow);
+        CheckBox preview =  findViewById(R.id.check_no_arrow);
         if (preview.isChecked()) {
             SavePreferences("ARROW_ROW", 0);
         } else SavePreferences("ARROW_ROW", 1);
@@ -256,18 +346,18 @@ public class MainActivity extends AppCompatActivity {
         RadioButton savedCheckedRadioButtonLayout = (RadioButton) radioGroupLayout.getChildAt(savedRadioLayout);
         savedCheckedRadioButtonLayout.setChecked(true);
 
-        int setPreview  = sharedPreferences.getInt("PREVIEW", 0);
-        int setSound    = sharedPreferences.getInt("SOUND"  , 1);
+        int setPreview = sharedPreferences.getInt("PREVIEW", 0);
+        int setSound = sharedPreferences.getInt("SOUND", 1);
         int setVibrator = sharedPreferences.getInt("VIBRATE", 1);
-        int setSize     = sharedPreferences.getInt("SIZE"   , 2);
+        int setSize = sharedPreferences.getInt("SIZE", 2);
 
         int setArrow = sharedPreferences.getInt("ARROW_ROW", 1);
-        CheckBox preview = (CheckBox) findViewById(R.id.check_preview);
+        CheckBox preview =  findViewById(R.id.check_preview);
 
-        CheckBox sound   = (CheckBox) findViewById(R.id.check_sound);
+        CheckBox sound =  findViewById(R.id.check_sound);
 //      按键振动
-        CheckBox vibrate = (CheckBox) findViewById(R.id.check_vibrator);
-        CheckBox noarrow = (CheckBox) findViewById(R.id.check_no_arrow);
+        CheckBox vibrate =  findViewById(R.id.check_vibrator);
+        CheckBox noarrow =  findViewById(R.id.check_no_arrow);
         SeekBar size = (SeekBar) findViewById(R.id.size_seekbar);
 
         if (setPreview == 1)
@@ -294,65 +384,33 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    /**
-     * 打开应用市场
-     * @param v
-     */
-    public void openPlay(View v) {
-        Intent i = new Intent(Intent.ACTION_VIEW);
-        i.setData(Uri.parse("market://details?id=com.gazlaws.codeboard"));
-        startActivity(i);
-    }
+
+
 
     /**
-     * 打开个人主页
+     * 监听点击事件
      * @param v
      */
-    public void openUserHome(View v) {
-        Intent i = new Intent(Intent.ACTION_VIEW);
-        i.setData(Uri.parse("https://github.com/chenwuwen"));
-        try {
-            startActivity(i);
-        } catch (ActivityNotFoundException e) {
-            Toast.makeText(context, "未安装相关应用程序", Toast.LENGTH_SHORT).show();
-            e.printStackTrace();
+    @Override
+    public void onClick(View v) {
+//        将按钮复位
+        resetImgButton();
+        switch (v.getId()) {
+            case R.id.lay_skin:
+                setSelected(0);
+                break;
+            default:
+                setSelected(1);
         }
     }
 
     /**
-     * 使用教程
-     * @param v
+     * 复位按钮，即设置按钮为未选中图片
      */
-    public void openTutorial(View v){
-        Intent i = new Intent(MainActivity.this, IntroActivity.class);
-        startActivity(i);
+    private void resetImgButton() {
+        skinImgButton.setImageResource(R.drawable.skin_dark);
+        setImgButton.setImageResource(R.drawable.setting_dark);
     }
-
-    /**
-     * 意见反馈
-     * @param v
-     */
-    public void feedback(View v) {
-        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-//        通过是否为NULL判断网络
-//        NetworkInfo wifiInfo = connectivityManager.getNetworkInfo(connectivityManager.TYPE_WIFI);
-//        NetworkInfo gprsInfo = connectivityManager.getNetworkInfo(connectivityManager.TYPE_MOBILE);
-
-        NetworkInfo activeNetWork = connectivityManager.getActiveNetworkInfo();
-        if (activeNetWork != null) {
-            if (activeNetWork.getType() == connectivityManager.TYPE_WIFI) {
-//                Toast.makeText(context, "当前连接的是WIFI",Toast.LENGTH_SHORT).show();
-            }else {
-//                Toast.makeText(context, "当前连接的是GPRS",Toast.LENGTH_SHORT).show();
-            }
-            Intent intent = new Intent(context,FeedBackActivity.class);
-            startActivity(intent);
-        }else {
-            Toast.makeText(context, "当前没有网络连接",Toast.LENGTH_SHORT).show();
-        }
-    }
-
-
 }
 
 
