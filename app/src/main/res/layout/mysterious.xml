@@ -147,7 +147,7 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/wechat"
+                android:src="@drawable/donation_wechat"
                 android:layout_marginRight="2dp"
                 android:id="@+id/weChatCodeImg"
 
@@ -157,7 +157,7 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/alipay"
+                android:src="@drawable/donation_alipay"
                 android:layout_marginLeft="2dp"
                 android:layout_weight="1"
                 android:id="@+id/aliPayCodeImg"

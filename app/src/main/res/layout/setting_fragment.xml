@@ -9,9 +9,9 @@
         android:id="@+id/change_button"
         android:layout_height="match_parent"
         android:layout_width="match_parent"
-        android:onClick="changeButton"
         android:text="更改键盘"
         android:visibility="visible" />
+        <!--android:onClick="changeButton"-->
 
     <EditText
         android:hint="重新打开键盘查看是否更改"
@@ -142,23 +142,23 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:layout_width="match_parent"
-        android:onClick="openTutorial"
         android:text="使用教程" />
+        <!--android:onClick="openTutorial"-->
 
 
     <Button
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:layout_width="match_parent"
-        android:onClick="openUserHome"
         android:text="个人主页" />
+        <!--android:onClick="openUserHome"-->
 
 
     <Button
         android:layout_height="wrap_content"
         android:layout_marginBottom="48dp"
         android:layout_width="match_parent"
-        android:onClick="feedback"
         android:text="意见与反馈" />
+        <!--android:onClick="feedback"-->
 
 </LinearLayout>

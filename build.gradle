@@ -40,6 +40,9 @@ allprojects {
 }
 task clean(type: Delete) {
     delete rootProject.buildDir
+//    rootProject.subprojects.forEach(module){
+//        delete module.buildDir
+//    }
 }
 
 dependencies {

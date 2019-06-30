@@ -52,6 +52,9 @@ import cn.kanyun.geekboard.mail.EmailUtil;
  */
 public class FeedBackActivity extends AppCompatActivity {
 
+    /**
+     * 使用@BindView注解的字段,不能用private,static修饰
+     */
     @BindView(R.id.feedback)
     EditText feedback;
 

@@ -107,11 +107,6 @@ android {
         }
     }
 
-
-    lintOptions {
-        checkReleaseBuilds false
-    }
-
 //    编译设置
     compileOptions {
         targetCompatibility 1.8
@@ -138,19 +133,56 @@ android {
 //    https://www.jianshu.com/p/787a90c9b042
     sourceSets {
         main {
+            java.srcDirs = [
+                    'src/main/java'
+            ]
             res.srcDirs = [
-                    'src/main/res/drawable/donation',
-                    'src/main/res/drawable/foot_tab',
-                    'src/main/res/drawable/skin_preview',
-                    'src/main/res/drawable',
-                    'src/main/res'
+//                    'src/main/res/drawable/donation',
+//                    'src/main/res/drawable/foot_tab',
+//                    'src/main/res/drawable/skin_preview',
+//                    'src/main/res/drawable',
+'src/main/res'
             ]
             assets.srcDirs = ['src/main/assets', 'src/main/assets/']
         }
     }
 
-}
+//    lint检查对于app来说也是很重要的，可以检查出很多问题
+    lintOptions {
+        checkReleaseBuilds false
 
+        // 关闭指定问题检查
+        disable 'InvalidPackage'
+
+        // true--生成txt格式报告(默认false)
+        textReport true
+        // 重定向输出；可以是文件或'stdout'
+        textOutput 'stdout'
+        // true--错误发生后停止gradle构建
+        abortOnError false
+        // true--生成XML格式报告
+        xmlReport false
+        // 指定xml报告文档(默认lint-results.xml)
+        xmlOutput file("lint-report.xml")
+        // true--生成HTML报告(带问题解释，源码位置，等)
+        htmlReport true
+        // html报告可选路径(构建器默认是lint-results.html )
+        htmlOutput file("build/lint-report.html")
+        //  true--所有正式版构建执行规则生成崩溃的lint检查，如果有崩溃问题将停止构建
+        checkReleaseBuilds true
+    }
+
+    dexOptions {
+        //最大堆内存
+        javaMaxHeapSize "8g"
+        //是否支持大工程模式
+        jumboMode = true
+        //预编译
+        preDexLibraries = true
+        //线程数
+        threadCount = 8
+    }
+}
 
 /**
  * dependencies {}块指定模块需要添加的依赖
@@ -158,13 +190,16 @@ android {
 dependencies {
     api 'androidx.appcompat:appcompat:1.0.0'
     api 'androidx.legacy:legacy-support-v13:1.0.0'
-    implementation 'com.github.apl-devs:appintro:v4.2.3'
+//    AppIntro是一个APP启动页开源库
+    implementation 'com.github.paolorotolo:appintro:v5.1.0'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+//    FloatingActionButton简称FAB 悬浮按钮
     implementation 'com.getbase:floatingactionbutton:1.10.1'
+//    ButterKnife是一个专注于Android系统的View注入框架,以前总是要写很多findViewById来找到View对象，有了ButterKnife可以很轻松的省去这些步骤。目前使用很广。最重要的一点，使用ButterKnife对性能基本没有损失，因为ButterKnife用到的注解并不是在运行时反射的，而是在编译的时候生成新的class。项目集成起来也是特别方便，使用起来也是特别简单
     implementation 'com.jakewharton:butterknife:10.1.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.1.0'
     implementation 'com.github.louisgeek:LouisJavaMail:1.0.1'
-    implementation 'org.apache.httpcomponents:httpclient:4.5.6'
+    implementation 'org.apache.httpcomponents:httpclient:4.5.9'
     implementation 'commons-codec:commons-codec:1.11'
     implementation 'org.apache.commons:commons-lang3:3.8.1'
     implementation 'androidx.annotation:annotation:1.0.0'
@@ -174,5 +209,19 @@ dependencies {
 //    https://blog.csdn.net/richiezhu/article/details/79578483
     implementation 'com.sun.mail:android-mail:1.6.2'
     implementation 'com.sun.mail:android-activation:1.6.2'
+//    RxAndroid主要的作用也是异步，随意定制主线程、子线程的操作，链式编程，让我们的代码可读性大大增强
+    implementation group: 'io.reactivex.rxjava2', name: 'rxandroid', version: '2.1.1'
+//    RxJava 主要的作用就是链式完成异步操作,并且非常强大，RxJava最核心的两个东西是Observables（被观察者，事件源）和Subscribers（订阅者）。Observables发出一系列事件，Subscribers处理这些事件
+    implementation group: 'io.reactivex.rxjava2', name: 'rxjava', version: '2.2.10'
+//    implementation group: 'com.squareup.okhttp3', name: 'okhttp', version: '4.0.0'
+//    必须使用 （OkGo - 3.0 一个基于okhttp的标准RESTful风格的网络框架） https://github.com/jeasonlzy/okhttp-OkGo/wiki/OkGo
+    implementation 'com.lzy.net:okgo:3.0.4'
+//    以下三个选择添加，okrx和okrx2不能同时使用
+//    implementation 'com.lzy.net:okrx:1.0.2'
+    implementation 'com.lzy.net:okrx2:2.0.2'
+    implementation 'com.lzy.net:okserver:2.0.5'
+
 
 }
+
+

@@ -7,11 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center"
-    android:background="#ece7e7"
-    app:alignmentMode="alignBounds"
-    app:columnCount="2"
-    app:orientation="horizontal"
-    app:useDefaultMargins="false">
+    android:background="#ece7e7">
 
     <ImgButton
         android:id="@+id/material_dark_button"
