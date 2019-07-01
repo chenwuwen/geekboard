@@ -1,5 +1,6 @@
 package cn.kanyun.geekboard.sync;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
@@ -7,7 +8,11 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AlertDialog;
 
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.cache.CacheMode;
@@ -44,7 +49,7 @@ import org.json.JSONObject;
  */
 
 
-public class CheckVersion extends AsyncTask<Void, Void, Void> {
+public class CheckVersion extends AsyncTask<Activity, Void, Void> {
 
     /**
      * github获取仓库最新Release版本号API
@@ -68,6 +73,7 @@ public class CheckVersion extends AsyncTask<Void, Void, Void> {
     }
 
 
+
     /**
      * 方法1：onPreExecute（）
      * 作用：执行 线程任务前的操作 可以操作UI
@@ -88,7 +94,7 @@ public class CheckVersion extends AsyncTask<Void, Void, Void> {
      * @return
      */
     @Override
-    protected Void doInBackground(Void... voids) {
+    protected Void doInBackground(Activity... activities) {
         OkGo.<String>get(checkVersionUrl)
                 // 请求的 tag, 主要用于取消对应的请求
                 .tag(this)
@@ -142,14 +148,20 @@ public class CheckVersion extends AsyncTask<Void, Void, Void> {
                 boolean isPreRelease = release.getBoolean("prerelease");
                 if (Double.valueOf(latestVersion) > Double.valueOf(currentVersion)) {
 
-                    // Need update.
+                    // 获取新版本下载地址
                     String downloadUrl = release.getJSONArray("assets").getJSONObject(0).getString("browser_download_url");
 
+//                    AlertDialog.Builder updateDialog =
+//                            new AlertDialog.Builder(MainActivity.this);
+//                    View updateDialogView = LayoutInflater.from(MainActivity.this)
+//                            .inflate(R.layout.update_dialog,null);
+//                    updateDialog.setTitle("发现新版本");
+//                    updateDialog.show();
                     // 不使用下载管理器。因为下载的APK已重命名，无法安装
                     Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(downloadUrl));
                     browserIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     context.startActivity(browserIntent);
-                    Toast.makeText(context, context.getString(R.string.update_new_seg1) + latestVersion + context.getString(R.string.update_new_seg2), Toast.LENGTH_LONG).show();
+//                    Toast.makeText(context, context.getString(R.string.update_new_seg1) + latestVersion + context.getString(R.string.update_new_seg2), Toast.LENGTH_LONG).show();
                 }
             } catch (JSONException | PackageManager.NameNotFoundException e) {
                 e.printStackTrace();

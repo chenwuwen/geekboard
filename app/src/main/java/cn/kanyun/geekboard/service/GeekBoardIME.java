@@ -611,7 +611,6 @@ public class GeekBoardIME extends InputMethodService
         //键盘皮肤
         switch (pre.getInt("RADIO_INDEX_COLOUR", 0)) {
             case 0:
-                //kv = (KeyboardView) getLayoutInflater().inflate(R.layout.keyboard, null);
                 kv = (KeyboardView) getLayoutInflater().inflate(R.layout.keyboard, null);
                 break;
             case 1:

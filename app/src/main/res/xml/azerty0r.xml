@@ -1,3 +1,6 @@
+<!--这是配置自定义软键盘的按钮的，软键盘显示的按钮通过xml来配置这个xml的文件放个res/xml/… 目录,没有xml文件夹的 手动创建一个-->
+<!--** keyWidth , keyHeight 可以采用百分比的写法,** android:keyWidth=”25%p”-->
+    <!--https://blog.csdn.net/qq_29983773/article/details/79501658-->
 <Keyboard xmlns:android="http://schemas.android.com/apk/res/android"
     android:horizontalGap="0px"
 		android:keyHeight="5%p"

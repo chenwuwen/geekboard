@@ -137,6 +137,7 @@ android {
                     'src/main/java'
             ]
             res.srcDirs = [
+//                    本想利用gradle的sourceSets来实现res下创建子文件夹用来分类资源,发现并没有什么用
 //                    'src/main/res/drawable/donation',
 //                    'src/main/res/drawable/foot_tab',
 //                    'src/main/res/drawable/skin_preview',
@@ -220,6 +221,11 @@ dependencies {
 //    implementation 'com.lzy.net:okrx:1.0.2'
     implementation 'com.lzy.net:okrx2:2.0.2'
     implementation 'com.lzy.net:okserver:2.0.5'
+
+    implementation 'com.google.android.material:material:1.0.0'
+
+//    强大的Android工具类：https://github.com/Blankj/AndroidUtilCode  http://www.apkbus.com/thread-593099-1-4.html
+    implementation 'com.blankj:utilcodex:1.24.7'
 
 
 }

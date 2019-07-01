@@ -1,8 +1,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#ccffff">
+    android:background="#f0f0f0">
 
+    <!--tab第一个按钮布局-->
     <LinearLayout
         android:id="@+id/lay_skin"
         android:layout_width="0dp"
@@ -24,6 +25,7 @@
             android:text="皮肤" />
     </LinearLayout>
 
+    <!--tab第二个按钮布局-->
     <LinearLayout
         android:id="@+id/lay_set"
         android:layout_width="0dp"

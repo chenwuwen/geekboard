@@ -19,6 +19,7 @@ import cn.kanyun.geekboard.R;
 
 /**
  * 使用向导
+ * 启动页
  */
 public class GuideActivity extends AppIntro {
     @Override

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="50dp"
+    android:layout_height="30dp"
+    android:paddingBottom="5dp"
+    android:orientation="vertical"
+    android:background="@drawable/skin_preview_image_button_border">
+
+    <ImageView
+        android:id="@+id/skin_preview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/skin_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center" />
+
+</LinearLayout>

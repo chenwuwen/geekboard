@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <!--https://www.cnblogs.com/whoislcj/p/5711001.html-->
+<resources>
+    <!--自定义ImageButton实现皮肤预览-->
+    <declare-styleable name="skin_preview_button">
+        <!--name属性我们可以随便写，format是这个attr的数据类型。写完这个之后我们就可以在我们的组合控件类中，获取这些属性的值，-->
+        <attr name="skin_name" format="string"></attr>
+        <attr name="img_preview" format="reference|integer"></attr>
+
+    </declare-styleable>
+</resources>

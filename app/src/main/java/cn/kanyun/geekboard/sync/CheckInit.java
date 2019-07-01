@@ -31,8 +31,8 @@ public class CheckInit implements Runnable {
 
 //       如果activity以前从未开始过(从来没有进入过该activity),那么进入使用向导activity
         if (isFirstStart) {
-            Button change = activity.findViewById(R.id.change_button);
-            change.setVisibility(View.GONE);
+//            Button change = activity.findViewById(R.id.change_button);
+//            change.setVisibility(View.GONE);
 //           转到使用向导activity
             Intent i = new Intent(activity, GuideActivity.class);
             activity.startActivity(i);

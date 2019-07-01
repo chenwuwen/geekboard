@@ -1,108 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout android:layout_height="match_parent"
-    android:layout_margin="16dp"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:orientation="vertical"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-
-
-
-
-
-
-
-
-
-
-
-
-    <TextView
-        android:layout_gravity="center_horizontal"
+    <include
+        layout="@layout/header"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:layout_width="wrap_content"
-        android:text="颜色"
-        android:textSize="20sp" />
-
-
-    <RadioGroup
-        android:id="@+id/radiogroupcolour"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
-        android:layout_marginTop="8dp"
-        android:layout_width="wrap_content">
-
-        <RadioButton
-            android:button="@drawable/selectmd"
-            android:id="@+id/material_dark_button"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:layout_width="match_parent"
-            android:onClick="closeKeyboard"
-            android:text=" Material Dark"
-
-            />
-
-        <RadioButton
-            android:button="@drawable/selectml"
-            android:id="@+id/material_light_button"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:layout_width="match_parent"
-            android:onClick="closeKeyboard"
-            android:text=" Material Light" />
-
-        <RadioButton
-            android:button="@drawable/selectblack"
-            android:id="@+id/black_button"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:layout_width="match_parent"
-            android:onClick="closeKeyboard"
-            android:text=" Pure Black" />
-
-        <RadioButton
-            android:button="@drawable/selectwhite"
-            android:id="@+id/white_button"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:layout_width="match_parent"
-            android:onClick="closeKeyboard"
-            android:text=" White" />
-
-        <RadioButton
-            android:button="@drawable/selectblue"
-            android:id="@+id/blue_button"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:layout_width="match_parent"
-            android:onClick="closeKeyboard"
-            android:text=" Blue" />
-
-        <RadioButton
-            android:button="@drawable/selectpurple"
-            android:checked="false"
-            android:id="@+id/purple_button"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_width="match_parent"
-            android:onClick="closeKeyboard"
-            android:text=" Purple" />
-
-    </RadioGroup>
-
-
-
+        android:layout_gravity="start" />
 
 
     <FrameLayout
-        android:id="@+id/main_frame"
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent">
+        android:id="@+id/main_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
     </FrameLayout>
 
-    <include layout="@layout/foot_tab" />
+    <!--Android使用include无法调整位置:https://blog.csdn.net/lc0817/article/details/48629151-->
+    <!--如果include想使用android:layout_below属性则应该为include设定ID-->
+    <!--https://www.cnblogs.com/exmyth/p/5424215.html-->
+    <!--https://www.cnblogs.com/SZ2015/p/4548044.html-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="bottom">
+        <include layout="@layout/foot_tab" />
+    </LinearLayout>
+
 </LinearLayout>

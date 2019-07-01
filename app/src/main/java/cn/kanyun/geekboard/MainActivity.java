@@ -76,40 +76,39 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         //进入界面，先让其显示 第一个
         setSelected(0);
 
-
         //  声明一个新线程以进行首选项检查
         new Thread(new CheckInit(this)).start();
 
-        seekBar = findViewById(R.id.size_seekbar);
+//        seekBar = findViewById(R.id.size_seekbar);
         // perform seek bar change listener event used for getting the progress value
-        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            int progressChangedValue = seekBar.getProgress();
+//        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+//            int progressChangedValue = seekBar.getProgress();
+//
+//            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+//                progressChangedValue = progress;
+//            }
+//
+//            public void onStartTrackingTouch(SeekBar seekBar) {
+//
+//            }
+//
+//            public void onStopTrackingTouch(SeekBar seekBar) {
+////                Toast.makeText(MainActivity.this, "Seek bar progress is :" + progressChangedValue,
+////                        Toast.LENGTH_SHORT).show();
+//                SavePreferences("SIZE", progressChangedValue);
+//
+//
+//            }
+//        });
 
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                progressChangedValue = progress;
-            }
-
-            public void onStartTrackingTouch(SeekBar seekBar) {
-
-            }
-
-            public void onStopTrackingTouch(SeekBar seekBar) {
-//                Toast.makeText(MainActivity.this, "Seek bar progress is :" + progressChangedValue,
-//                        Toast.LENGTH_SHORT).show();
-                SavePreferences("SIZE", progressChangedValue);
+//        radioGroupColour = findViewById(R.id.radiogroupcolour);
+//        radioGroupColour.setOnCheckedChangeListener(radioGroupOnCheckedChangeListenerColour);
+//
+//        radioGroupLayout = findViewById(R.id.radiogrouplayout);
+//        radioGroupLayout.setOnCheckedChangeListener(radioGroupOnCheckedChangeListenerLayout);
 
 
-            }
-        });
-
-        radioGroupColour = findViewById(R.id.radiogroupcolour);
-        radioGroupColour.setOnCheckedChangeListener(radioGroupOnCheckedChangeListenerColour);
-
-        radioGroupLayout = findViewById(R.id.radiogrouplayout);
-        radioGroupLayout.setOnCheckedChangeListener(radioGroupOnCheckedChangeListenerLayout);
-
-
-        LoadPreferences();
+//        LoadPreferences();
 
     }
 
@@ -132,7 +131,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 //                    实例化每一个fragment
                     skinFragment = new SkinFragment();
 //                    千万别忘记将该fragment加入到transaction中
-                    transaction.add(R.id.main_frame, skinFragment);
+                    transaction.replace(R.id.main_fragment, skinFragment);
                 }
                 transaction.show(skinFragment);
 //                设置图片按钮的图片(选中状态图片)
@@ -141,11 +140,10 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             default:
                 if (settingFragment == null) {
                     settingFragment = new SettingFragment();
-                    transaction.add(R.id.main_frame, settingFragment);
+                    transaction.replace(R.id.main_fragment, settingFragment);
                 }
                 transaction.show(settingFragment);
                 setImgButton.setImageResource(R.drawable.foot_tab_btn_setting_light);
-                break;
         }
 //        最后千万别忘记提交事务
         transaction.commit();
@@ -292,6 +290,10 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     }
 
 
+    /**
+     * 关闭键盘布局
+     * @param v
+     */
     public void closeKeyboard(View v) {
 
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -325,8 +327,8 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         CheckBox sound =  findViewById(R.id.check_sound);
 //      按键振动
         CheckBox vibrate =  findViewById(R.id.check_vibrator);
-        CheckBox noarrow =  findViewById(R.id.check_no_arrow);
-        SeekBar size = (SeekBar) findViewById(R.id.size_seekbar);
+        CheckBox noArrow =  findViewById(R.id.check_no_arrow);
+        SeekBar size =  findViewById(R.id.size_seekbar);
 
         if (setPreview == 1)
             preview.setChecked(true);
@@ -344,9 +346,9 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             vibrate.setChecked(false);
 
         if (setArrow == 1)
-            noarrow.setChecked(false);
+            noArrow.setChecked(false);
         else
-            noarrow.setChecked(true);
+            noArrow.setChecked(true);
 
         size.setProgress(setSize);
 

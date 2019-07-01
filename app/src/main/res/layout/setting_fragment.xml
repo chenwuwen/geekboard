@@ -1,164 +1,68 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/setting"
+    android:background="#d8e3e7"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
-    android:id="@+id/setting"
-    android:orientation="horizontal">
+    android:orientation="vertical">
 
     <Button
-        android:id="@+id/change_button"
-        android:layout_height="match_parent"
+        android:id="@+id/board_set"
         android:layout_width="match_parent"
-        android:text="更改键盘"
-        android:visibility="visible" />
-        <!--android:onClick="changeButton"-->
-
-    <EditText
-        android:hint="重新打开键盘查看是否更改"
-        android:id="@+id/hint_text"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_width="match_parent" />
+        android:text="键盘设置"
+        android:layout_marginBottom="16dp"
+        android:drawableStart="@drawable/ic_setting"
+        android:background="@drawable/setting_item_border"/>
 
-    <CheckBox
-        android:checked="false"
-        android:id="@+id/check_no_arrow"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_width="wrap_content"
-        android:onClick="arrowToggle"
-        android:text="用剪切、复制、粘贴的快捷方式,来替换箭头" />
-
-    <CheckBox
-        android:checked="false"
-        android:id="@+id/check_preview"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_width="wrap_content"
-        android:onClick="previewToggle"
-        android:text="按键气泡" />
-
-    <CheckBox
-        android:checked="true"
-        android:id="@+id/check_sound"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_width="wrap_content"
-        android:onClick="soundToggle"
-        android:text="按键声音" />
-
-    <CheckBox
-        android:checked="true"
-        android:id="@+id/check_vibrator"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_width="wrap_content"
-        android:onClick="vibratorToggle"
-        android:text="按键振动" />
-
-    <TextView
-        android:layout_gravity="center_horizontal"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginTop="24dp"
-        android:layout_width="wrap_content"
-        android:text="键盘尺寸"
-        android:textSize="20sp" />
-
-    <SeekBar
-        android:id="@+id/size_seekbar"
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:max="3"
-        android:onClick="closeKeyboard"
-        android:progress="2" />
-
-    <RelativeLayout
-        android:id="@+id/relative_layout"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_width="match_parent"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/smallest"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:text="小" />
-
-
-        <TextView
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:text="大" />
-
-    </RelativeLayout>
-
-
-    <TextView
-        android:layout_gravity="center_horizontal"
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-
-        android:text="布局"
-        android:textSize="20sp" />
-
-
-    <RadioGroup
-        android:id="@+id/radiogrouplayout"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
-        android:layout_marginTop="8dp"
-        android:layout_width="wrap_content">
-
-        <RadioButton
-            android:id="@+id/qwertylayout"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:layout_width="match_parent"
-            android:onClick="closeKeyboard"
-            android:text="Qwerty"
-
-            />
-
-        <RadioButton
-            android:checked="false"
-            android:id="@+id/azertylayout"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:layout_width="match_parent"
-            android:onClick="closeKeyboard"
-            android:text="Azerty" />
-
-
-    </RadioGroup>
 
     <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="feedback"
+        android:text="意见反馈"
+        android:drawableStart="@drawable/ic_feedback"
+        android:background="@drawable/setting_item_border"/>
+
+    <Button
+        android:id="@+id/intro"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
-        android:layout_width="match_parent"
-        android:text="使用教程" />
-        <!--android:onClick="openTutorial"-->
+        android:onClick="openTutorial"
+        android:text="开始向导"
+        android:drawableStart="@drawable/ic_intro"
+        android:background="@drawable/setting_item_border"/>
 
 
     <Button
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
+        android:id="@+id/share"
         android:layout_width="match_parent"
-        android:text="个人主页" />
+        android:layout_height="wrap_content"
+        android:text="分享"
+        android:drawableStart="@drawable/ic_share"
+        android:background="@drawable/setting_item_border"/>
+
+    <Button
+        android:id="@+id/check_update"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="更新升级"
+        android:drawableStart="@drawable/ic_update"
+        android:background="@drawable/setting_item_border"/>
+
+    <!--<Button-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginBottom="16dp"-->
         <!--android:onClick="openUserHome"-->
-
+        <!--android:text="个人主页" />-->
 
     <Button
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="48dp"
+        android:id="@+id/about_me"
         android:layout_width="match_parent"
-        android:text="意见与反馈" />
-        <!--android:onClick="feedback"-->
+        android:layout_height="wrap_content"
+        android:text="关于"
+        android:drawableStart="@drawable/ic_about"
+        android:background="@drawable/setting_item_border"/>
 
 </LinearLayout>
