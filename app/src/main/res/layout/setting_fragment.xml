@@ -16,9 +16,9 @@
 
 
     <Button
+        android:id="@+id/feedback"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="feedback"
         android:text="意见反馈"
         android:drawableStart="@drawable/ic_feedback"
         android:background="@drawable/setting_item_border"/>
@@ -28,7 +28,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
-        android:onClick="openTutorial"
         android:text="开始向导"
         android:drawableStart="@drawable/ic_intro"
         android:background="@drawable/setting_item_border"/>

@@ -1,7 +1,6 @@
 package cn.kanyun.geekboard.activity;
 
 
-
 import android.Manifest;
 import android.content.ClipData;
 import android.content.ClipboardManager;
@@ -15,6 +14,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -27,6 +27,9 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+
+import com.blankj.utilcode.util.AppUtils;
+import com.blankj.utilcode.util.DeviceUtils;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -52,6 +55,7 @@ import cn.kanyun.geekboard.mail.EmailUtil;
  */
 public class FeedBackActivity extends AppCompatActivity {
 
+    private static final String TAG = "FeedBackActivity";
     /**
      * 使用@BindView注解的字段,不能用private,static修饰
      */
@@ -60,6 +64,7 @@ public class FeedBackActivity extends AppCompatActivity {
 
 
     Context context;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,6 +76,7 @@ public class FeedBackActivity extends AppCompatActivity {
 
     /**
      * 请求权限返回结果
+     *
      * @param requestCode
      * @param permissions
      * @param grantResults
@@ -79,7 +85,7 @@ public class FeedBackActivity extends AppCompatActivity {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode != 0) {
-            Toast.makeText(context,"拒绝权限无法使用捐赠功能",Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "拒绝权限无法使用捐赠功能", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -95,42 +101,51 @@ public class FeedBackActivity extends AppCompatActivity {
 
     /**
      * 提交反馈意见
+     *
      * @param view
      */
     public void commitFeedBack(View view) {
-        final String feedbacktext = feedback.getText().toString().trim();
+//        获取设备型号
+        String deviceModel = DeviceUtils.getModel();
+//        设备制造商
+        String firm = DeviceUtils.getManufacturer();
+//        安卓系统版本
+        String androidVersion = DeviceUtils.getSDKVersionName();
+        String deviceInfo = firm + "型号：" + deviceModel + "系统版本：" + androidVersion + "/n";
+        Log.i(TAG, "当前设备信息：" + deviceInfo);
+        final String feedbacktext = deviceInfo + feedback.getText().toString().trim();
         if (feedbacktext.isEmpty()) {
             Toast.makeText(context, "请填写意见和建议", Toast.LENGTH_SHORT).show();
             return;
-        }else {
+        } else {
             view.setEnabled(false);
             ExecutorService executor = Executors.newFixedThreadPool(3);
-            Future<Boolean> future = executor.submit(new Callable<Boolean>(){
+            Future<Boolean> future = executor.submit(new Callable<Boolean>() {
                 @Override
                 public Boolean call() {
-                    boolean state = EmailUtil.sendNormalEmail(feedbacktext,"2504954849@qq.com");
+                    boolean state = EmailUtil.sendNormalEmail(feedbacktext, "2504954849@qq.com");
                     return state;
                 }
             });
             boolean state = false;
             try {
-                state = future.get(10,TimeUnit.SECONDS);
+                state = future.get(10, TimeUnit.SECONDS);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             } catch (ExecutionException e) {
                 e.printStackTrace();
             } catch (TimeoutException e) {
                 e.printStackTrace();
-                Toast.makeText(context,"发送超时,请检查你的网络",Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "发送超时,请检查你的网络", Toast.LENGTH_SHORT).show();
                 view.setEnabled(true);
                 return;
             }
             if (state) {
-                Toast.makeText(context,"已发送",Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "已发送", Toast.LENGTH_SHORT).show();
                 feedback.setText("", TextView.BufferType.NORMAL);
                 view.setEnabled(true);
             } else {
-                Toast.makeText(context,"发送失败",Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "发送失败", Toast.LENGTH_SHORT).show();
                 view.setEnabled(true);
             }
         }
@@ -139,11 +154,12 @@ public class FeedBackActivity extends AppCompatActivity {
 
     /**
      * 打开神秘页
+     *
      * @param view
      */
     public void mysterious(View view) {
         //主布局container即根布局
-       final ViewGroup rootView = getWindow().getDecorView().findViewById(android.R.id.content);
+        final ViewGroup rootView = getWindow().getDecorView().findViewById(android.R.id.content);
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -160,7 +176,7 @@ public class FeedBackActivity extends AppCompatActivity {
                         if (hasFocus) {
                             // 此处为得到焦点时的处理内容
                             ClipboardManager clipboardManager = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-                            ClipData clipData = ClipData.newPlainText("redBagCode",redBagCode.getText().toString());
+                            ClipData clipData = ClipData.newPlainText("redBagCode", redBagCode.getText().toString());
                             clipboardManager.setPrimaryClip(clipData);
                             Toast.makeText(context, "已复制到剪切板", Toast.LENGTH_SHORT).show();
                         }
@@ -198,7 +214,6 @@ public class FeedBackActivity extends AppCompatActivity {
     }
 
 
-
     /**
      * 打开支付宝
      */
@@ -227,6 +242,7 @@ public class FeedBackActivity extends AppCompatActivity {
 
     /**
      * 保存二维码图片到本地
+     *
      * @param type
      */
     public void saveCodeImg(ImageView type) {
@@ -237,7 +253,7 @@ public class FeedBackActivity extends AppCompatActivity {
             boolean sdState = Environment.getExternalStorageState().endsWith(Environment.MEDIA_MOUNTED);
             if (sdState) {
                 File file = Environment.getExternalStorageDirectory();
-                String storagePath = file.getPath() + "/cn.kanyun.geekboard/"+UUID.randomUUID().toString()+".png";
+                String storagePath = file.getPath() + "/cn.kanyun.geekboard/" + UUID.randomUUID().toString() + ".png";
                 if (!new File(storagePath).getParentFile().exists()) {
                     new File(storagePath).getParentFile().mkdirs();
                 }
@@ -249,7 +265,7 @@ public class FeedBackActivity extends AppCompatActivity {
                     }
                 }
                 Bitmap bitmap = ((BitmapDrawable) type.getDrawable()).getBitmap();
-                try (BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(storagePath))){
+                try (BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(storagePath))) {
                     bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bos);
                     Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
                     Uri uri = Uri.fromFile(new File(storagePath));
@@ -259,11 +275,11 @@ public class FeedBackActivity extends AppCompatActivity {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-            }else {
+            } else {
                 Toast.makeText(context, "SD卡未挂载不能保存图片", Toast.LENGTH_SHORT).show();
                 return;
             }
-        }else{
+        } else {
             //没有权限，向用户请求权限,requestCode 为自定义的0，onRequestPermissionsResult()方法如果接受参数为0,说明已用户同意了授权
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);
         }

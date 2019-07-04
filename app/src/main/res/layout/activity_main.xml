@@ -14,9 +14,7 @@
     <FrameLayout
         android:id="@+id/main_fragment"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-    </FrameLayout>
+        android:layout_height="wrap_content" />
 
     <!--Android使用include无法调整位置:https://blog.csdn.net/lc0817/article/details/48629151-->
     <!--如果include想使用android:layout_below属性则应该为include设定ID-->
@@ -27,7 +25,21 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:gravity="bottom">
+
         <include layout="@layout/foot_tab" />
     </LinearLayout>
+
+
+    <FrameLayout
+        android:id="@+id/share_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="bottom">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ＨＨＨＨＨＨ" />
+    </FrameLayout>
 
 </LinearLayout>

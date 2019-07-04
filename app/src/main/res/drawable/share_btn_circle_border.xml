@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?><!--圆形边框-->
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!--内部填充，也就是边框内的填充色-->
+    <solid android:color="@color/white" />
+
+    <!--这里是设置边框线的粗细和颜色-->
+    <stroke
+        android:width="0dp"
+        android:color="#BFBFBF" />
+
+
+    <!--圆角的话，里边有参数可以单独设置,如果要圆形边框，那么此处设置的值为被修饰组件长宽的一半,也就是说呗修饰的组件应该是正方形-->
+    <corners android:radius="15dp" />
+
+    <!--大小-->
+    <size
+        android:width="1dp"
+        android:height="1dp" />
+
+    <!--渐变色-->
+    <!--<gradient-->
+        <!--android:angle="90"-->
+        <!--android:endColor="#aa66cc"-->
+        <!--android:startColor="#9933cc" />-->
+
+    <!--内边距-->
+    <!--<padding-->
+        <!--android:bottom="5dp"-->
+        <!--android:left="5dp"-->
+        <!--android:right="5dp"-->
+        <!--android:top="5dp" />-->
+
+</shape>
+

@@ -41,13 +41,16 @@
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
+                <!--通过系统调用其他的App进行分享,加入此配置,当调用分享时,该app将出现在被分享的列表中-->
+                <!--<action android:name="android.intent.action.SEND"/>-->
             </intent-filter>
         </activity>
+
         <activity
             android:name=".activity.GuideActivity"
             android:label="@string/app_intro" />
-        <activity android:name=".activity.FeedBackActivity" />
 
+        <activity android:name=".activity.FeedBackActivity" />
 
     </application>
 

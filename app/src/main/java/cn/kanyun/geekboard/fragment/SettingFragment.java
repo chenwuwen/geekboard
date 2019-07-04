@@ -12,39 +12,41 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.blankj.utilcode.util.AppUtils;
 import com.google.android.material.snackbar.Snackbar;
 
-import butterknife.BindView;
 import cn.kanyun.geekboard.activity.FeedBackActivity;
 import cn.kanyun.geekboard.activity.GuideActivity;
 import cn.kanyun.geekboard.R;
+import cn.kanyun.geekboard.activity.ShareFragment;
 
 /**
  * 设置Fragment
  */
-public class SettingFragment extends BaseFragment implements View.OnClickListener {
+public class SettingFragment extends BaseFragment {
 
+    private static final String TAG = "SettingFragment";
     Context context;
 
-    @BindView(R.id.share)
-    Button shareButton;
+    /**
+     * 事务
+     */
+    FragmentTransaction transaction;
 
-    @BindView(R.id.check_update)
-    Button updateButton;
-
-    @BindView(R.id.about_me)
-    Button aboutButton;
-
-    @BindView(R.id.board_set)
-    Button boardSetButton;
+    Fragment shareFragment;
 
     @Nullable
     @Override
@@ -56,6 +58,47 @@ public class SettingFragment extends BaseFragment implements View.OnClickListene
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+//        Fragment无法使用onClick来处理点击事件,只能将点击事件放在onActivityCreated中
+//        原因在于：Fragment不是布局器，不具备渲染视图的能力，虽然可以管理布局器，但它管理的布局器最终要加载到一个ViewGroup对象内，由ViewGroup对象来渲染，而ViewGroup并不知道每一个子控件来源于哪里。
+
+        Button shareButton = getActivity().findViewById(R.id.share);
+
+        Button updateButton = getActivity().findViewById(R.id.check_update);
+
+        Button aboutButton = getActivity().findViewById(R.id.about_me);
+
+        Button boardSetButton = getActivity().findViewById(R.id.board_set);
+
+        Button introButton = getActivity().findViewById(R.id.intro);
+
+        Button feedbackButton = getActivity().findViewById(R.id.feedback);
+
+//        分享
+        shareButton.setOnClickListener(v -> share(v));
+//        更新版本
+        updateButton.setOnClickListener(v -> updateVersion(v));
+//        关于我
+        aboutButton.setOnClickListener(v -> aboutMe(v));
+//        进入键盘设置界面
+        boardSetButton.setOnClickListener(v -> boardSetting(v));
+//        App启动页
+        introButton.setOnClickListener(v -> openTutorial(v));
+//        意见反馈
+        feedbackButton.setOnClickListener(v -> feedback(v));
+    }
+
+    /**
+     * 跳到键盘设置页面
+     * @param v
+     */
+    private void boardSetting(View v) {
+    }
+
+    /**
+     * 版本更新
+     * @param v
+     */
+    private void updateVersion(View v) {
     }
 
     /**
@@ -120,56 +163,67 @@ public class SettingFragment extends BaseFragment implements View.OnClickListene
         }
     }
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.board_set:
-//                进入键盘设置界面
-                break;
-            case R.id.check_update:
-//                检测更新
-                break;
-            case R.id.share:
-//                分享
-                break;
-            default:
-//                关于
-                aboutMe();
-        }
+
+    /**
+     * 打开分享Activity
+     */
+    private void share(View view) {
+//        FragmentManager 需要在Activity中使用，在fragment中使用getActivity().getSupportFragmentManager();
+        FragmentManager manager = getActivity().getSupportFragmentManager();
+        transaction = manager.beginTransaction();
+        shareFragment = new ShareFragment();
+//        transaction.add(R.id.share_fragment, shareFragment);
+        transaction.show(shareFragment);
+//        提交事务
+        transaction.commit();
+//        将布局在下层的控件放到上层，不被其他控件挡住
+        view.bringToFront();
     }
 
     /**
      * 关于我
      * Snackbar:https://blog.csdn.net/lhy349/article/details/81096093
      */
-    private void aboutMe() {
-        Snackbar snackbar = Snackbar.make(null, "这是一个snackbar", Snackbar.LENGTH_SHORT)
+    private void aboutMe(View view) {
+        Snackbar snackbar = Snackbar.make(view, "这是一个snackbar", Snackbar.LENGTH_SHORT)
                 .setAction("关闭", new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Snackbar.make(null, "点击了关闭按钮", Snackbar.LENGTH_SHORT).show();
+                        Snackbar.make(view, "已关闭", Snackbar.LENGTH_SHORT).show();
                     }
                 });
-//        动态设置文本显示内容
 
-        snackbar.setText("GeekBoard\n" + AppUtils.getAppVersionCode());
+//        动态设置文本显示内容
+        snackbar.setText("GeekBoard\n当前版本：" + AppUtils.getAppVersionName());
+
         //动态设置Action文本的颜色
-        snackbar.setActionTextColor(Color.RED);
+        snackbar.setActionTextColor(Color.BLACK);
         //动态设置显示时间
         snackbar.setDuration(5000);
-        View snackbarView = snackbar.getView();//获取Snackbar显示的View对象
-        //获取显示文本View,并设置其显示颜色
-//        snackbarView.findViewById(R.id.snackbar_text).setTextColor(Color.BLUE);
-        //获取Action文本View，并设置其显示颜色
-//        snackbarView.findViewById(R.id.snackbar_action).setTextColor(Color.BLUE);
-        //设置SnackBar的背景色
-        snackbarView.setBackgroundColor(Color.GREEN);
+        //获取Snackbar显示的View对象
+        View snackBarView = snackbar.getView();
+
+        TextView snackbarMsgTextView =  snackBarView.findViewById(R.id.snackbar_text);
+
+//        设置Snackbar提示信息文字的颜色
+        snackbarMsgTextView.setTextColor(Color.BLACK);
+
+        //获取显示文本View(不包括Action),并设置其背景颜色
+//        snackBarView.findViewById(R.id.snackbar_text).setBackgroundColor(Color.BLACK);
+        //获取Action文本View，并设置其背景颜色
+//        snackBarView.findViewById(R.id.snackbar_action).setBackgroundColor(Color.BLACK);
+        //设置SnackBar的背景色（改配置是上面两行配置的集合）
+        snackBarView.setBackgroundColor(Color.WHITE);
 
         //设置SnackBar显示的位置
-        ViewGroup.LayoutParams params = snackbarView.getLayoutParams();
+        ViewGroup.LayoutParams params = snackBarView.getLayoutParams();
         CoordinatorLayout.LayoutParams layoutParams = new CoordinatorLayout.LayoutParams(params.width, params.height);
-        layoutParams.gravity = Gravity.CENTER_VERTICAL;//垂直居中
-        snackbarView.setLayoutParams(layoutParams);
+        //垂直居中
+        layoutParams.gravity = Gravity.CENTER_VERTICAL;
+//        水平居中
+        layoutParams.gravity = Gravity.CENTER_HORIZONTAL;
+        snackBarView.setLayoutParams(layoutParams);
+        snackBarView.setAnimation(new AnimationSet(true));
 
 //        一定要调用show方法,与Toast一样
         snackbar.show();

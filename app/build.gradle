@@ -42,9 +42,9 @@ android {
         minSdkVersion 26
         // 项目测试运行的版本
         targetSdkVersion 27
-        // 版本号
+        // 版本号 (VersionCode：对消费者不可见，仅用于应用市场、程序内部识别版本，判断新旧等用途) https://blog.csdn.net/attheway/article/details/24255793
         versionCode 14
-        // 在app中显示的版本名称
+        // 在app中显示的版本名称(VersionName：展示给消费者，消费者会通过它认知自己安装的版本)
         versionName "1.0.0"
 
     }
@@ -205,15 +205,18 @@ dependencies {
     implementation 'org.apache.commons:commons-lang3:3.8.1'
     implementation 'androidx.annotation:annotation:1.0.0'
     implementation group: 'com.google.guava', name: 'guava', version: '28.0-android'
+
 //    implementation group: 'javax.mail', name: 'javax.mail-api', version: '1.6.2'
 //    邮件依赖,不能使用上面的依赖,会导致冲突Duplicate class javax.mail.Address found in modules
 //    https://blog.csdn.net/richiezhu/article/details/79578483
     implementation 'com.sun.mail:android-mail:1.6.2'
     implementation 'com.sun.mail:android-activation:1.6.2'
+
 //    RxAndroid主要的作用也是异步，随意定制主线程、子线程的操作，链式编程，让我们的代码可读性大大增强
     implementation group: 'io.reactivex.rxjava2', name: 'rxandroid', version: '2.1.1'
 //    RxJava 主要的作用就是链式完成异步操作,并且非常强大，RxJava最核心的两个东西是Observables（被观察者，事件源）和Subscribers（订阅者）。Observables发出一系列事件，Subscribers处理这些事件
     implementation group: 'io.reactivex.rxjava2', name: 'rxjava', version: '2.2.10'
+
 //    implementation group: 'com.squareup.okhttp3', name: 'okhttp', version: '4.0.0'
 //    必须使用 （OkGo - 3.0 一个基于okhttp的标准RESTful风格的网络框架） https://github.com/jeasonlzy/okhttp-OkGo/wiki/OkGo
     implementation 'com.lzy.net:okgo:3.0.4'
