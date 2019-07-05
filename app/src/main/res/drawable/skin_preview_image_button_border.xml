@@ -7,7 +7,7 @@
     <!--这里是设置边框线的粗细和颜色-->
     <stroke
         android:width="0.01dp"
-        android:color="#BFBFBF" />
+        android:color="@color/white" />
 
     <!--内边距-->
     <padding
@@ -17,6 +17,6 @@
         android:top="0.01dp" />
 
     <!--圆角的话，里边有参数可以单独设置-->
-    <corners android:radius="1dp" />
+    <corners android:radius="0dp" />
 
 </shape>

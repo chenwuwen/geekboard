@@ -21,6 +21,8 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.blankj.utilcode.util.FragmentUtils;
+
 import cn.kanyun.geekboard.activity.GuideActivity;
 import cn.kanyun.geekboard.fragment.SettingFragment;
 import cn.kanyun.geekboard.fragment.SkinFragment;
@@ -60,21 +62,37 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     LinearLayout setLayout;
 
     /**
+     * 事务管理器
+     */
+    FragmentManager fragmentManager = getSupportFragmentManager();
+    /**
      * 事务
      */
     FragmentTransaction transaction;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         context = this;
+
+        skinFragment = new SkinFragment();
+        settingFragment = new SettingFragment();
+
         //用来初始化数据控件
         initView();
         //初始化事件
         initEvent();
+
+        FragmentUtils.add(fragmentManager, skinFragment, R.id.main_fragment, false);
+        FragmentUtils.add(fragmentManager, settingFragment, R.id.main_fragment, true);
+
         //进入界面，先让其显示 第一个
-        setSelected(0);
+//        setSelected(0);
+
+//        默认显示第一个
+        switchFragment(0);
 
         //  声明一个新线程以进行首选项检查
         new Thread(new CheckInit(this)).start();
@@ -112,15 +130,27 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
     }
 
+    private void switchFragment(int i) {
+        switch (i) {
+            case 1:
+                FragmentUtils.showHide(settingFragment, skinFragment);
+                setImgButton.setImageResource(R.drawable.foot_tab_btn_setting_light);
+                break;
+            default:
+                FragmentUtils.showHide(skinFragment, settingFragment);
+//                设置图片按钮的图片(选中状态图片)
+                skinImgButton.setImageResource(R.drawable.foot_tab_btn_skin_light);
+        }
+    }
+
     /**
      * 设定布局中间的FrameLayout的选择状态
+     * 启用Fragment切换时可能产生空白页
      *
      * @param i
      */
     private void setSelected(int i) {
 //        需要将按钮变亮，且需要切换fragment的状体
-//        获取事务
-        FragmentManager fragmentManager = getSupportFragmentManager();
 //        开启一个事务
         transaction = fragmentManager.beginTransaction();
 //        自定义一个方法，来隐藏所有的fragment
@@ -131,9 +161,14 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 //                    实例化每一个fragment
                     skinFragment = new SkinFragment();
 //                    千万别忘记将该fragment加入到transaction中
+//                    replace 是先remove再add，Fragment的onCreate方法都会被调用(如果在Fragment切换的过程中，不需要保留之前Fragment的状态，直接调用replace)
+//                     同时replace每次切换的时候Fragment都会重新实列化，重新加载一次数据，这样做会非常消耗性能用用户的流量
+//                    正确的切换方式是add()，切换时hide()，add()另一个Fragment；再次切换时，只需hide()当前，show()另一个。这样就能做到多个Fragment切换不重新实例化
                     transaction.replace(R.id.main_fragment, skinFragment);
+
                 }
                 transaction.show(skinFragment);
+
 //                设置图片按钮的图片(选中状态图片)
                 skinImgButton.setImageResource(R.drawable.foot_tab_btn_skin_light);
                 break;
@@ -252,7 +287,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     }
 
     public void previewToggle(View v) {
-        CheckBox preview =  findViewById(R.id.check_preview);
+        CheckBox preview = findViewById(R.id.check_preview);
         if (preview.isChecked()) {
             SavePreferences("PREVIEW", 1);
         } else SavePreferences("PREVIEW", 0);
@@ -261,7 +296,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     }
 
     public void soundToggle(View v) {
-        CheckBox preview =  findViewById(R.id.check_sound);
+        CheckBox preview = findViewById(R.id.check_sound);
         if (preview.isChecked()) {
             SavePreferences("SOUND", 1);
         } else SavePreferences("SOUND", 0);
@@ -274,7 +309,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
      * @param v
      */
     public void vibratorToggle(View v) {
-        CheckBox preview =  findViewById(R.id.check_vibrator);
+        CheckBox preview = findViewById(R.id.check_vibrator);
         if (preview.isChecked()) {
             SavePreferences("VIBRATE", 1);
         } else SavePreferences("VIBRATE", 0);
@@ -282,7 +317,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     }
 
     public void arrowToggle(View v) {
-        CheckBox preview =  findViewById(R.id.check_no_arrow);
+        CheckBox preview = findViewById(R.id.check_no_arrow);
         if (preview.isChecked()) {
             SavePreferences("ARROW_ROW", 0);
         } else SavePreferences("ARROW_ROW", 1);
@@ -292,6 +327,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
     /**
      * 关闭键盘布局
+     *
      * @param v
      */
     public void closeKeyboard(View v) {
@@ -322,13 +358,13 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         int setSize = sharedPreferences.getInt("SIZE", 2);
 
         int setArrow = sharedPreferences.getInt("ARROW_ROW", 1);
-        CheckBox preview =  findViewById(R.id.check_preview);
+        CheckBox preview = findViewById(R.id.check_preview);
 
-        CheckBox sound =  findViewById(R.id.check_sound);
+        CheckBox sound = findViewById(R.id.check_sound);
 //      按键振动
-        CheckBox vibrate =  findViewById(R.id.check_vibrator);
-        CheckBox noArrow =  findViewById(R.id.check_no_arrow);
-        SeekBar size =  findViewById(R.id.size_seekbar);
+        CheckBox vibrate = findViewById(R.id.check_vibrator);
+        CheckBox noArrow = findViewById(R.id.check_no_arrow);
+        SeekBar size = findViewById(R.id.size_seekbar);
 
         if (setPreview == 1)
             preview.setChecked(true);
@@ -355,10 +391,9 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     }
 
 
-
-
     /**
      * 监听点击事件
+     *
      * @param v
      */
     @Override
@@ -366,11 +401,13 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 //        将按钮复位
         resetImgButton();
         switch (v.getId()) {
-            case R.id.lay_skin:
-                setSelected(0);
+            case R.id.btn_skin:
+//                setSelected(0);
+                switchFragment(0);
                 break;
             default:
-                setSelected(1);
+//                setSelected(1);
+                switchFragment(1);
         }
     }
 

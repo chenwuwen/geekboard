@@ -31,7 +31,7 @@ import com.google.android.material.snackbar.Snackbar;
 import cn.kanyun.geekboard.activity.FeedBackActivity;
 import cn.kanyun.geekboard.activity.GuideActivity;
 import cn.kanyun.geekboard.R;
-import cn.kanyun.geekboard.activity.ShareFragment;
+import cn.kanyun.geekboard.widget.SharePopup;
 
 /**
  * 设置Fragment
@@ -46,7 +46,6 @@ public class SettingFragment extends BaseFragment {
      */
     FragmentTransaction transaction;
 
-    Fragment shareFragment;
 
     @Nullable
     @Override
@@ -165,19 +164,19 @@ public class SettingFragment extends BaseFragment {
 
 
     /**
-     * 打开分享Activity
+     * 打开分享Popup
+     * 展示PopupWindow的方法有三种:
+     * 分别是showPopupWindow()、showPopupWindow(View anchor)和showPopupWindow(int x, int y)
+     * 这三个方法有不同的含义：
+     * showPopupWindow()：无参传入，此时PopupWindow参考对象为屏幕（或者说整个DecorView），
+     * Gravity的表现就像在FrameLayout里面的Gravity表现一样，表示其处于屏幕的哪个方位
+     * showPopupWindow(View anchor)：传入AnchorView，此时PopupWindow参考对象为传入的anchorView，
+     * Gravity的表现则意味着这个PopupWindow应该处于目标AnchorView的哪个方位
+     * showPopupWindow(int x, int y)：传入位置信息，此时PopupWindow将会在指定位置弹出。
+     * https://github.com/razerdp/BasePopup
      */
     private void share(View view) {
-//        FragmentManager 需要在Activity中使用，在fragment中使用getActivity().getSupportFragmentManager();
-        FragmentManager manager = getActivity().getSupportFragmentManager();
-        transaction = manager.beginTransaction();
-        shareFragment = new ShareFragment();
-//        transaction.add(R.id.share_fragment, shareFragment);
-        transaction.show(shareFragment);
-//        提交事务
-        transaction.commit();
-//        将布局在下层的控件放到上层，不被其他控件挡住
-        view.bringToFront();
+        new SharePopup(context).showPopupWindow();
     }
 
     /**

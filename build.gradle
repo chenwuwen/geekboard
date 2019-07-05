@@ -16,6 +16,7 @@ buildscript {
 //    gradle需要使用的依赖
     dependencies {
 //        不要将应用程序依赖项放在此处；它们属于在单个模块build.gradle文件中
+//        这个插件的版本决定了module下的build.gradle中是使用compile还是implementation
         classpath 'com.android.tools.build:gradle:3.4.1'
         classpath 'com.jakewharton:butterknife-gradle-plugin:10.1.0'
     }

@@ -19,6 +19,7 @@ public class SkinFragment extends BaseFragment {
 
     Context context;
 
+
     /**
      * 系统会在Fragment首次绘制其用户界面时调用此方法。 要想为Fragment绘制 UI，
      * 从该方法中返回的 View 必须是Fragment布局的根视图。如果Fragment未提供 UI，您可以返回 null。
@@ -44,5 +45,8 @@ public class SkinFragment extends BaseFragment {
     }
 
 
-
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+    }
 }

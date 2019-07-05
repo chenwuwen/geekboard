@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="50dp"
-    android:layout_height="30dp"
+    <!--https://blog.csdn.net/hty1053240123/article/details/52486319-->
+    <!--tools命名空间的作用:tools可以告诉Android Studio，哪些属性在运行的时候是被忽略的，只在设计布局的时候有效-->
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="150dp"
+    android:layout_height="wrap_content"
     android:paddingBottom="5dp"
     android:orientation="vertical"
     android:background="@drawable/skin_preview_image_button_border">
@@ -9,12 +13,16 @@
     <ImageView
         android:id="@+id/skin_preview"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="match_parent"
+        android:adjustViewBounds="true"
+        android:scaleType="fitXY"
+        tools:src="@drawable/intro3"/>
 
     <TextView
         android:id="@+id/skin_name"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textAlignment="center" />
+        android:layout_height="match_parent"
+        android:textAlignment="center"
+        tools:text="测试文本"/>
 
 </LinearLayout>
