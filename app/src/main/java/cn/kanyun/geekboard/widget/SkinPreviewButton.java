@@ -2,6 +2,7 @@ package cn.kanyun.geekboard.widget;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Bitmap;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.ImageView;
@@ -86,6 +87,13 @@ public class SkinPreviewButton extends LinearLayout {
      */
     public void setImageResource(int resId) {
         buttonImage.setImageResource(resId);
+    }
+
+    /**
+     * 设置图片资源
+     */
+    public void setImageResource(Bitmap bm) {
+        buttonImage.setImageBitmap(bm);
     }
 
     /**

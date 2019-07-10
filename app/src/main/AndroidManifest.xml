@@ -10,8 +10,15 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <!--写SD卡权限-->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <!--允许变更配置权限,比如国际化,根据系统设定的语言,App更改语言：允许一个程序修改当前设置，如本地化-->
+    <!--但是该权限是系统级别的权限, 普通第三方应用时没有权限使用的, 即使声明了该权限也无法获取该权限. 需要声明该应用为系统级别:需要在AndroidManifest.xml 添加android:sharedUserId="android.uid.system". 如果是在linux上编译的话再Android.mk上添加LOCAL_CERTIFICATE := platform. 否则需要手动签名-->
+    <!--<uses-permission android:name="android.permission.CHANGE_CONFIGURATION" />-->
 
+    <!--在application节点中指定了程序的name属性，这个name属性是来设置你所有activity所属于哪个application的，默认是android.app.Application也可以自己定义一个类但是此类需要继承Application类-->
+    <!--将我们以前一直用的默认Application给他设置成我们自己做的MyApplication,MyApplication类的作用是为了放一些全局的和一些上下文都要用到变量和方法之类的-->
     <application
+        android:name=".MyApplication"
+        android:sharedUserId="android.uid.system"
         android:allowBackup="true"
         android:hardwareAccelerated="false"
         android:icon="@drawable/icon"
@@ -19,6 +26,11 @@
         android:largeHeap="true"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <!--开发用手机分辨率,如果使用AutoLayoutActivity来做自适应,需要此配置,否则会报错-->
+        <meta-data android:name="design_width" android:value="1080" />
+        <meta-data android:name="design_height" android:value="1920" />
+
         <service
             android:name=".GeekBoardIME"
             android:label="@string/geekboard_ime"

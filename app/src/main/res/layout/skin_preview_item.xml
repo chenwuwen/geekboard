@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--自定义控件需要添加命名控件,然后使用skinPreviewButton:xx 而不是android:xx-->
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:skinPreviewButton="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <cn.kanyun.geekboard.widget.SkinPreviewButton
+        android:id="@+id/skin_preview_item_button"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:gravity="center"
+        android:layout_margin="5dp"
+        skinPreviewButton:skin_name="material黑"
+        skinPreviewButton:img_preview="@drawable/intro3" />
+
+</LinearLayout>

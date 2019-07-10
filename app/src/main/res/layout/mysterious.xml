@@ -10,7 +10,7 @@
         android:background="@drawable/juanzeng_bodor"
         android:layout_gravity="center"
         android:layout_width="wrap_content"
-        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
         android:layout_marginRight="10dp"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -27,7 +27,7 @@
                 android:text="信息"
                 android:textSize="20sp"
                 android:layout_weight="1"
-                android:layout_marginLeft="5dp"/>
+                android:layout_marginStart="5dp"/>
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -45,13 +45,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="请作者喝杯茶,继续开发吧！"
-            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
             android:textSize="15sp"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="软件完善需要抽出业余时间来搞,捐赠纯属自愿！"
-            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
             android:textSize="15sp"/>
         <LinearLayout
             android:layout_width="wrap_content"
@@ -62,7 +62,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="或者点击下面的框,再点击复制,"
-                android:layout_marginLeft="5dp"
+                android:layout_marginStart="5dp"
                 android:textSize="15sp"/>
 
         <EditText
@@ -72,7 +72,7 @@
             android:selectAllOnFocus="true"
 
             android:id="@+id/red_bag_code"
-            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
             android:textSize="15sp"
             android:background="@drawable/feedback_input_border"
             />
@@ -83,7 +83,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text=",打开支付宝即可领取红包。3秒即可完成"
-            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
             android:textSize="15sp"/>
 
         <LinearLayout
@@ -95,7 +95,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="点击"
-            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
             android:textSize="15sp"/>
         <TextView
             android:layout_width="wrap_content"
@@ -103,14 +103,14 @@
             android:text="快速打开支付宝"
             android:id="@+id/aliPay"
             android:clickable="true"
-            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
             android:textSize="15sp"
             android:background="#0f8a1f"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="3秒即可完成"
-            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
             android:textSize="15sp"/>
 
         </LinearLayout>
@@ -140,7 +140,7 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="200dp"
-            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
             android:layout_margin="5dp"
             android:orientation="horizontal">
 
@@ -158,7 +158,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/donation_alipay"
-                android:layout_marginLeft="2dp"
+                android:layout_marginStart="2dp"
                 android:layout_weight="1"
                 android:id="@+id/aliPayCodeImg"
 

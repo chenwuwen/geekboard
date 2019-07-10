@@ -22,6 +22,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.blankj.utilcode.util.FragmentUtils;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import cn.kanyun.geekboard.activity.GuideActivity;
 import cn.kanyun.geekboard.fragment.SettingFragment;
@@ -431,6 +432,21 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 //        }
 //    }
 
+
+    /**
+     * 尽管ImageLoader很强大，但一直把图片缓存在内存中，会导致内存占用过高。
+     * 虽然对图片的引用是软引用，软引用在内存不够的时候会被GC，但我们还是希望减少GC的次数，
+     * 所以要经常手动清理ImageLoader中的缓存。
+     * 我们在上面MainActivity的 onDestroy()生命周期方法中，执行了ImageLoader的clearMemoryCache方法，
+     * 以确保页面销毁时，把为了显示这个页面而增加的内存缓存清除。
+     * 这样，即使到了下个页面要复用之前加载过的图片，虽然内存中没有了，根据ImageLoader的缓存策略，
+     * 还是可以在本地磁盘上找到
+     */
+    @Override
+    protected void onDestroy() {
+        ImageLoader.getInstance().clearMemoryCache();
+        super.onDestroy();
+    }
 }
 
 
