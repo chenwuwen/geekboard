@@ -25,8 +25,9 @@ android {
      * 以及Gradle用来构建应用程序的编译器。 你需要
      * 使用SDK管理器下载构建工具。
      */
-    compileSdkVersion 28
-    buildToolsVersion '28.0.3'
+//    引入变量 如果引入的变量是记录在xxx.properties文件中的变量,那么引用到的变量默认是String类型，如果需要in类型，需要在后面添加 as int 声明
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
 
     /**
      * defaultConfig {}块封装了所有构建variants的默认设置，
@@ -228,7 +229,8 @@ dependencies {
     implementation 'com.lzy.net:okrx2:2.0.2'
     implementation 'com.lzy.net:okserver:2.0.5'
 
-    implementation 'com.google.android.material:material:1.0.0'
+//    android support design包已经转移到这个下面了
+    implementation 'com.google.android.material:material:1.1.0-alpha07'
 
 //    强大的Android工具类：https://github.com/Blankj/AndroidUtilCode  http://www.apkbus.com/thread-593099-1-4.html
     implementation 'com.blankj:utilcodex:1.24.7'
@@ -245,6 +247,7 @@ dependencies {
     implementation 'com.github.razerdp:BasePopup-compat-androidx:2.2.1'
 
 //    Glide 是 Google 员工的开源项目， Google I/O 上被推荐使用，一个高效、开源、Android设备上的媒体管理框架
+//    https://muyangmin.github.io/glide-docs-cn/doc
     implementation group: 'com.github.bumptech.glide', name: 'glide', version: '4.9.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
 
@@ -261,6 +264,7 @@ dependencies {
 
 //    ImageLoad 用于加载图片
     implementation 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
+
 }
 
 

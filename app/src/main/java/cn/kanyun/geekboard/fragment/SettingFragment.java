@@ -46,6 +46,10 @@ public class SettingFragment extends BaseFragment {
      */
     FragmentTransaction transaction;
 
+    public static Fragment newInstance() {
+        return new SettingFragment();
+    }
+
 
     @Nullable
     @Override

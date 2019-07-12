@@ -5,45 +5,31 @@ import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
+
 import cn.kanyun.geekboard.R;
 
-/**
- * https://www.jianshu.com/p/5776362ee74e
- * 自定义皮肤预览ImageButton
- */
-public class SkinPreviewButton extends LinearLayout {
+public class TabButton extends LinearLayout {
 
-    private ImageView buttonImage;
-    private TextView buttonText;
+    private ImageButton tabImageButton;
+    private TextView tabText;
 
-    /**
-     * 只能在代码中动态的添加
-     *
-     * @param context
-     */
-    public SkinPreviewButton(Context context) {
+    public TabButton(Context context) {
         super(context);
     }
 
-    /**
-     * 可以在代码和xml中都可以用
-     * @param context
-     */
-    public SkinPreviewButton(Context context, AttributeSet attrs) {
-        super(context,attrs);
-//        加载布局
-        LayoutInflater.from(context).inflate(R.layout.skin_preview_image_button, this, true);
-        buttonImage = findViewById(R.id.skin_preview);
-        buttonText = findViewById(R.id.skin_name);
+    public TabButton(Context context, @Nullable AttributeSet attrs) {
+        super(context, attrs);
 
-        buttonImage.setPadding(0, 0, 0, 0);
-
-        setTextColor(0xFF000000);
-        buttonText.setPadding(0, 0, 0, 0);
+        //        加载布局
+        LayoutInflater.from(context).inflate(R.layout.custom_tab_layout, this, true);
+        tabImageButton = findViewById(R.id.tab_img_btn);
+        tabText = findViewById(R.id.tab_name);
 
         //设置本布局的属性
 
@@ -51,10 +37,8 @@ public class SkinPreviewButton extends LinearLayout {
         setClickable(true);
         //可聚焦
         setFocusable(true);
-
-        //布局才用普通按钮的背景(默认是灰色背景)
-//        setBackgroundResource(android.R.drawable.btn_default);
-
+        //布局才用普通按钮的背景(灰色)
+        setBackgroundResource(android.R.drawable.btn_default);
         //垂直布局
         setOrientation(LinearLayout.VERTICAL);
         //首先添加Image，然后才添加Text
@@ -65,6 +49,7 @@ public class SkinPreviewButton extends LinearLayout {
         initData(context,attrs);
     }
 
+
     /**
      * 初始化数据
      * AttributeSet是xml文件中元素属性的一个集合。其中提供了各种Api，供我们从已编译好的xml文件获取属性值
@@ -73,10 +58,10 @@ public class SkinPreviewButton extends LinearLayout {
      */
     public void initData(Context context, AttributeSet attrs) {
 //        skin_preview_button 的值是attrs.xml中declare-styleable定义的名字
-        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.skin_preview_button);
+        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.custom_tab_button);
 //        这个参数,是declare-styleable中的name+自定义的name
-        String name = typedArray.getString(R.styleable.skin_preview_button_skin_name);
-        int imageId = typedArray.getResourceId(R.styleable.skin_preview_button_img_preview, 0);
+        String name = typedArray.getString(R.styleable.custom_tab_button_tab_name);
+        int imageId = typedArray.getResourceId(R.styleable.custom_tab_button_tab_img_btn, 0);
         setImageResource(imageId);
         setText(name);
 //        在 Android 自定义 View 的时候，需要使用 TypedArray 来获取 XML layout 中的属性值，使用完之后，需要调用 recyle() 方法将 TypedArray 回收
@@ -88,29 +73,20 @@ public class SkinPreviewButton extends LinearLayout {
      * 设置图片资源
      */
     public void setImageResource(int resId) {
-        buttonImage.setImageResource(resId);
+        tabImageButton.setImageResource(resId);
     }
 
     /**
      * 设置图片资源
      */
     public void setImageResource(Bitmap bm) {
-        buttonImage.setImageBitmap(bm);
+        tabImageButton.setImageBitmap(bm);
     }
 
     /**
      * 设置显示的文字
      */
     public void setText(String text) {
-        buttonText.setText(text);
+        tabText.setText(text);
     }
-
-
-    /**
-     * setTextColor方法
-     */
-    public void setTextColor(int color) {
-        buttonText.setTextColor(color);
-    }
-
 }

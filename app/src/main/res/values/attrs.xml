@@ -8,4 +8,11 @@
         <attr name="img_preview" format="reference|integer"></attr>
 
     </declare-styleable>
+
+    <!--自定义TabButton实现皮肤预览-->
+    <declare-styleable name="custom_tab_button">
+        <attr name="tab_name" format="string"></attr>
+        <attr name="tab_img_btn" format="reference|integer"></attr>
+
+    </declare-styleable>
 </resources>

@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -56,6 +57,10 @@ public class SkinFragment extends BaseFragment {
      * 可以使用 RecyclerView 实现标准的垂直滚动列表、统一的网格、交错网格、水平滚动集合等
      */
     private GridLayoutManager layoutManager;
+
+    public static Fragment newInstance() {
+        return new SkinFragment();
+    }
 
     /**
      * 系统会在Fragment首次绘制其用户界面时调用此方法。 要想为Fragment绘制 UI，

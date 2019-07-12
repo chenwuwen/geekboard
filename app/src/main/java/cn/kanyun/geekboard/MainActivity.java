@@ -11,22 +11,32 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.SeekBar;
+import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.viewpager.widget.ViewPager;
 
 import com.blankj.utilcode.util.FragmentUtils;
+import com.google.android.material.tabs.TabLayout;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
-import cn.kanyun.geekboard.activity.GuideActivity;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.Map;
+
+import cn.kanyun.geekboard.adapter.MyViewPagerAdapter;
 import cn.kanyun.geekboard.fragment.SettingFragment;
 import cn.kanyun.geekboard.fragment.SkinFragment;
+import cn.kanyun.geekboard.listener.TabSwitchListener;
 import cn.kanyun.geekboard.sync.CheckInit;
 
 
@@ -71,6 +81,16 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
      */
     FragmentTransaction transaction;
 
+    /**
+     * TabLayout
+     */
+    TabLayout tabLayout;
+
+    /**
+     * 滑动布局
+     */
+    ViewPager viewPager;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,19 +101,45 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         skinFragment = new SkinFragment();
         settingFragment = new SettingFragment();
 
+        viewPager = findViewById(R.id.view_pager_content);
+//        创建ViewPagerAdapter
+        MyViewPagerAdapter myViewPagerAdapter = new MyViewPagerAdapter(getSupportFragmentManager());
+//        给viewPager赋值adapter
+        viewPager.setAdapter(myViewPagerAdapter);
+//        设置预加载页面数量的方法
+        viewPager.setOffscreenPageLimit(2);
+//        设置默认位于第一个
+        viewPager.setCurrentItem(0);
+//        初始化tabLayout
+        tabLayout = findViewById(R.id.foot_tab_layout);
+//        将TabLayout与Viewpager联动起来(需要注意的是,该方法需要添加在tabLayout添加tab的方法前面(添加tab的方法前 先remove所有tab),否则将找不到tab按钮和文字,因为该方法会移除以添加的tab)
+        tabLayout.setupWithViewPager(viewPager);
+
+//        默认的TabLayout布局
+//        tabLayout.addTab(tabLayout.newTab().setText("选项一").setIcon(R.drawable.icon));
+//        tabLayout.addTab(tabLayout.newTab().setText("选项二").setIcon(R.drawable.icon));
+
+//        初始化tab(自定义TabLayout布局)
+        initTab();
+
+
+
         //用来初始化数据控件
         initView();
         //初始化事件
-        initEvent();
+//        initEvent();
 
-        FragmentUtils.add(fragmentManager, skinFragment, R.id.main_fragment, false);
-        FragmentUtils.add(fragmentManager, settingFragment, R.id.main_fragment, true);
+//        由于使用了ViewPager来包装Fragment,故此处先进行注释
+//        FragmentUtils.add(fragmentManager, skinFragment, R.id.main_fragment, false);
+//        FragmentUtils.add(fragmentManager, settingFragment, R.id.main_fragment, true);
 
         //进入界面，先让其显示 第一个
 //        setSelected(0);
 
 //        默认显示第一个
         switchFragment(0);
+
+
 
         //  声明一个新线程以进行首选项检查
         new Thread(new CheckInit(this)).start();
@@ -131,25 +177,67 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
     }
 
+    /**
+     * 初始化Tab
+     * 自定义TabLayout布局
+     */
+    private void initTab() {
+//        添加tab前移除全部tab
+        tabLayout.removeAllTabs();
+//        这里不使用HashMap,是因为HashMap是无序的(不是按照插入顺序),这样的话就会导致tab按钮顺序不一致
+        Map<String, Integer> tabMap = new LinkedHashMap<>();
+//        第一个tab按钮默认是选中的,所以图标是选中的图标
+        tabMap.put("皮肤", R.drawable.foot_tab_btn_skin_light);
+        tabMap.put("设置", R.drawable.foot_tab_btn_setting_dark);
+        Iterator<Map.Entry<String, Integer>> it = tabMap.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry<String, Integer> entry = it.next();
+
+            View inflate = View.inflate(this, R.layout.custom_tab_layout, null);
+            TabLayout.Tab tab = tabLayout.newTab();
+            TextView textView = inflate.findViewById(R.id.tab_name);
+            textView.setText(entry.getKey());
+            ImageButton imageButton = inflate.findViewById(R.id.tab_img_btn);
+            imageButton.setImageResource(entry.getValue());
+            tab.setCustomView(inflate);
+            tabLayout.addTab(tab);
+//            if (tabLayout.getSelectedTabPosition() == 0) {
+////              设置第一个选中
+//                tabLayout.getTabAt(0).getCustomView().setSelected(true);
+//                imageButton.setImageResource(entry.getValue().re);
+//            }
+        }
+//        添加监听器
+        tabLayout.addOnTabSelectedListener(new TabSwitchListener());
+
+    }
+
+    /**
+     * Fragment切换，使用了开源工具FragmentUtils
+     *
+     * @param i
+     */
     private void switchFragment(int i) {
         switch (i) {
             case 1:
                 FragmentUtils.showHide(settingFragment, skinFragment);
-                setImgButton.setImageResource(R.drawable.foot_tab_btn_setting_light);
+//                setImgButton.setImageResource(R.drawable.foot_tab_btn_setting_light);
                 break;
             default:
                 FragmentUtils.showHide(skinFragment, settingFragment);
 //                设置图片按钮的图片(选中状态图片)
-                skinImgButton.setImageResource(R.drawable.foot_tab_btn_skin_light);
+//                skinImgButton.setImageResource(R.drawable.foot_tab_btn_skin_light);
         }
     }
 
     /**
+     * 弃用
      * 设定布局中间的FrameLayout的选择状态
      * 启用Fragment切换时可能产生空白页
      *
      * @param i
      */
+    @Deprecated
     private void setSelected(int i) {
 //        需要将按钮变亮，且需要切换fragment的状体
 //        开启一个事务
@@ -165,7 +253,8 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 //                    replace 是先remove再add，Fragment的onCreate方法都会被调用(如果在Fragment切换的过程中，不需要保留之前Fragment的状态，直接调用replace)
 //                     同时replace每次切换的时候Fragment都会重新实列化，重新加载一次数据，这样做会非常消耗性能用用户的流量
 //                    正确的切换方式是add()，切换时hide()，add()另一个Fragment；再次切换时，只需hide()当前，show()另一个。这样就能做到多个Fragment切换不重新实例化
-                    transaction.replace(R.id.main_fragment, skinFragment);
+//                      由于使用了ViewPager来包装Fragment,故此处先进行注释
+//                    transaction.replace(R.id.main_fragment, skinFragment);
 
                 }
                 transaction.show(skinFragment);
@@ -176,7 +265,9 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             default:
                 if (settingFragment == null) {
                     settingFragment = new SettingFragment();
-                    transaction.replace(R.id.main_fragment, settingFragment);
+
+//                    由于使用了ViewPager来包装Fragment,故此处先进行注释
+//                    transaction.replace(R.id.main_fragment, settingFragment);
                 }
                 transaction.show(settingFragment);
                 setImgButton.setImageResource(R.drawable.foot_tab_btn_setting_light);

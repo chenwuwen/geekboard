@@ -3,6 +3,10 @@
 //buildscript{}块是配置仓库和Gradle本身的依赖
 buildscript {
 
+//    定义全局变量
+    ext.compileSdkVersion = 28
+    ext.buildToolsVersion = '28.0.3'
+
 //    配置依赖仓库
     repositories {
         mavenLocal()

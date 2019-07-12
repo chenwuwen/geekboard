@@ -1,0 +1,26 @@
+<!--自定义TabLayout布局-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:orientation="vertical">
+
+        <!--style="?android:attr/borderlessButtonStyle":去掉自带的阴影,但是会造成tab显示不全[高度不够]-->
+        <!--设置android:clickable="false"是因为当设置为true是点击ImageButton不能触发切换效果(点击非Button时可以触发切换),因为切换效果交给了TabLayout,-->
+        <ImageButton
+            android:id="@+id/tab_img_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/foot_tab_btn_skin_dark"
+            android:background="@android:color/transparent"
+            android:clickable="false"
+            android:stateListAnimator="@null" />
+
+        <TextView
+            android:id="@+id/tab_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="皮肤" />
+
+
+</LinearLayout>

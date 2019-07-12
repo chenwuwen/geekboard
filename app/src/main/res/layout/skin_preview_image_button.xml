@@ -6,7 +6,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:paddingBottom="5dp"
     android:orientation="vertical"
     android:background="@drawable/skin_preview_image_button_border">
 
@@ -16,7 +15,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:adjustViewBounds="true"
-        android:scaleType="fitXY"
+        android:scaleType="centerCrop"
+        android:background="@android:color/white"
+        android:contentDescription="皮肤预览"
         tools:src="@drawable/intro3"/>
 
     <TextView

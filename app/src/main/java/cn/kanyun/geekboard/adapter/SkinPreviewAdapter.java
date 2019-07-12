@@ -1,8 +1,10 @@
 package cn.kanyun.geekboard.adapter;
 
 import android.graphics.Color;
+import android.nfc.Tag;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -12,10 +14,12 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import cn.kanyun.geekboard.R;
 import cn.kanyun.geekboard.entity.Skin;
+import cn.kanyun.geekboard.listener.SkinSwitchListener;
 import cn.kanyun.geekboard.widget.SkinPreviewButton;
 
 /**
@@ -47,10 +51,10 @@ public class SkinPreviewAdapter extends RecyclerView.Adapter<SkinPreviewAdapter.
     private List<Skin> dataList;
 
 
-
     public SkinPreviewAdapter(List list) {
         this.dataList = list;
     }
+
 
     /**
      * 创建ViewHolder
@@ -79,9 +83,11 @@ public class SkinPreviewAdapter extends RecyclerView.Adapter<SkinPreviewAdapter.
         holder.button.setImageResource(dataList.get(position).getPreviewImg());
 
 //        item 点击事件
-        holder.button.setOnClickListener(v -> {
-            Log.i(TAG, "点击了皮肤:"+dataList.get(position).getName());
-        });
+//        holder.button.setOnClickListener(v -> {
+//            Log.i(TAG, "点击了皮肤:"+dataList.get(position).getName());
+//        });
+        holder.button.setOnClickListener(new SkinSwitchListener(dataList.get(position).getName(),position));
+        holder.button.setOnTouchListener(new SkinSwitchListener(dataList.get(position).getName(),position));
 
     }
 
@@ -93,6 +99,7 @@ public class SkinPreviewAdapter extends RecyclerView.Adapter<SkinPreviewAdapter.
     public int getItemCount() {
         return dataList.size();
     }
+
 
 
 

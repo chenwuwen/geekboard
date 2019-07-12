@@ -35,11 +35,10 @@
         android:layout_margin="5dp"/>
     </LinearLayout>
 
-
+    <!--RecyclerView 存放列表 是ListView/GridView的升级版-->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/skin_preview_recycler_view"
         android:layout_height="wrap_content"
-
         android:layout_width="match_parent"
         />
 

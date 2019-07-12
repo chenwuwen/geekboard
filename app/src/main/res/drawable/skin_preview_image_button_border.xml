@@ -1,22 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<shape xmlns:android="http://schemas.android.com/apk/res/android" >
-    <!--这里是LinearLayout布局的背景颜色-->
+    <!--shape用于定义形状，有四种形状(矩形rectangle| 椭圆oval | 直线line | 圆形ring)-->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
 
-    <solid android:color="@color/white" />
+    <!--这里是LinearLayout布局的背景颜色-->
+    <solid android:color="@android:color/white" />
 
     <!--这里是设置边框线的粗细和颜色-->
     <stroke
-        android:width="0.01dp"
-        android:color="@color/white" />
+        android:width="0.3dp"
+        android:color="@android:color/darker_gray" />
 
     <!--内边距-->
     <padding
-        android:bottom="0.01dp"
-        android:left="0.01dp"
-        android:right="0.01dp"
-        android:top="0.01dp" />
+        android:bottom="5dp"
+        android:left="10dp"
+        android:right="10dp"
+        android:top="10dp" />
 
     <!--圆角的话，里边有参数可以单独设置-->
-    <corners android:radius="0dp" />
+    <corners android:radius="2dp" />
 
 </shape>

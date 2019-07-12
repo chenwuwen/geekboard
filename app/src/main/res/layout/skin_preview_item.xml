@@ -1,19 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--自定义控件需要添加命名控件,然后使用skinPreviewButton:xx 而不是android:xx-->
-<LinearLayout
+<!--这个布局是RecycleView需要的Item,为什么不让RecycleView直接使用自定义的View呢?因为涉及到传值问题-->
+<!--自定义控件需要添加命名空间,然后使用skinPreviewButton:xx 而不是android:xx-->
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:skinPreviewButton="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
+    android:layout_margin="5dp"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
+    <!--引入自定义组件,需要注意的是：如果自定义组件中需要配置自定义的属性,那么需要在当前布局引入命名空间-->
     <cn.kanyun.geekboard.widget.SkinPreviewButton
         android:id="@+id/skin_preview_item_button"
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:gravity="center"
-        android:layout_margin="5dp"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
         skinPreviewButton:skin_name="material黑"
         skinPreviewButton:img_preview="@drawable/intro3" />
 
-</LinearLayout>
+    <!--android:visibility="gone" 隐藏 https://blog.csdn.net/caroline_wendy/article/details/40887373-->
+    <ImageView
+        android:id="@+id/skin_enable"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/skin_enable"
+        skinPreviewButton:layout_constraintRight_toRightOf="parent"
+        skinPreviewButton:layout_constraintTop_toTopOf="@+id/skin_preview_item_button"
+        android:layout_marginTop="7.2dp"
+        android:visibility="gone"/>
+</androidx.constraintlayout.widget.ConstraintLayout>
