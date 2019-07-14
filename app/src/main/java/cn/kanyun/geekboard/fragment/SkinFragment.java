@@ -90,6 +90,8 @@ public class SkinFragment extends BaseFragment {
 //        skinPreView.addItemDecoration(new DividerGridItemDecoration(this));
 //        设置增加或删除条目的动画
         skinPreView.setItemAnimator(new DefaultItemAnimator());
+//        解决NestedScrollView嵌套滑动的卡顿
+        skinPreView.setNestedScrollingEnabled(false);
         return view;
     }
 
@@ -191,6 +193,18 @@ public class SkinFragment extends BaseFragment {
         skin9.setName("紫色");
         skin9.setPreviewImg(bm);
 
+        Skin skin10 = new Skin();
+        skin10.setName("紫色");
+        skin10.setPreviewImg(bm);
+
+        Skin skin11 = new Skin();
+        skin11.setName("紫色");
+        skin11.setPreviewImg(bm);
+
+        Skin skin12 = new Skin();
+        skin12.setName("紫色");
+        skin12.setPreviewImg(bm);
+
         list.add(skin1);
         list.add(skin2);
         list.add(skin3);
@@ -199,6 +213,9 @@ public class SkinFragment extends BaseFragment {
         list.add(skin7);
         list.add(skin8);
         list.add(skin9);
+        list.add(skin10);
+        list.add(skin11);
+        list.add(skin12);
 
     }
 }

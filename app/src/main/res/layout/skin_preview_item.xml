@@ -7,7 +7,8 @@
     android:orientation="vertical"
     android:layout_margin="5dp"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@drawable/select_skin_preview_button">
 
     <!--引入自定义组件,需要注意的是：如果自定义组件中需要配置自定义的属性,那么需要在当前布局引入命名空间-->
     <cn.kanyun.geekboard.widget.SkinPreviewButton

@@ -1,17 +1,12 @@
 package cn.kanyun.geekboard;
 
 import android.content.Context;
-import android.Manifest;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -28,12 +23,12 @@ import com.blankj.utilcode.util.FragmentUtils;
 import com.google.android.material.tabs.TabLayout;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 import cn.kanyun.geekboard.adapter.MyViewPagerAdapter;
+import cn.kanyun.geekboard.entity.Constant;
 import cn.kanyun.geekboard.fragment.SettingFragment;
 import cn.kanyun.geekboard.fragment.SkinFragment;
 import cn.kanyun.geekboard.listener.TabSwitchListener;
@@ -54,8 +49,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     Context context;
 
 
-    final String RADIO_INDEX_COLOUR = "RADIO_INDEX_COLOUR";
-    final String RADIO_INDEX_LAYOUT = "RADIO_INDEX_LAYOUT";
     /**
      * fragment
      */
@@ -141,7 +134,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
 
 
-        //  声明一个新线程以进行首选项检查
+        //  声明一个新线程以进行首选项检查[检查是否进入过主界面,如果没有进入过,则进入引导页]
         new Thread(new CheckInit(this)).start();
 
 //        seekBar = findViewById(R.id.size_seekbar);
@@ -322,7 +315,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
                     RadioButton checkedRadioButtonColour = (RadioButton) radioGroupColour.findViewById(checkedId);
                     int checkedIndexColour = radioGroupColour.indexOfChild(checkedRadioButtonColour);
-                    SavePreferences(RADIO_INDEX_COLOUR, checkedIndexColour);
+                    SavePreferences(Constant.BOARD_LAYOUT, checkedIndexColour);
 
                 }
             };
@@ -336,7 +329,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
                     RadioButton checkedRadioButtonLayout = (RadioButton) radioGroupLayout.findViewById(checkedId);
                     int checkedIndexLayout = radioGroupLayout.indexOfChild(checkedRadioButtonLayout);
-                    SavePreferences(RADIO_INDEX_LAYOUT, checkedIndexLayout);
+                    SavePreferences(Constant.BOARD_LAYOUT, checkedIndexLayout);
 
                 }
             };
@@ -436,11 +429,11 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     private void LoadPreferences() {
         SharedPreferences sharedPreferences = getSharedPreferences("MY_SHARED_PREF", MODE_PRIVATE);
 
-        int savedRadioColour = sharedPreferences.getInt(RADIO_INDEX_COLOUR, 0);
+        int savedRadioColour = sharedPreferences.getInt(Constant.BOARD_SKIN, 0);
         RadioButton savedCheckedRadioButtonColour = (RadioButton) radioGroupColour.getChildAt(savedRadioColour);
         savedCheckedRadioButtonColour.setChecked(true);
 
-        int savedRadioLayout = sharedPreferences.getInt(RADIO_INDEX_LAYOUT, 0);
+        int savedRadioLayout = sharedPreferences.getInt(Constant.BOARD_LAYOUT, 0);
         RadioButton savedCheckedRadioButtonLayout = (RadioButton) radioGroupLayout.getChildAt(savedRadioLayout);
         savedCheckedRadioButtonLayout.setChecked(true);
 

@@ -3,7 +3,7 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/skin"
-    android:background="#d8e3e7"
+    android:background="#F0EFF5"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center"
@@ -35,12 +35,20 @@
         android:layout_margin="5dp"/>
     </LinearLayout>
 
+    <!--NestedScrollView替代了ScrollView 解决嵌套问题-->
+    <androidx.core.widget.NestedScrollView
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:scrollbars="none">
+
     <!--RecyclerView 存放列表 是ListView/GridView的升级版-->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/skin_preview_recycler_view"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         />
+
+    </androidx.core.widget.NestedScrollView>
 
     <!--第一行-->
     <!--<cn.kanyun.geekboard.widget.SkinPreviewButton-->

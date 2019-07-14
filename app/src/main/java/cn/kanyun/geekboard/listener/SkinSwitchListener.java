@@ -1,5 +1,6 @@
 package cn.kanyun.geekboard.listener;
 
+import android.app.backup.SharedPreferencesBackupHelper;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -10,6 +11,8 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import cn.kanyun.geekboard.R;
+import cn.kanyun.geekboard.entity.Constant;
+import cn.kanyun.geekboard.util.SPUtils;
 import cn.kanyun.geekboard.widget.SkinPreviewButton;
 
 
@@ -59,6 +62,8 @@ public class SkinSwitchListener implements View.OnClickListener, View.OnTouchLis
         Log.i(TAG, parent.getLayoutDirection() + "");
 //        设置当前被点击的position为lastIndex
         lastIndex = position;
+//        将键盘皮肤名称保存到SharedPreferences中
+        SPUtils.put(v.getContext(), Constant.BOARD_SKIN, skinName);
     }
 
 

@@ -1,5 +1,6 @@
 package cn.kanyun.geekboard.adapter;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.nfc.Tag;
 import android.util.Log;
@@ -8,18 +9,22 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import cn.kanyun.geekboard.R;
+import cn.kanyun.geekboard.entity.Constant;
 import cn.kanyun.geekboard.entity.Skin;
 import cn.kanyun.geekboard.listener.SkinSwitchListener;
+import cn.kanyun.geekboard.util.SPUtils;
 import cn.kanyun.geekboard.widget.SkinPreviewButton;
 
 /**
@@ -35,10 +40,8 @@ import cn.kanyun.geekboard.widget.SkinPreviewButton;
  * 这个方法主要生成为每个Item inflater出一个View，但是该方法返回的是一个ViewHolder。
  * 该方法把View直接封装在ViewHolder中，然后我们面向的是ViewHolder这个实例，
  * 当然这个ViewHolder需要我们自己去编写
- *
  * onBindViewHolder()
  * 这个方法主要用于适配渲染数据到View中。方法提供给你了一viewHolder而不是原来的convertView。
- *
  * getItemCount()
  * 这个方法就类似于BaseAdapter的getCount方法了，即总共有多少个条目。
  */
@@ -50,6 +53,8 @@ public class SkinPreviewAdapter extends RecyclerView.Adapter<SkinPreviewAdapter.
      */
     private List<Skin> dataList;
 
+    Context context;
+
 
     public SkinPreviewAdapter(List list) {
         this.dataList = list;
@@ -58,6 +63,7 @@ public class SkinPreviewAdapter extends RecyclerView.Adapter<SkinPreviewAdapter.
 
     /**
      * 创建ViewHolder
+     *
      * @param parent
      * @param viewType
      * @return
@@ -65,6 +71,7 @@ public class SkinPreviewAdapter extends RecyclerView.Adapter<SkinPreviewAdapter.
     @NonNull
     @Override
     public SkinPreviewAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        context = parent.getContext();
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.skin_preview_item, parent, false);
         ViewHolder holder = new ViewHolder(view);
         return holder;
@@ -73,34 +80,49 @@ public class SkinPreviewAdapter extends RecyclerView.Adapter<SkinPreviewAdapter.
     /**
      * 填充视图
      * 将数据与界面进行绑定的操作
+     *
      * @param holder
      * @param position
      */
     @Override
     public void onBindViewHolder(@NonNull SkinPreviewAdapter.ViewHolder holder, int position) {
-//        holder后面的属性是当前类中的静态内部类的私有属性
+
+//        获得SharedPreferences中记录上次选择的皮肤名称(找不到返回默认值)
+        String lastSkinName = (String) SPUtils.get(context, Constant.BOARD_SKIN, "material黑");
+
+//        获取当前皮肤名称
+        String currentSkinName = dataList.get(position).getName();
+
+//      holder后面的属性是当前类中的静态内部类的私有属性
         holder.button.setText(dataList.get(position).getName());
         holder.button.setImageResource(dataList.get(position).getPreviewImg());
+
+//      如果SharedPreferences中记录上次选择的皮肤名称与当前皮肤名称一致,则将其标注为已启用状态
+        if (lastSkinName.equals(currentSkinName)) {
+            ConstraintLayout layout = (ConstraintLayout) holder.itemView;
+            ImageView enable = layout.findViewById(R.id.skin_enable);
+            enable.setVisibility((View.VISIBLE));
+        }
+
 
 //        item 点击事件
 //        holder.button.setOnClickListener(v -> {
 //            Log.i(TAG, "点击了皮肤:"+dataList.get(position).getName());
 //        });
-        holder.button.setOnClickListener(new SkinSwitchListener(dataList.get(position).getName(),position));
-        holder.button.setOnTouchListener(new SkinSwitchListener(dataList.get(position).getName(),position));
+        holder.button.setOnClickListener(new SkinSwitchListener(dataList.get(position).getName(), position));
+        holder.button.setOnTouchListener(new SkinSwitchListener(dataList.get(position).getName(), position));
 
     }
 
     /**
      * 返回item个数
+     *
      * @return
      */
     @Override
     public int getItemCount() {
         return dataList.size();
     }
-
-
 
 
     /**
