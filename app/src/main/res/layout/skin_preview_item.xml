@@ -6,6 +6,8 @@
     xmlns:skinPreviewButton="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_margin="5dp"
+    android:clickable="true"
+    android:addStatesFromChildren="true"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:background="@drawable/select_skin_preview_button">
@@ -15,6 +17,7 @@
         android:id="@+id/skin_preview_item_button"
         android:layout_height="match_parent"
         android:layout_width="match_parent"
+
         skinPreviewButton:skin_name="material黑"
         skinPreviewButton:img_preview="@drawable/intro3" />
 

@@ -22,9 +22,6 @@ import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
-
-import cn.kanyun.geekboard.GlideApp;
 import cn.kanyun.geekboard.R;
 import cn.kanyun.geekboard.adapter.SkinPreviewAdapter;
 import cn.kanyun.geekboard.entity.Skin;
@@ -82,6 +79,7 @@ public class SkinFragment extends BaseFragment {
         adapter = new SkinPreviewAdapter(list);
 //        GridLayoutManager构造函数接收两个参数， 第一个是Context， 第二个是列数
         layoutManager = new GridLayoutManager(context, 2);
+
 //        设置Adapter
         skinPreView.setAdapter(adapter);
 //        设置布局管理器
@@ -90,6 +88,8 @@ public class SkinFragment extends BaseFragment {
 //        skinPreView.addItemDecoration(new DividerGridItemDecoration(this));
 //        设置增加或删除条目的动画
         skinPreView.setItemAnimator(new DefaultItemAnimator());
+
+        layoutManager.setSmoothScrollbarEnabled(true);
 //        解决NestedScrollView嵌套滑动的卡顿
         skinPreView.setNestedScrollingEnabled(false);
         return view;

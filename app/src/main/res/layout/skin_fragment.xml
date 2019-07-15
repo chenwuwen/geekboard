@@ -39,7 +39,8 @@
     <androidx.core.widget.NestedScrollView
         android:layout_height="match_parent"
         android:layout_width="match_parent"
-        android:scrollbars="none">
+        android:scrollbars="none"
+        android:fillViewport="true">
 
     <!--RecyclerView 存放列表 是ListView/GridView的升级版-->
     <androidx.recyclerview.widget.RecyclerView

@@ -48,12 +48,20 @@ import cn.kanyun.geekboard.widget.SkinPreviewButton;
 public class SkinPreviewAdapter extends RecyclerView.Adapter<SkinPreviewAdapter.ViewHolder> {
 
     private static final String TAG = "SkinPreviewAdapter";
+
+
     /**
      * 数据源
      */
     private List<Skin> dataList;
 
     Context context;
+
+    /**
+     * SharedPreferences中保存的皮肤名称,如果没有找不到
+     * 则返回dataList中的第一个
+     */
+    private String lastSkinName;
 
 
     public SkinPreviewAdapter(List list) {
@@ -73,24 +81,24 @@ public class SkinPreviewAdapter extends RecyclerView.Adapter<SkinPreviewAdapter.
     public SkinPreviewAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         context = parent.getContext();
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.skin_preview_item, parent, false);
+//        获得SharedPreferences中记录上次选择的皮肤名称(找不到返回默认值)
+        lastSkinName = (String) SPUtils.get(context, Constant.BOARD_SKIN, dataList.get(0).getName());
         ViewHolder holder = new ViewHolder(view);
+
         return holder;
     }
 
     /**
      * 填充视图
      * 将数据与界面进行绑定的操作
-     *
+     * 这个方法将会遍历,遍历此时为dataList.size()
      * @param holder
      * @param position
      */
     @Override
     public void onBindViewHolder(@NonNull SkinPreviewAdapter.ViewHolder holder, int position) {
 
-//        获得SharedPreferences中记录上次选择的皮肤名称(找不到返回默认值)
-        String lastSkinName = (String) SPUtils.get(context, Constant.BOARD_SKIN, "material黑");
-
-//        获取当前皮肤名称
+//        获取当前遍历得到的皮肤名称
         String currentSkinName = dataList.get(position).getName();
 
 //      holder后面的属性是当前类中的静态内部类的私有属性

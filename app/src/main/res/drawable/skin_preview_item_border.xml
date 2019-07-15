@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-    <!--shape用于定义形状，有四种形状(矩形rectangle| 椭圆oval | 直线line | 圆形ring)-->
+<!--此背景用于皮肤预览Item,配合selector,来实现点击皮肤预览按钮时,出现边框,以提示被点击效果-->
+<!--shape用于定义形状，有四种形状(矩形rectangle| 椭圆oval | 直线line | 圆形ring)-->
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape="rectangle">
 
