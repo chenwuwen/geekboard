@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:fab="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".activity.FeedBackActivity"
     android:orientation="vertical">
 
@@ -20,10 +21,13 @@
         android:hint="请备注好：手机机型及安卓版本" />
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="提交"
         android:layout_gravity="center"
+        style="?android:attr/borderlessButtonStyle"
+        app:tabRippleColor="@android:color/transparent"
         android:onClick="commitFeedBack" />
 
     <com.getbase.floatingactionbutton.FloatingActionsMenu

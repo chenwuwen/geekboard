@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#303030"
+    android:orientation="vertical">
+
+    <!--Toolbar是在 Android 5.0 开始推出的一个 Material Design 风格的导航控件 ，Google 非常推荐大家使用 Toolbar 来作为Android客户端的导航栏，以此来取代之前的 Actionbar-->
+    <!--如果使用xml方式添加toolbar那么toolbar将失去阴影效果-->
+    <!--app:subtitle="子标题"-->
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/setting_tool_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#212121"
+        app:navigationIcon="@drawable/left_arrow"
+        android:elevation="5dp"
+        android:translationZ="20dp"
+        app:title="GeekBoard设置" />
+
+
+    <!--设置项-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:divider="@drawable/line_shape"
+        android:showDividers="middle"
+        android:clickable="true"
+        android:orientation="vertical">
+
+        <!--TextView 如果需要首行缩进 可以使用转移字符 \u3000 是首行缩进-->
+
+        <LinearLayout
+            android:id="@+id/board_layout_set"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:background="#01000000"
+            android:orientation="vertical"
+            android:paddingLeft="20dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="布局设置"
+                android:clickable="false"
+                android:textAlignment="textStart"
+                android:textColor="#ffffff"
+                android:textSize="15dp"
+                app:tabRippleColor="@android:color/transparent" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="textStart"
+                android:textColor="#c1c1c1"
+                android:textSize="10dp"
+                tools:text="Qwerty" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/board_shock_set"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#01000000"
+            android:orientation="vertical"
+            android:clickable="true"
+            android:paddingLeft="20dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="按键震动"
+                android:textAlignment="inherit"
+                android:textColor="#ffffff"
+                android:textSize="15dp"
+
+                app:tabRippleColor="@android:color/transparent" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="textStart"
+                android:textColor="#c1c1c1"
+                android:textSize="10dp"
+                tools:text="开启" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/board_bubble_set"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#01000000"
+            android:orientation="vertical"
+            android:clickable="true"
+            android:paddingLeft="20dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="按键气泡"
+                android:textAlignment="textStart"
+                android:textColor="#ffffff"
+                android:textSize="15dp"
+                app:tabRippleColor="@android:color/transparent" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="textStart"
+                android:textColor="#c1c1c1"
+                android:textSize="10dp"
+                tools:text="开启" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/board_sound_set"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#01000000"
+            android:orientation="vertical"
+            android:clickable="true"
+            android:paddingLeft="20dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="按键声音"
+                android:textAlignment="textStart"
+                android:textColor="#ffffff"
+                android:textSize="15dp"
+                app:tabRippleColor="@android:color/transparent" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="textStart"
+                android:textColor="#c1c1c1"
+                android:textSize="10dp"
+                tools:text="开启" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</LinearLayout>

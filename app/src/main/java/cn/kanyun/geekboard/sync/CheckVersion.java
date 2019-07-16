@@ -46,6 +46,10 @@ import org.json.JSONObject;
  * b. 同一个AsyncTask实例对象只能执行1次，若执行第2次将会抛出异常
  * c. 执行任务中，系统会自动调用AsyncTask的一系列方法：onPreExecute() 、doInBackground()、onProgressUpdate() 、onPostExecute()
  * d. 不能手动调用上述方法
+ *
+ * 外部如果需要使用AsyncTask任务，需要首先实例化,再调用execute方法，如：
+ * CheckVersion check = new CheckVersion()
+ * check.execute()
  */
 
 
@@ -53,8 +57,9 @@ public class CheckVersion extends AsyncTask<Activity, Void, Void> {
 
     /**
      * github获取仓库最新Release版本号API
+     * github API :https://developer.github.com/v3/repos/releases/#get-the-latest-release
      */
-    public static final String checkVersionUrl = "https://api.github.com/repos/kanyun/geekboard/releases/latest";
+    public static final String checkVersionUrl = "https://api.github.com/repos/chenwuwen/geekboard/releases/latest";
     public static final String TAG = "CheckVersion";
 
     private String responseText;
@@ -117,13 +122,13 @@ public class CheckVersion extends AsyncTask<Activity, Void, Void> {
     /**
      * 方法3：onProgressUpdate（）
      * 作用：在主线程 显示线程任务执行的进度
-     * 注：根据需求复写
+     * 注：根据需求复写,从而自定义UI操作
      *
      * @param voids
      */
     @Override
     protected void onProgressUpdate(Void... voids) {
-
+        Log.d(TAG, "异步操作返回");
 
     }
 
@@ -176,6 +181,7 @@ public class CheckVersion extends AsyncTask<Activity, Void, Void> {
      */
     @Override
     protected void onCancelled() {
+        Log.d(TAG, "异步任务取消");
     }
 }
 

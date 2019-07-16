@@ -2,12 +2,14 @@ package cn.kanyun.geekboard.fragment;
 
 import android.content.ActivityNotFoundException;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,12 +27,18 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.blankj.utilcode.util.AppUtils;
+import com.blankj.utilcode.util.TimeUtils;
 import com.google.android.material.snackbar.Snackbar;
 
+import java.util.concurrent.TimeUnit;
+
+import cn.kanyun.geekboard.activity.BoardSettingActivity;
 import cn.kanyun.geekboard.activity.FeedBackActivity;
 import cn.kanyun.geekboard.activity.GuideActivity;
 import cn.kanyun.geekboard.R;
+import cn.kanyun.geekboard.sync.CheckVersion;
 import cn.kanyun.geekboard.widget.SharePopup;
 
 /**
@@ -92,16 +100,44 @@ public class SettingFragment extends BaseFragment {
 
     /**
      * 跳到键盘设置页面
+     *
      * @param v
      */
     private void boardSetting(View v) {
+        Intent intent = new Intent(context, BoardSettingActivity.class);
+        startActivity(intent);
     }
 
     /**
      * 版本更新
+     *
      * @param v
      */
     private void updateVersion(View v) {
+        MaterialDialog.Builder builder = new MaterialDialog.Builder(context)
+                .title("检查更新")
+                .content("正在检查新版本....")
+                .progress(true, 0);
+
+//        配置监听(注意顺序,需要放在builder.show()之前)
+        builder.showListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(DialogInterface dialog) {
+                Log.d(TAG, "dialog弹起监听");
+            }
+        });
+            builder.dismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                Log.d(TAG, "dialog关闭");
+            }
+        });
+        builder.show();
+
+//        调用ASync任务,检查新版本
+        CheckVersion checkVersion = new CheckVersion(context);
+        checkVersion.execute(getActivity());
+
     }
 
     /**
@@ -206,7 +242,7 @@ public class SettingFragment extends BaseFragment {
         //获取Snackbar显示的View对象
         View snackBarView = snackbar.getView();
 
-        TextView snackbarMsgTextView =  snackBarView.findViewById(R.id.snackbar_text);
+        TextView snackbarMsgTextView = snackBarView.findViewById(R.id.snackbar_text);
 
 //        设置Snackbar提示信息文字的颜色
         snackbarMsgTextView.setTextColor(Color.BLACK);

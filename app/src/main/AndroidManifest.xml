@@ -25,7 +25,7 @@
         android:label="@string/app_name"
         android:largeHeap="true"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme.NoActionBar">
 
         <!--开发用手机分辨率,如果使用AutoLayoutActivity来做自适应,需要此配置,否则会报错-->
         <meta-data android:name="design_width" android:value="1080" />
@@ -63,6 +63,7 @@
             android:label="@string/app_intro" />
 
         <activity android:name=".activity.FeedBackActivity" />
+        <activity android:name=".activity.BoardSettingActivity" />
 
     </application>
 

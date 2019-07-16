@@ -42,6 +42,9 @@ import cn.kanyun.geekboard.sync.CheckInit;
  * 然后通过事务控制隐藏和显示每一个fragment来达到切换的目的
  * 所以我们需要MainActivity去继承FragmentActivity 而不是传统的AppCompatActivity了
  * 注意：继承的类Fragment一定导入androidx.fragment.app.FragmentActivity;这个包，而不能是其他包下的
+ *
+ * Activity、FragmentActivity和AppCompatActivity的区别
+ * https://www.jianshu.com/p/9d590c478828
  */
 public class MainActivity extends FragmentActivity implements View.OnClickListener {
     RadioGroup radioGroupColour, radioGroupLayout;
@@ -166,7 +169,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 //        radioGroupLayout.setOnCheckedChangeListener(radioGroupOnCheckedChangeListenerLayout);
 
 
-//        LoadPreferences();
 
     }
 
@@ -307,34 +309,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     }
 
 
-    RadioGroup.OnCheckedChangeListener radioGroupOnCheckedChangeListenerColour =
-            new RadioGroup.OnCheckedChangeListener() {
-
-                @Override
-                public void onCheckedChanged(RadioGroup group, int checkedId) {
-
-                    RadioButton checkedRadioButtonColour = (RadioButton) radioGroupColour.findViewById(checkedId);
-                    int checkedIndexColour = radioGroupColour.indexOfChild(checkedRadioButtonColour);
-                    SavePreferences(Constant.BOARD_LAYOUT, checkedIndexColour);
-
-                }
-            };
-
-    RadioGroup.OnCheckedChangeListener radioGroupOnCheckedChangeListenerLayout =
-            new RadioGroup.OnCheckedChangeListener() {
-
-                @Override
-                public void onCheckedChanged(RadioGroup group, int checkedId) {
-
-
-                    RadioButton checkedRadioButtonLayout = (RadioButton) radioGroupLayout.findViewById(checkedId);
-                    int checkedIndexLayout = radioGroupLayout.indexOfChild(checkedRadioButtonLayout);
-                    SavePreferences(Constant.BOARD_LAYOUT, checkedIndexLayout);
-
-                }
-            };
-
-
     /**
      * 保存配置到配置文件
      *
@@ -423,57 +397,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
     }
 
-    /**
-     * 加载键盘配置
-     */
-    private void LoadPreferences() {
-        SharedPreferences sharedPreferences = getSharedPreferences("MY_SHARED_PREF", MODE_PRIVATE);
-
-        int savedRadioColour = sharedPreferences.getInt(Constant.BOARD_SKIN, 0);
-        RadioButton savedCheckedRadioButtonColour = (RadioButton) radioGroupColour.getChildAt(savedRadioColour);
-        savedCheckedRadioButtonColour.setChecked(true);
-
-        int savedRadioLayout = sharedPreferences.getInt(Constant.BOARD_LAYOUT, 0);
-        RadioButton savedCheckedRadioButtonLayout = (RadioButton) radioGroupLayout.getChildAt(savedRadioLayout);
-        savedCheckedRadioButtonLayout.setChecked(true);
-
-        int setPreview = sharedPreferences.getInt("PREVIEW", 0);
-        int setSound = sharedPreferences.getInt("SOUND", 1);
-        int setVibrator = sharedPreferences.getInt("VIBRATE", 1);
-        int setSize = sharedPreferences.getInt("SIZE", 2);
-
-        int setArrow = sharedPreferences.getInt("ARROW_ROW", 1);
-        CheckBox preview = findViewById(R.id.check_preview);
-
-        CheckBox sound = findViewById(R.id.check_sound);
-//      按键振动
-        CheckBox vibrate = findViewById(R.id.check_vibrator);
-        CheckBox noArrow = findViewById(R.id.check_no_arrow);
-        SeekBar size = findViewById(R.id.size_seekbar);
-
-        if (setPreview == 1)
-            preview.setChecked(true);
-        else
-            preview.setChecked(false);
-
-        if (setSound == 1)
-            sound.setChecked(true);
-        else
-            sound.setChecked(false);
-
-        if (setVibrator == 1)
-            vibrate.setChecked(true);
-        else
-            vibrate.setChecked(false);
-
-        if (setArrow == 1)
-            noArrow.setChecked(false);
-        else
-            noArrow.setChecked(true);
-
-        size.setProgress(setSize);
-
-    }
 
 
     /**

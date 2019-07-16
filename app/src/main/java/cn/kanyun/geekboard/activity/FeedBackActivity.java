@@ -58,6 +58,9 @@ public class FeedBackActivity extends AppCompatActivity {
     private static final String TAG = "FeedBackActivity";
     /**
      * 使用@BindView注解的字段,不能用private,static修饰
+     * 同时需要注意的是：被注解的变量的类型要与layout.xml中配置的一致
+     * 否则会报错,判断方法,可以在layout.xml中 找到对应组件,点进去看看使用的是
+     * 哪个包下的哪个组件,再在该注解下点击变量类型看看是哪个包下的组件,判断他们是否一致
      */
     @BindView(R.id.feedback)
     EditText feedback;

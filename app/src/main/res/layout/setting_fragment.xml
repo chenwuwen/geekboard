@@ -1,6 +1,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/setting"
-    android:background="#d8e3e7"
+    android:background="#F0EFF5"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">

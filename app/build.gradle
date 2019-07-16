@@ -274,6 +274,11 @@ dependencies {
 //    ImageLoad 用于加载图片
     implementation 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
 
+//    这是一个开源的dialog组件(这个组件的2.x/3.x版本只适用于Kotlin)
+    implementation 'com.afollestad.material-dialogs:core:0.9.6.0'
+    implementation 'com.afollestad.material-dialogs:commons:0.9.6.0'
+
+
 }
 
 

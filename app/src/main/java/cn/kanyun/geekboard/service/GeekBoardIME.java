@@ -22,6 +22,9 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 
+import cn.kanyun.geekboard.entity.Constant;
+import cn.kanyun.geekboard.util.SPUtils;
+
 import static android.view.KeyEvent.KEYCODE_CTRL_LEFT;
 import static android.view.KeyEvent.KEYCODE_SHIFT_LEFT;
 import static android.view.KeyEvent.META_CTRL_ON;
@@ -32,7 +35,13 @@ public class GeekBoardIME extends InputMethodService
     private KeyboardView kv;
     private Keyboard keyboard;
     EditorInfo sEditorInfo;
+    /**
+     * 震动开关
+     */
     private boolean vibratorOn;
+    /**
+     * 按键声音开关
+     */
     private boolean soundOn;
     private boolean shiftLock = false;
     private boolean shift = false;
@@ -607,7 +616,7 @@ public class GeekBoardIME extends InputMethodService
     @Override
     public View onCreateInputView() {
 
-        SharedPreferences pre = getSharedPreferences("MY_SHARED_PREF", MODE_PRIVATE);
+        SharedPreferences pre = getSharedPreferences(SPUtils.FILE_NAME, MODE_PRIVATE);
         //键盘皮肤
         switch (pre.getInt("RADIO_INDEX_COLOUR", 0)) {
             case 0:
@@ -638,15 +647,19 @@ public class GeekBoardIME extends InputMethodService
         if (pre.getInt("PREVIEW", 0) == 1) {
             kv.setPreviewEnabled(true);
         } else kv.setPreviewEnabled(false);
-//声音
-        if (pre.getInt("SOUND", 1) == 1) {
+//         声音
+        if (pre.getString(Constant.BOARD_SOUND, "关闭") .equals("开启") ) {
             soundOn = true;
-        } else soundOn = false;
+        } else {
+            soundOn = false;
+        }
 
 //        震动
-        if (pre.getInt("VIBRATE", 1) == 1) {
+        if (pre.getString(Constant.BOARD_SHOCK, "关闭").equals("开启")) {
             vibratorOn = true;
-        } else vibratorOn = false;
+        } else {
+            vibratorOn = false;
+        }
 
         shift = false;
         ctrl = false;
