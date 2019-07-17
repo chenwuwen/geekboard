@@ -51,6 +51,18 @@ android {
 //        当使用Lombok时需要再次声明该配置(应当是当使用一些插件此插件会在编译期起作用时,声明该配置)
         javaCompileOptions { annotationProcessorOptions { includeCompileClasspath = true } }
 
+
+//        安卓真机或者模拟器运行安装应用时提示 Failure [INSTALL_FAILED_NO_MATCHING_ABIS: Failed to extract native libraries, res=-113]
+//        这个错误提示, 是由于使用了native libraries 。该native libraries 不支持当前的cpu的体系结构。
+//        解决办法： 现在安卓模拟器的 CPU/ABI 一般有三种类型：INTEL X86；ARM；MIPS .既然用 INTEL X86 出现 INSTALL_FAILED_NO_MATCHING_ABIS 的错误，那就改用 ARM 的吧。
+        splits {
+            abi {
+                enable true
+                reset()
+                include 'x86', 'armeabi-v7a','x86_64'
+                universalApk true
+            }
+        }
     }
 
 //    默认生成的release版apk名为app-release.apk

@@ -67,9 +67,17 @@ public class BoardSettingActivity extends AppCompatActivity implements View.OnCl
     }};
 
     /**
+     * 快捷键开关列表
+     */
+    private static List<String> boardQuickItems = new ArrayList() {{
+        add("关闭");
+        add("开启");
+    }};
+
+    /**
      * 设置项缓存
      */
-    private static Map<String, String> config = new HashMap<>(4);
+    private static Map<String, String> config = new HashMap<>(5);
 
     Context context;
 
@@ -100,6 +108,12 @@ public class BoardSettingActivity extends AppCompatActivity implements View.OnCl
     @BindView(R.id.board_shock_set)
     LinearLayout boardShockSet;
 
+    /**
+     * 快捷键开关设置
+     */
+    @BindView(R.id.board_quick_set)
+    LinearLayout boardQuickSet;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -125,6 +139,7 @@ public class BoardSettingActivity extends AppCompatActivity implements View.OnCl
         boardShockSet.setOnClickListener(this);
         boardBubbleSet.setOnClickListener(this);
         boardSoundSet.setOnClickListener(this);
+        boardQuickSet.setOnClickListener(this);
     }
 
 
@@ -138,12 +153,14 @@ public class BoardSettingActivity extends AppCompatActivity implements View.OnCl
         String board_sound = (String) SPUtils.get(context, Constant.BOARD_SOUND, "关闭");
         String board_shock = (String) SPUtils.get(context, Constant.BOARD_SHOCK, "关闭");
         String board_bubble = (String) SPUtils.get(context, Constant.BOARD_BUBBLE, "关闭");
+        String board_quick = (String) SPUtils.get(context, Constant.BOARD_QUICK, "关闭");
 
 //        将配置放到缓存中
         config.put(Constant.BOARD_LAYOUT, board_layout);
         config.put(Constant.BOARD_SOUND, board_sound);
         config.put(Constant.BOARD_SHOCK, board_shock);
         config.put(Constant.BOARD_BUBBLE, board_bubble);
+        config.put(Constant.BOARD_QUICK, board_quick);
 
     }
 
@@ -171,6 +188,10 @@ public class BoardSettingActivity extends AppCompatActivity implements View.OnCl
 //        设置布局当前状态
         TextView layoutText = (TextView) boardLayoutSet.getChildAt(1);
         layoutText.setText(config.get(Constant.BOARD_LAYOUT));
+
+//        设置快捷键当前状态
+        TextView quickText = (TextView) boardQuickSet.getChildAt(1);
+        quickText.setText(config.get(Constant.BOARD_QUICK));
     }
 
     @Override
@@ -191,12 +212,17 @@ public class BoardSettingActivity extends AppCompatActivity implements View.OnCl
             case R.id.board_sound_set:
                 showBoardSoundSetDialog(v);
                 break;
+            case R.id.board_quick_set:
+                showBoardQuickDialog(v);
+                break;
             default:
                 showBoardShockSetDialog(v);
 
 
         }
     }
+
+
 
     /**
      * 按键气泡设置
@@ -350,6 +376,43 @@ public class BoardSettingActivity extends AppCompatActivity implements View.OnCl
                     }
                 });
         builder.show();
+    }
+
+    /**
+     * 快捷键开关设置
+     * @param v
+     */
+    private void showBoardQuickDialog(View view) {
+//        获取缓存中的对象的索引值,在dialog中的radio组中进行预选择
+        int index = 0;
+        if (boardQuickItems.contains(config.get(Constant.BOARD_QUICK))) {
+            index = boardQuickItems.indexOf(config.get(Constant.BOARD_QUICK));
+        }
+
+        MaterialDialog.Builder builder = new MaterialDialog.Builder(this)
+                .title("快捷键设置")
+//                title颜色
+                .titleColor(Color.WHITE)
+//                radio组文字颜色
+                .itemsColor(Color.WHITE)
+//                 radio组小圆点颜色
+                .choiceWidgetColor(ColorStateList.valueOf(Color.WHITE))
+                .backgroundColor(Color.parseColor("#4B4B4B"))
+                .positiveText("确认")
+                .negativeText("取消")
+                .items(boardQuickItems)
+//                该方法第一个参数,表示预选元素,如果不设置预选,则传入-1,否则传入大于-1的元素,那么在dialog在打开后会自动勾选一个选项
+                .itemsCallbackSingleChoice(index, new MaterialDialog.ListCallbackSingleChoice() {
+                    //                    点击dialog确定按钮后回调方法
+                    @Override
+                    public boolean onSelection(MaterialDialog dialog, View itemView, int which, CharSequence text) {
+                        Log.d(TAG, "用户点击了Radio中的某一项Item,且点击了确定按钮时,选中的值为：" + text);
+                        modifyConfiguration(Constant.BOARD_QUICK, text.toString());
+                        return true;
+                    }
+                });
+        builder.show();
+
     }
 
     /**

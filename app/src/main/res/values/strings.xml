@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">GeekBoard</string>
-    <string name="geekboard_ime">GeekBoard IME</string>
+    <string name="show_board_list_name">GeekBoard IME</string>
     <string name="subtype_en_US">GeekBoard-%s</string>
     <string name="subtype_fr_FR">GeekBoard-%s</string>
     <string name="printf">printf(\"\");</string>

@@ -115,6 +115,11 @@ public class CheckVersion extends AsyncTask<Activity, Void, Void> {
                         Log.i(TAG, "检测新版本成功");
                         setResponseText(response.body());
                     }
+
+                    @Override
+                    public void onError(Response<String> response) {
+                        super.onError(response);
+                    }
                 });
         return null;
     }

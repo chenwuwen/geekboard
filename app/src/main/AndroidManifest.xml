@@ -31,9 +31,12 @@
         <meta-data android:name="design_width" android:value="1080" />
         <meta-data android:name="design_height" android:value="1920" />
 
+        <!--定义服务-->
+        <!--需要注意的是name需要加上包名(只需要精确到应用名下一级即可,如这里的.service.GeekBoardIME ,它是不带cn.kanyun.geekboard的)-->
+        <!--label: 显示在键盘选择列表的名称-->
         <service
-            android:name=".GeekBoardIME"
-            android:label="@string/geekboard_ime"
+            android:name=".service.GeekBoardIME"
+            android:label="@string/show_board_list_name"
             android:permission="android.permission.BIND_INPUT_METHOD">
             <meta-data
                 android:name="android.view.im"
@@ -64,6 +67,7 @@
 
         <activity android:name=".activity.FeedBackActivity" />
         <activity android:name=".activity.BoardSettingActivity" />
+        <activity android:name=".activity.VerificationActivity" />
 
     </application>
 

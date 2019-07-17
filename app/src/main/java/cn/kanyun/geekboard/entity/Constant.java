@@ -38,6 +38,11 @@ public class Constant {
      */
     public static final String BOARD_BUBBLE= "BOARD_BUBBLE";
 
+    /**
+     * 快捷设置
+     */
+    public static final String BOARD_QUICK= "BOARD_QUICK";
+
 
 
 

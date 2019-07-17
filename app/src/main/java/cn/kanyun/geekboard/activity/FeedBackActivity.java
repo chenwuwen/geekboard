@@ -61,6 +61,9 @@ public class FeedBackActivity extends AppCompatActivity {
      * 同时需要注意的是：被注解的变量的类型要与layout.xml中配置的一致
      * 否则会报错,判断方法,可以在layout.xml中 找到对应组件,点进去看看使用的是
      * 哪个包下的哪个组件,再在该注解下点击变量类型看看是哪个包下的组件,判断他们是否一致
+     *
+     * 同时在使用该注解时,还需要在onCreate方法中添加 ButterKnife.bind(this);
+     * 并且注意添加的位置
      */
     @BindView(R.id.feedback)
     EditText feedback;
@@ -73,6 +76,9 @@ public class FeedBackActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_feed_back);
         context = this;
+
+//        绑定Activity
+//        需要注意这个方法的位置,一定要在setContentView()方法后,否则上面@BindView() 定义的变量会提示找不到
         ButterKnife.bind(this);
 
     }

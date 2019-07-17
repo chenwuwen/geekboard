@@ -165,7 +165,7 @@ public class SkinFragment extends BaseFragment {
         skin1.setPreviewImg(bm);
 
         Skin skin2 = new Skin();
-        skin2.setName("纯黑");
+        skin2.setName("material白");
         skin2.setPreviewImg(bm);
 
         Skin skin3 = new Skin();
@@ -180,42 +180,16 @@ public class SkinFragment extends BaseFragment {
         skin5.setName("紫色");
         skin5.setPreviewImg(bm);
 
-
-        Skin skin7 = new Skin();
-        skin7.setName("紫色");
-        skin7.setPreviewImg(bm);
-
-        Skin skin8 = new Skin();
-        skin8.setName("紫色");
-        skin8.setPreviewImg(bm);
-
-        Skin skin9 = new Skin();
-        skin9.setName("紫色");
-        skin9.setPreviewImg(bm);
-
-        Skin skin10 = new Skin();
-        skin10.setName("紫色");
-        skin10.setPreviewImg(bm);
-
-        Skin skin11 = new Skin();
-        skin11.setName("紫色");
-        skin11.setPreviewImg(bm);
-
-        Skin skin12 = new Skin();
-        skin12.setName("紫色");
-        skin12.setPreviewImg(bm);
+        Skin skin6 = new Skin();
+        skin6.setName("纯黑");
+        skin6.setPreviewImg(bm);
 
         list.add(skin1);
         list.add(skin2);
         list.add(skin3);
         list.add(skin4);
         list.add(skin5);
-        list.add(skin7);
-        list.add(skin8);
-        list.add(skin9);
-        list.add(skin10);
-        list.add(skin11);
-        list.add(skin12);
+        list.add(skin6);
 
     }
 }

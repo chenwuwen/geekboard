@@ -149,6 +149,34 @@
 
         </LinearLayout>
 
+        <LinearLayout
+            android:id="@+id/board_quick_set"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#01000000"
+            android:orientation="vertical"
+            android:clickable="true"
+            android:paddingLeft="20dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="快捷键设置"
+                android:textAlignment="textStart"
+                android:textColor="#ffffff"
+                android:textSize="15dp"
+                app:tabRippleColor="@android:color/transparent" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="textStart"
+                android:textColor="#c1c1c1"
+                android:textSize="10dp"
+                tools:text="开启" />
+
+        </LinearLayout>
+
     </LinearLayout>
 
 

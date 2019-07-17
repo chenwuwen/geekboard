@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--纯黑皮肤-->
 <android.inputmethodservice.KeyboardView
 
     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -6,9 +7,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_alignParentBottom="true"
-    android:keyPreviewOffset="40dp"
-    android:keyPreviewLayout="@layout/preview0"
-    android:background="@drawable/dark_263238"
-    android:keyBackground="@drawable/dark_263238"
-    android:popupLayout="@layout/popup0"
+    android:keyPreviewLayout="@layout/preview2"
+    android:keyBackground="@drawable/black_000000"
+    android:background="@drawable/black_000000"
+    android:popupLayout="@layout/popup2"
+
     />

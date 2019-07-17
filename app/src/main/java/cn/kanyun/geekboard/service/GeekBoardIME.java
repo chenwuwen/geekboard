@@ -1,4 +1,4 @@
-package cn.kanyun.geekboard;
+package cn.kanyun.geekboard.service;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -22,6 +22,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 
+import cn.kanyun.geekboard.R;
 import cn.kanyun.geekboard.entity.Constant;
 import cn.kanyun.geekboard.util.SPUtils;
 
@@ -32,13 +33,28 @@ import static android.view.KeyEvent.META_SHIFT_ON;
 
 public class GeekBoardIME extends InputMethodService
         implements KeyboardView.OnKeyboardActionListener {
+    /**
+     * 键盘视图类
+     * 检测按键和触摸动作
+     * 显示虚拟按键视图,处理呈现的按键并检测按键和触摸动作
+     * 其包含一个嵌套类:KeyboardView.OnKeyboardActionListener
+     */
     private KeyboardView kv;
+
+
+    /**
+     *键盘按钮配置
+     * 注意是：按钮[按键]
+     */
     private Keyboard keyboard;
+
     EditorInfo sEditorInfo;
+
     /**
      * 震动开关
      */
     private boolean vibratorOn;
+
     /**
      * 按键声音开关
      */
@@ -49,9 +65,7 @@ public class GeekBoardIME extends InputMethodService
     private int mKeyboardState = R.integer.keyboard_normal;
     private int mLayout, mToprow, mSize;
     private Timer timerLongPress = null;
-    private boolean switchedKeyboard=false;
-
-
+    private boolean switchedKeyboard = false;
 
 
     public void onKeyCtrl(int code, InputConnection ic) {
@@ -327,14 +341,14 @@ public class GeekBoardIME extends InputMethodService
             case -15:
                 if (kv != null) {
                     if (mKeyboardState == R.integer.keyboard_normal) {
-                        //change to symbol keyboard
+                        //change to symbol keyboard_material_dark
                         Keyboard symbolKeyboard = chooseKB(mLayout, mToprow, mSize, R.integer.keyboard_sym);
 
                         kv.setKeyboard(symbolKeyboard);
 
                         mKeyboardState = R.integer.keyboard_sym;
                     } else if (mKeyboardState == R.integer.keyboard_sym) {
-                        //change to normal keyboard
+                        //change to normal keyboard_material_dark
                         Keyboard normalKeyboard = chooseKB(mLayout, mToprow, mSize, R.integer.keyboard_normal);
 
                         kv.setKeyboard(normalKeyboard);
@@ -423,11 +437,11 @@ public class GeekBoardIME extends InputMethodService
                     }
 
                     shiftKeyUpdateView();
-                } else{
-                    if(!switchedKeyboard) {
+                } else {
+                    if (!switchedKeyboard) {
                         ic.commitText(String.valueOf(code), 1);
                     }
-                    switchedKeyboard=false;
+                    switchedKeyboard = false;
                 }
         }
 
@@ -435,12 +449,12 @@ public class GeekBoardIME extends InputMethodService
 
     @Override
     public void onPress(final int primaryCode) {
-        
+
         if (soundOn) {
 //            声音控制
-            MediaPlayer keypressSoundPlayer = MediaPlayer.create(this, R.raw.keypress_sound);
-            keypressSoundPlayer.start();
-            keypressSoundPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            MediaPlayer keyPressSoundPlayer = MediaPlayer.create(this, R.raw.keypress_sound);
+            keyPressSoundPlayer.start();
+            keyPressSoundPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
                 public void onCompletion(MediaPlayer mp) {
                     mp.release();
                 }
@@ -449,7 +463,7 @@ public class GeekBoardIME extends InputMethodService
         if (vibratorOn) {
 //            震动控制
             Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-            if(vibrator!=null)
+            if (vibrator != null)
                 vibrator.vibrate(40);
         }
         if (timerLongPress != null)
@@ -511,13 +525,13 @@ public class GeekBoardIME extends InputMethodService
         if (keyCode == 32) {
             InputMethodManager imm = (InputMethodManager)
                     getSystemService(Context.INPUT_METHOD_SERVICE);
-            if(imm!=null)
+            if (imm != null)
                 imm.showInputMethodPicker();
-            switchedKeyboard=true;
+            switchedKeyboard = true;
         }
 
         Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-        if(vibrator!=null)
+        if (vibrator != null)
             vibrator.vibrate(50);
     }
 
@@ -611,44 +625,48 @@ public class GeekBoardIME extends InputMethodService
 
     /**
      * 该函数中创建键盘视图
+     *
      * @return
      */
     @Override
     public View onCreateInputView() {
 
         SharedPreferences pre = getSharedPreferences(SPUtils.FILE_NAME, MODE_PRIVATE);
-        //键盘皮肤
-        switch (pre.getInt("RADIO_INDEX_COLOUR", 0)) {
-            case 0:
-                kv = (KeyboardView) getLayoutInflater().inflate(R.layout.keyboard, null);
+//        键盘皮肤
+        switch (pre.getString(Constant.BOARD_SKIN, "material黑")) {
+            case "material黑":
+                kv = (KeyboardView) getLayoutInflater().inflate(R.layout.keyboard_material_dark, null);
                 break;
-            case 1:
-                kv = (KeyboardView) getLayoutInflater().inflate(R.layout.keyboard1, null);
+            case "material白":
+                kv = (KeyboardView) getLayoutInflater().inflate(R.layout.keyboard_material_light, null);
                 break;
-            case 2:
-                kv = (KeyboardView) getLayoutInflater().inflate(R.layout.keyboard2, null);
+            case "纯黑":
+                kv = (KeyboardView) getLayoutInflater().inflate(R.layout.keyboard_pure_black, null);
                 break;
-            case 3:
-                kv = (KeyboardView) getLayoutInflater().inflate(R.layout.keyboard3, null);
+            case "纯白":
+                kv = (KeyboardView) getLayoutInflater().inflate(R.layout.keyboard_pure_white, null);
                 break;
-            case 4:
-                kv = (KeyboardView) getLayoutInflater().inflate(R.layout.keyboard4, null);
+            case "蓝":
+                kv = (KeyboardView) getLayoutInflater().inflate(R.layout.keyboard_blue, null);
                 break;
-            case 5:
-                kv = (KeyboardView) getLayoutInflater().inflate(R.layout.keyboard5, null);
+            case "紫":
+                kv = (KeyboardView) getLayoutInflater().inflate(R.layout.keyboard_purple, null);
                 break;
 
             default:
-                kv = (KeyboardView) getLayoutInflater().inflate(R.layout.keyboard, null);
+                kv = (KeyboardView) getLayoutInflater().inflate(R.layout.keyboard_material_dark, null);
                 break;
 
         }
 
-        if (pre.getInt("PREVIEW", 0) == 1) {
+//        按键气泡
+        if (pre.getString(Constant.BOARD_BUBBLE, "关闭").equals("开启")) {
             kv.setPreviewEnabled(true);
-        } else kv.setPreviewEnabled(false);
+        } else {
+            kv.setPreviewEnabled(false);
+        }
 //         声音
-        if (pre.getString(Constant.BOARD_SOUND, "关闭") .equals("开启") ) {
+        if (pre.getString(Constant.BOARD_SOUND, "关闭").equals("开启")) {
             soundOn = true;
         } else {
             soundOn = false;
@@ -664,9 +682,16 @@ public class GeekBoardIME extends InputMethodService
         shift = false;
         ctrl = false;
 
+//        键盘布局
         mLayout = pre.getInt("RADIO_INDEX_LAYOUT", 0);
+//        键盘尺寸
         mSize = pre.getInt("SIZE", 2);
-        mToprow = pre.getInt("ARROW_ROW", 1);
+//        快捷键
+        if (pre.getString(Constant.BOARD_QUICK, "关闭").equals("开启")) {
+            mToprow = 0;
+        }else {
+            mToprow = 1;
+        }
         mKeyboardState = R.integer.keyboard_normal;
         //reset to normal
 
@@ -733,13 +758,15 @@ public class GeekBoardIME extends InputMethodService
         if (ctrl && shift) {
             ic.sendKeyEvent(new KeyEvent(now2, now2, KeyEvent.ACTION_DOWN, KEYCODE_CTRL_LEFT, 0, META_SHIFT_ON | META_CTRL_ON));
             moveSelection(keyCode);
-            ic.sendKeyEvent(new KeyEvent(now2 , now2, KeyEvent.ACTION_UP, KEYCODE_CTRL_LEFT, 0, META_SHIFT_ON | META_CTRL_ON));
+            ic.sendKeyEvent(new KeyEvent(now2, now2, KeyEvent.ACTION_UP, KEYCODE_CTRL_LEFT, 0, META_SHIFT_ON | META_CTRL_ON));
 
         } else if (shift)
             moveSelection(keyCode);
         else if (ctrl)
-            ic.sendKeyEvent(new KeyEvent(now2, now2, KeyEvent.ACTION_DOWN, keyCode, 0,  META_CTRL_ON));
-        else {sendDownUpKeyEvents(keyCode);}
+            ic.sendKeyEvent(new KeyEvent(now2, now2, KeyEvent.ACTION_DOWN, keyCode, 0, META_CTRL_ON));
+        else {
+            sendDownUpKeyEvents(keyCode);
+        }
     }
 
     private void moveSelection(int keyCode) {
@@ -753,7 +780,7 @@ public class GeekBoardIME extends InputMethodService
             ic.sendKeyEvent(new KeyEvent(now2, now2, KeyEvent.ACTION_DOWN, keyCode, 0, META_SHIFT_ON | META_CTRL_ON));
 
         else
-            ic.sendKeyEvent(new KeyEvent(now2, now2 , KeyEvent.ACTION_DOWN, keyCode, 0, META_SHIFT_ON));
+            ic.sendKeyEvent(new KeyEvent(now2, now2, KeyEvent.ACTION_DOWN, keyCode, 0, META_SHIFT_ON));
         ic.sendKeyEvent(new KeyEvent(now2, now2, KeyEvent.ACTION_UP, KEYCODE_SHIFT_LEFT, 0, META_SHIFT_ON | META_CTRL_ON));
 
 

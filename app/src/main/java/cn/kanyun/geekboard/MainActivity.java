@@ -323,44 +323,20 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     }
 
 
+    /**
+     * 显示输入法菜单列表
+     * 即 让用户选择使用哪个输入法 列表
+     * @param v
+     */
     public void changeButton(View v) {
 
         InputMethodManager imm = (InputMethodManager)
                 getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.showInputMethodPicker();
 
-//        Button enable = (Button) findViewById(R.id.enable_button);
-//        enable.setText("Change Keyboard");
-//
-//        String id = Settings.Secure.getString(
-//                getContentResolver(),
-//                Settings.Secure.DEFAULT_INPUT_METHOD
-//        );
-//
-//        if(!(id.equals("cn.kanyun.geekboard/.GeekBoardIME"))){
-//            InputMethodManager imm = (InputMethodManager)
-//                    getSystemService(Context.INPUT_METHOD_SERVICE);
-//            imm.showInputMethodPicker();
-//        }
-
     }
 
-    public void previewToggle(View v) {
-        CheckBox preview = findViewById(R.id.check_preview);
-        if (preview.isChecked()) {
-            SavePreferences("PREVIEW", 1);
-        } else SavePreferences("PREVIEW", 0);
-        closeKeyboard(v);
 
-    }
-
-    public void soundToggle(View v) {
-        CheckBox preview = findViewById(R.id.check_sound);
-        if (preview.isChecked()) {
-            SavePreferences("SOUND", 1);
-        } else SavePreferences("SOUND", 0);
-        closeKeyboard(v);
-    }
 
     /**
      * 振动开关
@@ -385,7 +361,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
 
     /**
-     * 关闭键盘布局
+     * 从窗口关闭软键盘
      *
      * @param v
      */
