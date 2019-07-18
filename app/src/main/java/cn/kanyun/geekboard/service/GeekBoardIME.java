@@ -43,7 +43,7 @@ public class GeekBoardIME extends InputMethodService
 
 
     /**
-     *键盘按钮配置
+     * 键盘按钮配置
      * 注意是：按钮[按键]
      */
     private Keyboard keyboard;
@@ -689,7 +689,7 @@ public class GeekBoardIME extends InputMethodService
 //        快捷键
         if (pre.getString(Constant.BOARD_QUICK, "关闭").equals("开启")) {
             mToprow = 0;
-        }else {
+        } else {
             mToprow = 1;
         }
         mKeyboardState = R.integer.keyboard_normal;

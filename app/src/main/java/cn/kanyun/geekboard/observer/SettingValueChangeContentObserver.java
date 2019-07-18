@@ -64,7 +64,9 @@ public class SettingValueChangeContentObserver extends ContentObserver {
 //                android.os.Message是定义一个Message包含必要的描述和属性数据，并且此对象可以被发送给android.os.Handler处理。
 //                属性字段：arg1、arg2、what、obj、replyTo等；其中arg1和arg2是用来存放整型数据的；what是用来保存消息标示的；obj是Object类型的任意对象；replyTo是消息管理器，会关联到一个handler，handler就是处理其中的消息。
 //                通常对Message对象不是直接new出来的，只要调用handler中的obtainMessage方法来直接获得Message对象，也就是说这样创建message可以减少内存开销
+//                获取消息
                 Message message = handler.obtainMessage(1);
+//                发送消息(这个时候注册了这个内容监听者的类(本例中指的是VerificationActivity类)中的Handler类型字段中的handleMessage()方法将会执行)
                 handler.dispatchMessage(message);
             }
         } else {
