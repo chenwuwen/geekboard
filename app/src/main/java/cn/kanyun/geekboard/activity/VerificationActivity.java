@@ -1,5 +1,6 @@
 package cn.kanyun.geekboard.activity;
 
+import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -21,6 +22,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Stream;
 
 import butterknife.BindView;
@@ -90,6 +92,8 @@ public class VerificationActivity extends AppCompatActivity {
      */
     private LocalBroadcastManager localBroadcastManager;
 
+
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -105,7 +109,12 @@ public class VerificationActivity extends AppCompatActivity {
 
 //        注册输入法激活观察者 (handler为构建UI线程的handler)
         settingValueChangeContentObserver = new SettingValueChangeContentObserver(handler, context);
-        getContentResolver().registerContentObserver(Settings.Secure.getUriFor("enabled_input_methods"), false, settingValueChangeContentObserver);
+//        第一个参数是Uri:表示我去监听哪个Uri的内容改变
+//        第二个参数：为 false 表示精确匹配，即只匹配该 Uri。为 true 表示可以同时匹配其派生的 Uri
+//        第三个参数：ContentObserver 的实例
+//        可以注册多个Uri(每行一个)
+        getContentResolver().registerContentObserver(Settings.Secure.getUriFor(Settings.Secure.ENABLED_INPUT_METHODS), false, settingValueChangeContentObserver);
+        getContentResolver().registerContentObserver(Settings.Secure.getUriFor(Settings.Secure.DEFAULT_INPUT_METHOD), false, settingValueChangeContentObserver);
 
     }
 
@@ -114,6 +123,7 @@ public class VerificationActivity extends AppCompatActivity {
         super.onStart();
         inputMethodChangeReceiver = new InputMethodChangeReceiver();
         intentFilter = new IntentFilter();
+//        这个方法的参数是想要接收的广播类型值
 //        android.intent.action.INPUT_METHOD_CHANGED:在任何应用中,改变输入法的时候被调用
         intentFilter.addAction("android.intent.action.INPUT_METHOD_CHANGED");
 //        intentFilter.addCategory();
@@ -125,10 +135,10 @@ public class VerificationActivity extends AppCompatActivity {
 //        本地广播:只能在本地应用程序中发送与接收广播，可以起到保护数据安全的作用
         localBroadcastManager.registerReceiver(inputMethodChangeReceiver, intentFilter);
 
-//        指明要发送的广播值
+//      指明要发送的广播值
         Intent sendIntent = new Intent("键盘改变了");
 //        发送标准广播
-        localBroadcastManager.sendBroadcast(sendIntent);
+        sendBroadcast(sendIntent);
 
     }
 
@@ -149,7 +159,7 @@ public class VerificationActivity extends AppCompatActivity {
             enableButtonIntro.setEnabled(false);
 //            判断当前使用的输入法是否是本输入法
             String curInputMethodId = Settings.Secure.getString(VerificationActivity.this.getContentResolver(), Settings.Secure.DEFAULT_INPUT_METHOD);
-            Log.d(TAG, "当前使用的输入法是：" + curInputMethodId);
+            Log.d(TAG, "VerificationActivity的onResume()方法表示->当前使用的输入法是：" + curInputMethodId);
             if (curInputMethodId.equals(selfKeyBoardServiceId)) {
                 switchButtonIntro.setEnabled(false);
                 Intent intent = new Intent(this, MainActivity.class);
@@ -185,11 +195,13 @@ public class VerificationActivity extends AppCompatActivity {
         InputMethodManager imm = (InputMethodManager)
                 getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.showInputMethodPicker();
+
     }
 
 
     @Override
     protected void onDestroy() {
+        Log.d(TAG, "onDestroy方法执行");
         super.onDestroy();
 //        需要注意的是，动态注册的广播接收器一定要注销，在onDestroy方法中调用unregisterReceiver(recevier);
         localBroadcastManager.unregisterReceiver(inputMethodChangeReceiver);
@@ -204,12 +216,19 @@ public class VerificationActivity extends AppCompatActivity {
      * 非UI线程更新UI时，报错SecurityException
      */
     private Handler handler = new Handler() {
+//        能走这个方法就表示,已经勾选了当前输入法,可以直接做一些事情了,因为我在监听者那写的是,如果符合就返回Message,否则什么都不做
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             Log.d(TAG, "内容观察者返回结果是：" + msg);
+            switchButtonIntro.setEnabled(false);
+//                跳转到MainActivity
+                Intent intent = new Intent(context, MainActivity.class);
+                startActivity(intent);
+
         }
     };
+
 
 }
 

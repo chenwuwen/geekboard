@@ -92,8 +92,13 @@ public class GuideActivity extends AppIntro {
         super.onSkipPressed(currentFragment);
         // 当用户点击“跳过”按钮时做一些事情。
 //        finish();
-        Intent intent = new Intent(context, MainActivity.class);
-        startActivity(intent);
+        if (!verifyBoardUseStatus()) {
+            Intent intent = new Intent(context, VerificationActivity.class);
+            startActivity(intent);
+        } else {
+            Intent intent = new Intent(context, MainActivity.class);
+            startActivity(intent);
+        }
     }
 
     /**

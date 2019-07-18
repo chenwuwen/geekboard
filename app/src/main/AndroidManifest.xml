@@ -31,6 +31,7 @@
         android:label="@string/app_name"
         android:largeHeap="true"
         android:supportsRtl="true"
+        android:enabled="true"
         android:theme="@style/AppTheme.NoActionBar">
 
         <!--开发用手机分辨率,如果使用AutoLayoutActivity来做自适应,需要此配置,否则会报错-->
@@ -45,16 +46,26 @@
             android:name=".service.GeekBoardIME"
             android:label="@string/show_board_list_name"
             android:permission="android.permission.BIND_INPUT_METHOD">
-            <meta-data android:name="android.view.im" android:resource="@xml/input_method" />
 
             <!--静态注册广播接受者,优先级priority取值为 -1000 ~ 1000 -->
             <!--IntentFilter的匹配规则：一个过滤规则中有多个action-->
-            <intent-filter android:priority="100">
+            <intent-filter android:priority="0">
                 <!--自定义键盘放入清单文件,这句话必须添加,否则在激活键盘列表中,找不到该键盘-->
-                <action android:name="android.view.INPUT_METHOD" />
-                <!--<category android:name="android.intent.category.DEFAULT"/>-->
+                <!--https://www.cnblogs.com/dame/p/8085907.html-->
+                <action android:name="android.view.InputMethod" />
+                <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
+
+            <meta-data android:name="android.view.im" android:resource="@xml/input_method" />
         </service>
+
+        <!--android:exported:用于指示该广播接收器是否能够接收来自应用程序外部的消息，如果设置true，则能够接收，如果设置为false，则不能够接收。如果设置为false，这该接收只能接收那些由相同应用程序组件或带有相同用户ID的应用程序所发出的消息-->
+        <!--android:enabled:这个属性用于定义系统是否能够实例化这个广播接收器，如果设置为true，则能够实例化，如果设置为false，则不能被实例化。默认值是true。<application>元素有它自己的enabled属性，这个属性会应用给应用程序的所有组件， 包括广播接收器。<application>和<receiver>元素的这个属性都必须是true，这个广播接收器才能够被启用。如果有一个被设置为false，该广播接收器会被禁止实例化-->
+        <!--<receiver-->
+            <!--android:name=".broadcast.InputMethodChangeReceiver"-->
+            <!--android:enabled="true"-->
+            <!--android:exported="true">-->
+        <!--</receiver>-->
 
         <!--此处配置所有Activity,具体Activity的配置放在intent-filter配置中-->
         <activity

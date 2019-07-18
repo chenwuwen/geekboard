@@ -55,6 +55,7 @@ public class InputMethodChangeReceiver extends BroadcastReceiver {
         boolean isDefault = false;
         try {
             String curInputMethodId = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.DEFAULT_INPUT_METHOD);
+            Log.d(TAG, "广播接受者得到了当前使用的输入法：" + curInputMethodId);
             if (curInputMethodId.equals(VerificationActivity.selfKeyBoardServiceId)){
                 isDefault = true;
             }
