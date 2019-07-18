@@ -4,6 +4,12 @@
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.VIBRATE" />
+    <!--允许程序连接配对过的蓝牙设备-->
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <!--允许程序进行发现和配对新的蓝牙设备-->
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <!--允许访问摄像头进行拍照-->
+    <uses-permission android:name="android.permission.CAMERA" />
     <!--请求网络权限-->
     <uses-permission android:name="android.permission.INTERNET" />
     <!--读取SD卡权限-->
@@ -34,17 +40,19 @@
         <!--定义服务-->
         <!--需要注意的是name需要加上包名(只需要精确到应用名下一级即可,如这里的.service.GeekBoardIME ,它是不带cn.kanyun.geekboard的)-->
         <!--label: 显示在键盘选择列表的名称-->
+        <!--请求了 BIND_INPUT_METHOD 权限来允许服务连接到系统的IME，建立intent filter和metadata-->
         <service
             android:name=".service.GeekBoardIME"
             android:label="@string/show_board_list_name"
             android:permission="android.permission.BIND_INPUT_METHOD">
-            <meta-data
-                android:name="android.view.im"
-                android:resource="@xml/method" />
+            <meta-data android:name="android.view.im" android:resource="@xml/input_method" />
 
-            <intent-filter>
-                <!--自定义键盘放入清单文件-->
-                <action android:name="android.view.InputMethod" />
+            <!--静态注册广播接受者,优先级priority取值为 -1000 ~ 1000 -->
+            <!--IntentFilter的匹配规则：一个过滤规则中有多个action-->
+            <intent-filter android:priority="100">
+                <!--自定义键盘放入清单文件,这句话必须添加,否则在激活键盘列表中,找不到该键盘-->
+                <action android:name="android.view.INPUT_METHOD" />
+                <!--<category android:name="android.intent.category.DEFAULT"/>-->
             </intent-filter>
         </service>
 

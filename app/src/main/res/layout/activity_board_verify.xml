@@ -35,7 +35,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_margin="24dp"
-            android:background="@drawable/intro_button_border"
+            android:background="@drawable/select_verify_button_border"
             android:drawableRight="@drawable/right_arrow"
             android:onClick="enableButtonIntro"
             android:text="第一步  启用GeekBoard"
@@ -47,7 +47,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_margin="24dp"
-            android:background="@drawable/intro_button_border"
+            android:background="@drawable/select_verify_button_border"
             android:drawableRight="@drawable/right_arrow"
             android:onClick="switchButtonIntro"
             android:text="第二步  切换到GeekBoard"
@@ -63,7 +63,7 @@
         android:layout_marginRight="10dp"
         android:text="跳过"
         android:textColor="@color/white"
-        android:background="@drawable/intro_button_border"
+        android:background="@drawable/skip_verify_button_border"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 

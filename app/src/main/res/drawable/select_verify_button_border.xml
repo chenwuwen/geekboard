@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:enterFadeDuration="200" android:exitFadeDuration="200"
+    android:visible="true">
+
+    <!--按钮禁用边框-->
+    <item android:state_enabled="false">
+        <shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle" >
+            <!--内部填充，也就是边框内的填充色-->
+            <solid android:color="#999" />
+            <!--这里是设置边框线的粗细和颜色-->
+            <stroke
+                android:width="3dp"
+                android:color="#999" />
+            <!--圆角的话，里边有参数可以单独设置,如果要圆形边框，那么此处设置的值为被修饰组件长宽的一半,也就是说呗修饰的组件应该是正方形-->
+            <corners android:radius="30dp" />
+            <!--大小-->
+            <size
+                android:width="10dp"
+                android:height="10dp" />
+            <!--内边距-->
+            <padding
+                android:bottom="5dp"
+                android:left="50dp"
+                android:right="50dp"
+                android:top="5dp" />
+        </shape>
+    </item>
+
+
+    <!--按钮正常边框-->
+    <item android:state_enabled="true">
+        <shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle" >
+            <!--内部填充，也就是边框内的填充色-->
+            <solid android:color="#23A0FF" />
+            <!--这里是设置边框线的粗细和颜色-->
+            <stroke
+                android:width="3dp"
+                android:color="#23A0FF" />
+            <!--圆角的话，里边有参数可以单独设置,如果要圆形边框，那么此处设置的值为被修饰组件长宽的一半,也就是说呗修饰的组件应该是正方形-->
+            <corners android:radius="30dp" />
+            <!--大小-->
+            <size
+                android:width="10dp"
+                android:height="10dp" />
+            <!--内边距-->
+            <padding
+                android:bottom="5dp"
+                android:left="50dp"
+                android:right="50dp"
+                android:top="5dp" />
+        </shape>
+    </item>
+</selector>

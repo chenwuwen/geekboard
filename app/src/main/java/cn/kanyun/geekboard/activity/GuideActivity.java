@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 
+import android.provider.Settings;
 import android.view.View;
 import android.view.inputmethod.InputMethodInfo;
 import android.view.inputmethod.InputMethodManager;
@@ -18,6 +19,7 @@ import com.github.paolorotolo.appintro.AppIntroFragment;
 import java.util.List;
 import java.util.stream.Stream;
 
+import cn.kanyun.geekboard.MainActivity;
 import cn.kanyun.geekboard.fragment.GeekBoardIntro;
 import cn.kanyun.geekboard.R;
 
@@ -89,7 +91,9 @@ public class GuideActivity extends AppIntro {
     public void onSkipPressed(Fragment currentFragment) {
         super.onSkipPressed(currentFragment);
         // 当用户点击“跳过”按钮时做一些事情。
-        finish();
+//        finish();
+        Intent intent = new Intent(context, MainActivity.class);
+        startActivity(intent);
     }
 
     /**
@@ -103,8 +107,13 @@ public class GuideActivity extends AppIntro {
 //         当用户点击 "完成" 按钮时执行某些操作
 //        finish();
 //        这边判断是否启用和选择了输入法,如果都成功了,那么进入主界面,否则进入VerificationActivity
-        Intent intent = new Intent(context,VerificationActivity.class);
-        startActivity(intent);
+        if (!verifyBoardUseStatus()) {
+            Intent intent = new Intent(context, VerificationActivity.class);
+            startActivity(intent);
+        } else {
+            Intent intent = new Intent(context, MainActivity.class);
+            startActivity(intent);
+        }
 
     }
 
@@ -120,35 +129,13 @@ public class GuideActivity extends AppIntro {
         // 做一些事情，当slide改变时,在这里我判断第二页的按钮的禁用和启用【由于此处无法使用findViewById因此无法使用】
     }
 
-    /**
-     * 启用键盘,此时只是将键盘,加上了键盘列表中
-     *
-     * @param v
-     */
-    public void enableButtonIntro(View v) {
-        Intent intent = new Intent(android.provider.Settings.ACTION_INPUT_METHOD_SETTINGS);
-        startActivity(intent);
-    }
 
     /**
-     * 显示输入法菜单列表
-     * 即 让用户选择使用哪个输入法 列表
-     *
-     * @param v
-     */
-    public void switchButtonIntro(View v) {
-        InputMethodManager imm = (InputMethodManager)
-                getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.showInputMethodPicker();
-    }
-
-
-    /**
-     * 验证键盘状态
+     * 验证键盘是否是启用状态
      *
      * @return
      */
-    private boolean verifyBoardStatus() {
+    private boolean verifyBoardEnableStatus() {
 
 //      获得软键盘管理器
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -158,11 +145,22 @@ public class GuideActivity extends AppIntro {
         List<InputMethodInfo> inputMethodInfos = imm.getEnabledInputMethodList();
         Stream<InputMethodInfo> stream = inputMethodInfos.stream().filter(
                 inputMethodInfo ->
-                        "cn.kanyun.geekboard/.GeekBoardIME".equals(inputMethodInfo.getId()));
+                        VerificationActivity.selfKeyBoardServiceId.equals(inputMethodInfo.getId()));
         if (stream.count() > 0) {
             return true;
         }
         return false;
+    }
+
+
+    /**
+     * 验证键盘当前是否正在使用
+     *
+     * @return
+     */
+    private boolean verifyBoardUseStatus() {
+        String curInputMethodId = Settings.Secure.getString(GuideActivity.this.getContentResolver(), Settings.Secure.DEFAULT_INPUT_METHOD);
+        return curInputMethodId.equals(VerificationActivity.selfKeyBoardServiceId);
     }
 }
 
