@@ -1,0 +1,22 @@
+query CheckVersion($owner: String!, $name: String!, $releasesLast: Int = 1, $releaseAssetsFirst: Int = 1) {
+  repository(owner: $owner, name: $name) {
+    releases(last: $releasesLast) {
+      totalCount
+      edges {
+        node {
+          tagName
+          isPrerelease
+          url
+          releaseAssets(first: $releaseAssetsFirst) {
+            edges {
+              node {
+                downloadUrl
+                downloadCount
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

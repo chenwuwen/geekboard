@@ -74,6 +74,9 @@ public class VerificationActivity extends AppCompatActivity {
      */
     private InputMethodChangeReceiver inputMethodChangeReceiver;
 
+    /**
+     * 定义意图过滤器
+     */
     private IntentFilter intentFilter;
 
     /**

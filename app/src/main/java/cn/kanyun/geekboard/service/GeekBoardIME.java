@@ -31,10 +31,17 @@ import static android.view.KeyEvent.KEYCODE_SHIFT_LEFT;
 import static android.view.KeyEvent.META_CTRL_ON;
 import static android.view.KeyEvent.META_SHIFT_ON;
 
+/**
+ * 首先IME是什么：IME 是Input Method Editor 的缩写
+ * IME的生命周期：https://blog.csdn.net/le_go/article/details/9265119
+ * IME的核心组件是一个继承InputMethodService的类。除了实现基本的服务的生命周期外，这个类还有一些回调函数提供给我们的IME的UI，
+ * 用来处理用户输入，传递文本到当前焦点所在的Field。默认情况下，InputMethodService类提供了大部分实现来管理IME的可见性和与当前焦点坐在Field的联系
+ */
 public class GeekBoardIME extends InputMethodService
         implements KeyboardView.OnKeyboardActionListener {
     /**
      * 键盘视图类
+     * View的一个拓展，渲染了一个键盘，响应用户的输入，键盘布局是可以用定义在XML文件中的Keyboard实例来指定的
      * 检测按键和触摸动作
      * 显示虚拟按键视图,处理呈现的按键并检测按键和触摸动作
      * 其包含一个嵌套类:KeyboardView.OnKeyboardActionListener
@@ -48,6 +55,9 @@ public class GeekBoardIME extends InputMethodService
      */
     private Keyboard keyboard;
 
+    /**
+     * 描述文本编辑对象的几个属性
+     */
     EditorInfo sEditorInfo;
 
     /**
@@ -59,6 +69,10 @@ public class GeekBoardIME extends InputMethodService
      * 按键声音开关
      */
     private boolean soundOn;
+
+    /**
+     * Shift键是否锁定
+     */
     private boolean shiftLock = false;
     private boolean shift = false;
     private boolean ctrl = false;
@@ -68,6 +82,12 @@ public class GeekBoardIME extends InputMethodService
     private boolean switchedKeyboard = false;
 
 
+    /**
+     * Ctrl键的相关快捷键
+     *
+     * @param code
+     * @param ic
+     */
     public void onKeyCtrl(int code, InputConnection ic) {
         long now2 = System.currentTimeMillis();
         switch (code) {
@@ -290,10 +310,18 @@ public class GeekBoardIME extends InputMethodService
         }
     }
 
+    /**
+     * 点击按键时触发
+     * 只处理特殊按键,或自定义按键
+     * 普通按键 交给系统函数运行 也就是switch中的default
+     *
+     * @param primaryCode
+     * @param KeyCodes
+     */
     @Override
     public void onKey(int primaryCode, int[] KeyCodes) {
-
-
+//        InputConnection 是输入法和应用内View（通常是EditText）交互的通道，输入法的文本输入和删改事件，包括key event事件都是通过InputConnection发送给EditText
+//        InputConnection接口是接收输入的应用程序与InputMethod间的通讯通道。它可以完成以下功能，如读取光标周围的文本，向文本框提交文本，向应用程序提交原始按键事件
         InputConnection ic = getCurrentInputConnection();
         keyboard = kv.getKeyboard();
 
@@ -364,10 +392,13 @@ public class GeekBoardIME extends InputMethodService
             case 17:
 //              ctrl key
                 long nowCtrl = System.currentTimeMillis();
-                if (ctrl)
+                if (ctrl) {
+//                    长按Ctrl走这里
                     ic.sendKeyEvent(new KeyEvent(nowCtrl, nowCtrl, KeyEvent.ACTION_UP, KeyEvent.KEYCODE_CTRL_LEFT, 0, META_CTRL_ON));
-                else
+                } else {
+//                    短按Ctrl走这里
                     ic.sendKeyEvent(new KeyEvent(nowCtrl, nowCtrl, KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_CTRL_LEFT, 0, META_CTRL_ON));
+                }
 
                 ctrl = !ctrl;
                 controlKeyUpdateView();
@@ -377,10 +408,13 @@ public class GeekBoardIME extends InputMethodService
                 // Log.e("GeekBoardIME", "onKey" + Boolean.toString(shiftLock));
                 //Shift - runs after long press, so shiftlock may have just been activated
                 long nowShift = System.currentTimeMillis();
-                if (shift)
+                if (shift) {
+//                    短按Shift走这里
                     ic.sendKeyEvent(new KeyEvent(nowShift, nowShift, KeyEvent.ACTION_UP, KeyEvent.KEYCODE_SHIFT_LEFT, 0, META_SHIFT_ON));
-                else
+                } else {
+//                    长按Shift走这里
                     ic.sendKeyEvent(new KeyEvent(nowShift, nowShift, KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_SHIFT_LEFT, 0, META_SHIFT_ON));
+                }
 
                 if (shiftLock) {
                     shift = true;
@@ -401,10 +435,10 @@ public class GeekBoardIME extends InputMethodService
             case 5000:
                 handleArrow(KeyEvent.KEYCODE_DPAD_LEFT);
                 break;
-            case 5001:
+            case 5001:  //下方向键 (交由系统函数处理)
                 sendDownUpKeyEvents(KeyEvent.KEYCODE_DPAD_DOWN);
                 break;
-            case 5002:
+            case 5002: //上方向键 (交由系统函数处理)
                 sendDownUpKeyEvents(KeyEvent.KEYCODE_DPAD_UP);
                 break;
             case 5003:
@@ -514,6 +548,12 @@ public class GeekBoardIME extends InputMethodService
 
     }
 
+    /**
+     * 长按事件
+     * 比如长按 shift 将全部输入大写字符
+     *
+     * @param keyCode
+     */
     public void onKeyLongPress(int keyCode) {
         // Process long-click here
         if (keyCode == 16) {
@@ -556,6 +596,9 @@ public class GeekBoardIME extends InputMethodService
         }
     }
 
+    /**
+     * 手指从上往下滑动，关闭键盘
+     */
     @Override
     public void swipeDown() {
 
@@ -563,15 +606,24 @@ public class GeekBoardIME extends InputMethodService
 
     }
 
+    /**
+     * 左滑
+     */
     @Override
     public void swipeLeft() {
 
     }
 
+    /**
+     * 右滑动
+     */
     @Override
     public void swipeRight() {
     }
 
+    /**
+     * 上滑动
+     */
     @Override
     public void swipeUp() {
 
@@ -752,6 +804,12 @@ public class GeekBoardIME extends InputMethodService
         kv.invalidateAllKeys();
     }
 
+    /**
+     * 处理方向键按钮
+     * 仅处理 左右方向键
+     *
+     * @param keyCode
+     */
     public void handleArrow(int keyCode) {
         InputConnection ic = getCurrentInputConnection();
         Long now2 = System.currentTimeMillis();
@@ -776,11 +834,11 @@ public class GeekBoardIME extends InputMethodService
         InputConnection ic = getCurrentInputConnection();
         Long now2 = System.currentTimeMillis();
         ic.sendKeyEvent(new KeyEvent(now2, now2, KeyEvent.ACTION_DOWN, KEYCODE_SHIFT_LEFT, 0, META_SHIFT_ON | META_CTRL_ON));
-        if (ctrl)
+        if (ctrl) {
             ic.sendKeyEvent(new KeyEvent(now2, now2, KeyEvent.ACTION_DOWN, keyCode, 0, META_SHIFT_ON | META_CTRL_ON));
-
-        else
+        } else {
             ic.sendKeyEvent(new KeyEvent(now2, now2, KeyEvent.ACTION_DOWN, keyCode, 0, META_SHIFT_ON));
+        }
         ic.sendKeyEvent(new KeyEvent(now2, now2, KeyEvent.ACTION_UP, KEYCODE_SHIFT_LEFT, 0, META_SHIFT_ON | META_CTRL_ON));
 
 

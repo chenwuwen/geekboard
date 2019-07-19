@@ -17,7 +17,7 @@
         android:background="#212121"
         app:navigationIcon="@drawable/left_arrow"
         android:elevation="5dp"
-        android:translationZ="20dp"
+        android:translationZ="18dp"
         app:title="GeekBoard设置" />
 
 
@@ -39,7 +39,7 @@
             android:clickable="true"
             android:background="#01000000"
             android:orientation="vertical"
-            android:paddingLeft="20dp">
+            android:paddingLeft="18dp">
 
             <TextView
                 android:layout_width="match_parent"
@@ -48,7 +48,7 @@
                 android:clickable="false"
                 android:textAlignment="textStart"
                 android:textColor="#ffffff"
-                android:textSize="15dp"
+                android:textSize="18dp"
                 app:tabRippleColor="@android:color/transparent" />
 
             <TextView
@@ -69,7 +69,7 @@
             android:background="#01000000"
             android:orientation="vertical"
             android:clickable="true"
-            android:paddingLeft="20dp">
+            android:paddingLeft="18dp">
 
             <TextView
                 android:layout_width="match_parent"
@@ -77,7 +77,7 @@
                 android:text="按键震动"
                 android:textAlignment="inherit"
                 android:textColor="#ffffff"
-                android:textSize="15dp"
+                android:textSize="18dp"
 
                 app:tabRippleColor="@android:color/transparent" />
 
@@ -99,7 +99,7 @@
             android:background="#01000000"
             android:orientation="vertical"
             android:clickable="true"
-            android:paddingLeft="20dp">
+            android:paddingLeft="18dp">
 
             <TextView
                 android:layout_width="match_parent"
@@ -107,7 +107,7 @@
                 android:text="按键气泡"
                 android:textAlignment="textStart"
                 android:textColor="#ffffff"
-                android:textSize="15dp"
+                android:textSize="18dp"
                 app:tabRippleColor="@android:color/transparent" />
 
             <TextView
@@ -128,7 +128,7 @@
             android:background="#01000000"
             android:orientation="vertical"
             android:clickable="true"
-            android:paddingLeft="20dp">
+            android:paddingLeft="18dp">
 
             <TextView
                 android:layout_width="match_parent"
@@ -136,7 +136,7 @@
                 android:text="按键声音"
                 android:textAlignment="textStart"
                 android:textColor="#ffffff"
-                android:textSize="15dp"
+                android:textSize="18dp"
                 app:tabRippleColor="@android:color/transparent" />
 
             <TextView
@@ -149,33 +149,56 @@
 
         </LinearLayout>
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/board_quick_set"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#01000000"
             android:orientation="vertical"
             android:clickable="true"
-            android:paddingLeft="20dp">
+            android:paddingLeft="18dp">
+
 
             <TextView
-                android:layout_width="match_parent"
+                android:id="@+id/self_11"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="快捷键设置"
                 android:textAlignment="textStart"
                 android:textColor="#ffffff"
-                android:textSize="15dp"
+                android:textSize="18dp"
                 app:tabRippleColor="@android:color/transparent" />
 
             <TextView
+                android:id="@+id/self_22"
+                app:layout_constraintTop_toBottomOf="@+id/self_11"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textAlignment="textStart"
                 android:textColor="#c1c1c1"
                 android:textSize="10dp"
-                tools:text="开启" />
+                android:text="打开后键盘上将出现一些快捷按键,方便您的操作"/>
 
-        </LinearLayout>
+            <!--app:kswTextExtra="10dp" 控制button长度 使文字显示的不拥挤-->
+            <com.kyleduo.switchbutton.SwitchButton
+                style="@style/SwitchButtonStyle"
+                android:id="@+id/board_quick_set_switch"
+                android:layout_width="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:kswTintColor="#16A560"
+                app:kswBackColor="#650796F7"
+                app:kswTextOff="OFF"
+                app:kswTextOn="ON"
+                android:textColor="@android:color/darker_gray"
+                app:kswTextExtra="10dp"
+                />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </LinearLayout>
 

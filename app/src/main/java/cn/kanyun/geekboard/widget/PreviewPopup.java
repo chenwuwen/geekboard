@@ -3,20 +3,21 @@ package cn.kanyun.geekboard.widget;
 import android.content.Context;
 import android.view.View;
 import android.view.animation.Animation;
-import android.widget.Toast;
 
 import cn.kanyun.geekboard.R;
+import razerdp.basepopup.BasePopup;
 import razerdp.basepopup.BasePopupWindow;
 
 /**
- * 分享弹窗使用 BasePopup
+ * 皮肤预览 选择皮肤后 弹出一个窗口(带输入框) 可以预览皮肤启用后的效果 BasePopup
  * https://github.com/razerdp/BasePopup
  */
-public class SharePopup extends BasePopupWindow implements View.OnClickListener {
+public class PreviewPopup extends BasePopupWindow {
 
-    public SharePopup(Context context) {
+    public PreviewPopup(Context context) {
         super(context);
     }
+
 
     /**
      * 必须实现，这里返回您的contentView
@@ -25,7 +26,7 @@ public class SharePopup extends BasePopupWindow implements View.OnClickListener 
      */
     @Override
     public View onCreateContentView() {
-        return createPopupById(R.layout.popup_share);
+        return createPopupById(R.layout.popup_preview);
     }
 
     /**
@@ -43,21 +44,5 @@ public class SharePopup extends BasePopupWindow implements View.OnClickListener 
         return getDefaultScaleAnimation(false);
     }
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.qq:
-                Toast.makeText(getContext(), "暂不支持分享", Toast.LENGTH_SHORT);
-                break;
-            case R.id.qzone:
-                Toast.makeText(getContext(), "暂不支持分享", Toast.LENGTH_SHORT);
-                break;
-            case R.id.sina:
-                Toast.makeText(getContext(), "暂不支持分享", Toast.LENGTH_SHORT);
-                break;
-            default:
-//                微信
-                Toast.makeText(getContext(), "暂不支持分享", Toast.LENGTH_SHORT);
-        }
-    }
+
 }

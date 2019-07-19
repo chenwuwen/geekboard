@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="这是一个启动页"/>
+        android:text="这是一个启动页,但是我没有什么好说的,就说一些使用技巧吧,比如在键盘上使用下滑手势，可以关闭键盘,左/右滑可以切换到快捷页面,长按空格键方便切换输入法" />
 </LinearLayout>

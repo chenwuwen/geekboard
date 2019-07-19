@@ -3,6 +3,8 @@
 
 apply plugin: 'com.android.application'
 //apply plugin: 'com.jakewharton.butterknife'
+//配置GraphQL 这一行应该在com.android.application下面。如果你想在你的Kotlin项目中使用Apollo，请将 Apollo 插件添加在 Kotlin 插件之前
+//apply plugin: 'com.apollographql.android'
 
 //android {}块配置所有Android特定的构建选项
 android {
@@ -290,7 +292,13 @@ dependencies {
     implementation 'com.afollestad.material-dialogs:core:0.9.6.0'
     implementation 'com.afollestad.material-dialogs:commons:0.9.6.0'
 
+//    implementation 'com.apollographql.apollo:apollo-runtime:1.0.2-SNAPSHOT'
 
+//    SwitchButton开关按钮  https://github.com/kyleduo/SwitchButton
+    implementation 'com.kyleduo.switchbutton:library:2.0.0'
+
+//    动态权限库  https://github.com/tbruyelle/RxPermissions
+    implementation 'com.github.tbruyelle:rxpermissions:0.10.2'
 }
 
 

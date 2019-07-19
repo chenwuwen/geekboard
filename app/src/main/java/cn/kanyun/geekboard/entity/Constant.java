@@ -44,6 +44,12 @@ public class Constant {
     public static final String BOARD_QUICK= "BOARD_QUICK";
 
 
+    /**
+     * 皮肤改变
+     */
+    public static final String BOARD_SKIN_SWITCH= "cn.kanyun.geekboard.skin_switch";
+
+
 
 
 }

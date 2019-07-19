@@ -1,6 +1,7 @@
 package cn.kanyun.geekboard.listener;
 
 import android.app.backup.SharedPreferencesBackupHelper;
+import android.content.Intent;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -8,11 +9,14 @@ import android.view.ViewParent;
 import android.widget.ImageView;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import cn.kanyun.geekboard.R;
+import cn.kanyun.geekboard.broadcast.SkinChangeReceiver;
 import cn.kanyun.geekboard.entity.Constant;
 import cn.kanyun.geekboard.util.SPUtils;
+import cn.kanyun.geekboard.widget.PreviewPopup;
 import cn.kanyun.geekboard.widget.SkinPreviewButton;
 
 
@@ -41,6 +45,7 @@ public class SkinSwitchListener implements View.OnClickListener, View.OnTouchLis
      */
     int position;
 
+
     public SkinSwitchListener(String skinName, int position) {
         this.skinName = skinName;
         this.position = position;
@@ -64,6 +69,11 @@ public class SkinSwitchListener implements View.OnClickListener, View.OnTouchLis
         lastIndex = position;
 //        将键盘皮肤名称保存到SharedPreferences中
         SPUtils.put(v.getContext(), Constant.BOARD_SKIN, skinName);
+//           点击皮肤后,直接预览皮肤,之前想的是直接在此处写弹出poup的代码,想了想,这样写不够优雅,因此使用广播来解耦
+        Intent intent = new Intent(Constant.BOARD_SKIN_SWITCH);
+//          需要注意的是这里发送的广播使用的是Context上下文发送的,所以:在注册广播接受者时,也要使用上下文Context来注册,而不能使用LocalBroadcastManager本地广播
+        v.getContext().sendBroadcast(intent);
+
     }
 
 

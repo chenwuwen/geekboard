@@ -1,6 +1,7 @@
 package cn.kanyun.geekboard.fragment;
 
 import android.content.Context;
+import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,6 +11,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -24,6 +26,8 @@ import java.util.ArrayList;
 import java.util.List;
 import cn.kanyun.geekboard.R;
 import cn.kanyun.geekboard.adapter.SkinPreviewAdapter;
+import cn.kanyun.geekboard.broadcast.SkinChangeReceiver;
+import cn.kanyun.geekboard.entity.Constant;
 import cn.kanyun.geekboard.entity.Skin;
 
 /**
@@ -54,6 +58,17 @@ public class SkinFragment extends BaseFragment {
      * 可以使用 RecyclerView 实现标准的垂直滚动列表、统一的网格、交错网格、水平滚动集合等
      */
     private GridLayoutManager layoutManager;
+
+    /**
+     * 定义广播接收者
+     */
+    SkinChangeReceiver skinChangeReceiver;
+
+    /**
+     * 定义意图过滤器
+     */
+    private IntentFilter intentFilter;
+
 
     public static Fragment newInstance() {
         return new SkinFragment();
@@ -117,6 +132,12 @@ public class SkinFragment extends BaseFragment {
 //        初始化本地数据
         initSkinPreview();
 
+//        注册广播接受者(动态注册)
+        skinChangeReceiver = new SkinChangeReceiver();
+        intentFilter = new IntentFilter();
+        intentFilter.addAction(Constant.BOARD_SKIN_SWITCH);
+        context.registerReceiver(skinChangeReceiver, intentFilter);
+
     }
 
 
@@ -125,6 +146,15 @@ public class SkinFragment extends BaseFragment {
         super.onActivityCreated(savedInstanceState);
     }
 
+    /**
+     * 销毁时
+     * 取消注册广播接收者
+     */
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        context.unregisterReceiver(skinChangeReceiver);
+    }
 
     /**
      * 初始化皮肤预览数据

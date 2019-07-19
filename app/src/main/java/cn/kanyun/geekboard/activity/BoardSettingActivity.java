@@ -7,14 +7,17 @@ import android.os.Bundle;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.kyleduo.switchbutton.SwitchButton;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -112,7 +115,10 @@ public class BoardSettingActivity extends AppCompatActivity implements View.OnCl
      * 快捷键开关设置
      */
     @BindView(R.id.board_quick_set)
-    LinearLayout boardQuickSet;
+    ConstraintLayout boardQuickSet;
+
+    @BindView(R.id.board_quick_set_switch)
+    SwitchButton quickSwitchButton;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -140,6 +146,15 @@ public class BoardSettingActivity extends AppCompatActivity implements View.OnCl
         boardBubbleSet.setOnClickListener(this);
         boardSoundSet.setOnClickListener(this);
         boardQuickSet.setOnClickListener(this);
+
+        quickSwitchButton.setEnabled(false);
+//        SwitchButton选中监听
+//        quickSwitchButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+//
+//            }
+//        });
     }
 
 
@@ -190,8 +205,10 @@ public class BoardSettingActivity extends AppCompatActivity implements View.OnCl
         layoutText.setText(config.get(Constant.BOARD_LAYOUT));
 
 //        设置快捷键当前状态
-        TextView quickText = (TextView) boardQuickSet.getChildAt(1);
-        quickText.setText(config.get(Constant.BOARD_QUICK));
+        if (config.get(Constant.BOARD_QUICK).equals("开启")) {
+            quickSwitchButton.setChecked(true);
+        }
+
     }
 
     @Override
@@ -221,7 +238,6 @@ public class BoardSettingActivity extends AppCompatActivity implements View.OnCl
 
         }
     }
-
 
 
     /**
@@ -380,38 +396,17 @@ public class BoardSettingActivity extends AppCompatActivity implements View.OnCl
 
     /**
      * 快捷键开关设置
+     *
      * @param v
      */
     private void showBoardQuickDialog(View view) {
-//        获取缓存中的对象的索引值,在dialog中的radio组中进行预选择
-        int index = 0;
-        if (boardQuickItems.contains(config.get(Constant.BOARD_QUICK))) {
-            index = boardQuickItems.indexOf(config.get(Constant.BOARD_QUICK));
+        if (quickSwitchButton.isChecked()) {
+            quickSwitchButton.setChecked(false);
+            modifyConfiguration(Constant.BOARD_QUICK, "关闭");
+        } else {
+            quickSwitchButton.setChecked(true);
+            modifyConfiguration(Constant.BOARD_QUICK, "开启");
         }
-
-        MaterialDialog.Builder builder = new MaterialDialog.Builder(this)
-                .title("快捷键设置")
-//                title颜色
-                .titleColor(Color.WHITE)
-//                radio组文字颜色
-                .itemsColor(Color.WHITE)
-//                 radio组小圆点颜色
-                .choiceWidgetColor(ColorStateList.valueOf(Color.WHITE))
-                .backgroundColor(Color.parseColor("#4B4B4B"))
-                .positiveText("确认")
-                .negativeText("取消")
-                .items(boardQuickItems)
-//                该方法第一个参数,表示预选元素,如果不设置预选,则传入-1,否则传入大于-1的元素,那么在dialog在打开后会自动勾选一个选项
-                .itemsCallbackSingleChoice(index, new MaterialDialog.ListCallbackSingleChoice() {
-                    //                    点击dialog确定按钮后回调方法
-                    @Override
-                    public boolean onSelection(MaterialDialog dialog, View itemView, int which, CharSequence text) {
-                        Log.d(TAG, "用户点击了Radio中的某一项Item,且点击了确定按钮时,选中的值为：" + text);
-                        modifyConfiguration(Constant.BOARD_QUICK, text.toString());
-                        return true;
-                    }
-                });
-        builder.show();
 
     }
 
