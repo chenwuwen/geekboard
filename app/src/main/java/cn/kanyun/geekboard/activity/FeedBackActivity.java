@@ -173,7 +173,8 @@ public class FeedBackActivity extends AppCompatActivity {
             @Override
             public void run() {
                 final View mysterious_view = View.inflate(context, R.layout.mysterious, null);
-                rootView.addView(mysterious_view);
+                ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT);
+                rootView.addView(mysterious_view,layoutParams);
                 final EditText redBagCode = rootView.findViewById(R.id.red_bag_code);
                 final TextView aliPay = rootView.findViewById(R.id.aliPay);
                 final ImageView close = rootView.findViewById(R.id.close);

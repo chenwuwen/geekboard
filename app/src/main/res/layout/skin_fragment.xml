@@ -2,6 +2,7 @@
 <!--自定义控件需要添加命名控件,然后使用skinPreviewButton:xx 而不是android:xx-->
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/skin"
     android:background="#F0EFF5"
     android:layout_width="match_parent"
@@ -14,22 +15,23 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
-    <Button
+
+    <top.androidman.superbutton.SuperButton
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:drawableStart="@drawable/ic_camera"
+        android:drawable_left="@drawable/ic_camera"
         android:gravity="center"
         android:layout_weight="1"
-
         android:background="@color/white"
         android:text="拍照做皮肤"
         android:layout_margin="5dp"/>
-    <Button
+
+    <top.androidman.superbutton.SuperButton
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:gravity="center"
         android:layout_weight="1"
-        android:drawableStart="@drawable/ic_photo"
+        android:drawable_left="@drawable/ic_photo"
         android:text="照片做皮肤"
         android:background="@color/white"
         android:layout_margin="5dp"/>
