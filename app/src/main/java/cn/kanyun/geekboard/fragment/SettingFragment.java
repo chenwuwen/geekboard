@@ -252,7 +252,7 @@ public class SettingFragment extends BaseFragment {
         //获取Action文本View，并设置其背景颜色
 //        snackBarView.findViewById(R.id.snackbar_action).setBackgroundColor(Color.BLACK);
         //设置SnackBar的背景色（改配置是上面两行配置的集合）
-        snackBarView.setBackgroundColor(Color.WHITE);
+        snackBarView.setBackgroundColor(Color.parseColor("#dbdbdb"));
 
         //设置SnackBar显示的位置
         ViewGroup.LayoutParams params = snackBarView.getLayoutParams();

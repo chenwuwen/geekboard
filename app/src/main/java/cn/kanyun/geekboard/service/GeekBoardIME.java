@@ -17,13 +17,18 @@ import android.view.inputmethod.InputConnection;
 import android.view.inputmethod.InputMethodManager;
 import android.media.MediaPlayer; // for keypress sound
 
+import com.blankj.utilcode.util.StringUtils;
+
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
 
+import cn.kanyun.geekboard.MyApplication;
 import cn.kanyun.geekboard.R;
 import cn.kanyun.geekboard.entity.Constant;
+import cn.kanyun.geekboard.entity.Skin;
+import cn.kanyun.geekboard.gen.SkinDao;
 import cn.kanyun.geekboard.util.SPUtils;
 
 import static android.view.KeyEvent.KEYCODE_CTRL_LEFT;
@@ -70,6 +75,12 @@ public class GeekBoardIME extends InputMethodService
      */
     private boolean soundOn;
 
+    private Context context;
+
+    private SkinDao skinDao;
+
+    private MyApplication application;
+
     /**
      * Shift键是否锁定
      */
@@ -81,6 +92,14 @@ public class GeekBoardIME extends InputMethodService
     private Timer timerLongPress = null;
     private boolean switchedKeyboard = false;
 
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        context = getBaseContext();
+        application = (MyApplication) MyApplication.getInstance();
+        skinDao = application.getDaoSession().getSkinDao();
+    }
 
     /**
      * Ctrl键的相关快捷键
@@ -683,49 +702,44 @@ public class GeekBoardIME extends InputMethodService
     @Override
     public View onCreateInputView() {
 
-        SharedPreferences pre = getSharedPreferences(SPUtils.FILE_NAME, MODE_PRIVATE);
-//        键盘皮肤
-        switch (pre.getString(Constant.BOARD_SKIN, "material黑")) {
-            case "material黑":
-                kv = (KeyboardView) getLayoutInflater().inflate(R.layout.keyboard_material_dark, null);
-                break;
-            case "material白":
-                kv = (KeyboardView) getLayoutInflater().inflate(R.layout.keyboard_material_light, null);
-                break;
-            case "纯黑":
-                kv = (KeyboardView) getLayoutInflater().inflate(R.layout.keyboard_pure_black, null);
-                break;
-            case "纯白":
-                kv = (KeyboardView) getLayoutInflater().inflate(R.layout.keyboard_pure_white, null);
-                break;
-            case "蓝":
-                kv = (KeyboardView) getLayoutInflater().inflate(R.layout.keyboard_blue, null);
-                break;
-            case "紫":
-                kv = (KeyboardView) getLayoutInflater().inflate(R.layout.keyboard_purple, null);
-                break;
+        Long id = (Long) SPUtils.get(context, Constant.BOARD_SKIN, 0L);
 
-            default:
-                kv = (KeyboardView) getLayoutInflater().inflate(R.layout.keyboard_material_dark, null);
-                break;
+        Skin skin;
 
+        if (id != 0) {
+            skin = skinDao.load(id.longValue());
+        } else {
+            skin = skinDao.loadByRowId(1);
         }
 
+        String xml = skin.getSkinImgXml();
+        int resourceId = 0;
+
+//        这里先进行转换,如果能转换成int不报错,则说明数据库中存放的是本地的资源Id,否则需要手动获取resource对象
+        try {
+            resourceId = Integer.parseInt(xml);
+        } catch (Exception e) {
+
+        }
+//        键盘皮肤
+//        kv = (KeyboardView) getLayoutInflater().inflate(R.layout.keyboard_material_dark, null);
+        kv = (KeyboardView) getLayoutInflater().inflate(resourceId, null);
+
 //        按键气泡
-        if (pre.getString(Constant.BOARD_BUBBLE, "关闭").equals("开启")) {
+        if (SPUtils.get(context, Constant.BOARD_BUBBLE, "关闭").equals("开启")) {
             kv.setPreviewEnabled(true);
         } else {
             kv.setPreviewEnabled(false);
         }
 //         声音
-        if (pre.getString(Constant.BOARD_SOUND, "关闭").equals("开启")) {
+        if (SPUtils.get(context, Constant.BOARD_SOUND, "关闭").equals("开启")) {
             soundOn = true;
         } else {
             soundOn = false;
         }
 
 //        震动
-        if (pre.getString(Constant.BOARD_SHOCK, "关闭").equals("开启")) {
+        if (SPUtils.get(context, Constant.BOARD_SHOCK, "关闭").equals("开启")) {
             vibratorOn = true;
         } else {
             vibratorOn = false;
@@ -735,11 +749,11 @@ public class GeekBoardIME extends InputMethodService
         ctrl = false;
 
 //        键盘布局
-        mLayout = pre.getInt("RADIO_INDEX_LAYOUT", 0);
+        mLayout = (int) SPUtils.get(context, "RADIO_INDEX_LAYOUT", 0);
 //        键盘尺寸
-        mSize = pre.getInt("SIZE", 2);
+        mSize = (int) SPUtils.get(context, "SIZE", 2);
 //        快捷键
-        if (pre.getString(Constant.BOARD_QUICK, "关闭").equals("开启")) {
+        if (SPUtils.get(context, Constant.BOARD_QUICK, "关闭").equals("开启")) {
             mToprow = 0;
         } else {
             mToprow = 1;

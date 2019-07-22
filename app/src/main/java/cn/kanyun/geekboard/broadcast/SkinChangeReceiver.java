@@ -50,7 +50,7 @@ public class SkinChangeReceiver extends BroadcastReceiver {
 
 
             } else {
-                Toast.makeText(context, "切换到GeekBoard进行预览", Toast.LENGTH_LONG).show();
+                Toast.makeText(context, "请切换到GeekBoard后进行预览", Toast.LENGTH_LONG).show();
             }
         }
     }

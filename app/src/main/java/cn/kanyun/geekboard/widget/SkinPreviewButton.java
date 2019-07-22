@@ -9,6 +9,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.ImageScaleType;
+
 import cn.kanyun.geekboard.R;
 
 /**
@@ -19,6 +23,22 @@ public class SkinPreviewButton extends LinearLayout {
 
     private ImageView buttonImage;
     private TextView buttonText;
+
+    /**
+     * ImageLoader展示图片的工具
+     */
+    public static DisplayImageOptions options;
+
+    static {
+
+//        加载本地图片，不缓存，不存储
+        options = new DisplayImageOptions.Builder()
+                .cacheOnDisk(false).cacheInMemory(false)
+                .imageScaleType(ImageScaleType.EXACTLY)
+                .bitmapConfig(Bitmap.Config.RGB_565)
+                .considerExifParams(true)
+                .build();
+    }
 
     /**
      * 只能在代码中动态的添加
@@ -96,6 +116,18 @@ public class SkinPreviewButton extends LinearLayout {
      */
     public void setImageResource(Bitmap bm) {
         buttonImage.setImageBitmap(bm);
+    }
+
+    /**
+     * 设置图片资源
+     */
+    public void setImageResource(String uri) {
+//            如果以Uri开头的路径则是自带的图片
+        if (uri.startsWith("drawable")) {
+//          此方法需要注意：取到的可能有空,因为涉及IO操作(包括网络IO)需要开线程，4.0以后的这个方法获取为空,可以通过添加option获取
+            Bitmap bm = ImageLoader.getInstance().loadImageSync(uri, options);
+            buttonImage.setImageBitmap(bm);
+        }
     }
 
     /**

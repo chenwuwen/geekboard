@@ -41,14 +41,20 @@ public class SkinSwitchListener implements View.OnClickListener, View.OnTouchLis
     String skinName;
 
     /**
+     * 数据库中的皮肤ID
+     */
+    long skinId;
+
+    /**
      * 当前被点击的 position
      */
     int position;
 
 
-    public SkinSwitchListener(String skinName, int position) {
+    public SkinSwitchListener(String skinName, long skinId, int position) {
         this.skinName = skinName;
         this.position = position;
+        this.skinId = skinId;
     }
 
 
@@ -67,8 +73,8 @@ public class SkinSwitchListener implements View.OnClickListener, View.OnTouchLis
         Log.i(TAG, parent.getLayoutDirection() + "");
 //        设置当前被点击的position为lastIndex
         lastIndex = position;
-//        将键盘皮肤名称保存到SharedPreferences中
-        SPUtils.put(v.getContext(), Constant.BOARD_SKIN, skinName);
+//        将键盘皮肤ID保存到SharedPreferences中
+        SPUtils.put(v.getContext(), Constant.BOARD_SKIN, skinId);
 //           点击皮肤后,直接预览皮肤,之前想的是直接在此处写弹出poup的代码,想了想,这样写不够优雅,因此使用广播来解耦
         Intent intent = new Intent(Constant.BOARD_SKIN_SWITCH);
 //          需要注意的是这里发送的广播使用的是Context上下文发送的,所以:在注册广播接受者时,也要使用上下文Context来注册,而不能使用LocalBroadcastManager本地广播

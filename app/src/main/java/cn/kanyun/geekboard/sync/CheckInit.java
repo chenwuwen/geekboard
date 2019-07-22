@@ -1,14 +1,22 @@
 package cn.kanyun.geekboard.sync;
 
 import android.app.Activity;
+import android.app.Application;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import cn.kanyun.geekboard.MyApplication;
 import cn.kanyun.geekboard.R;
 import cn.kanyun.geekboard.activity.GuideActivity;
+import cn.kanyun.geekboard.entity.Skin;
+import cn.kanyun.geekboard.gen.DaoSession;
+import cn.kanyun.geekboard.gen.SkinDao;
 
 /**
  * 检测是否是首次进入主页面
@@ -31,6 +39,10 @@ public class CheckInit implements Runnable {
 
 //       如果activity以前从未开始过(从来没有进入过该activity),那么进入使用向导activity
         if (isFirstStart) {
+
+//            初始化皮肤数据
+            initData();
+
 //            Button change = activity.findViewById(R.id.change_button);
 //            change.setVisibility(View.GONE);
 //           转到使用向导activity
@@ -46,5 +58,56 @@ public class CheckInit implements Runnable {
 //          应用更改
             e.apply();
         }
+    }
+
+    /**
+     * 初始化数据库
+     */
+    public void initData() {
+        MyApplication application = (MyApplication) MyApplication.getInstance();
+        SkinDao skinDao = application.getDaoSession().getSkinDao();
+        List<Skin> list = new ArrayList<>();
+        Skin skin1 = new Skin();
+        skin1.setName("material黑");
+        skin1.setPreviewImg("drawable://" + R.drawable.intro3);
+        skin1.setSkinImgXml(String.valueOf(R.layout.keyboard_material_dark));
+        skin1.setEnable(true);
+
+        Skin skin2 = new Skin();
+        skin2.setName("material白");
+        skin2.setPreviewImg("drawable://" + R.drawable.intro3);
+        skin2.setSkinImgXml(String.valueOf(R.layout.keyboard_material_light));
+
+        Skin skin3 = new Skin();
+        skin3.setName("纯白");
+        skin3.setPreviewImg("drawable://" + R.drawable.intro3);
+        skin3.setSkinImgXml(String.valueOf(R.layout.keyboard_pure_white));
+
+        Skin skin4 = new Skin();
+        skin4.setName("蓝色");
+        skin4.setPreviewImg("drawable://" + R.drawable.intro3);
+        skin4.setSkinImgXml(String.valueOf(R.layout.keyboard_blue));
+
+        Skin skin5 = new Skin();
+        skin5.setName("紫色");
+        skin5.setPreviewImg("drawable://" + R.drawable.intro3);
+        skin5.setSkinImgXml(String.valueOf(R.layout.keyboard_purple));
+
+        Skin skin6 = new Skin();
+        skin6.setName("纯黑");
+        skin6.setPreviewImg("drawable://" + R.drawable.intro3);
+        skin6.setSkinImgXml(String.valueOf(R.layout.keyboard_pure_black));
+
+        list.add(skin1);
+        list.add(skin2);
+        list.add(skin3);
+        list.add(skin4);
+        list.add(skin5);
+        list.add(skin6);
+
+        skinDao.insertInTx(list);
+
+
+
     }
 }

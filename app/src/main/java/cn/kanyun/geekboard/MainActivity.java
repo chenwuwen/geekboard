@@ -31,6 +31,7 @@ import cn.kanyun.geekboard.adapter.MyViewPagerAdapter;
 import cn.kanyun.geekboard.entity.Constant;
 import cn.kanyun.geekboard.fragment.SettingFragment;
 import cn.kanyun.geekboard.fragment.SkinFragment;
+import cn.kanyun.geekboard.gen.SkinDao;
 import cn.kanyun.geekboard.listener.TabSwitchListener;
 import cn.kanyun.geekboard.sync.CheckInit;
 
@@ -135,40 +136,8 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 //        默认显示第一个
         switchFragment(0);
 
-
-
         //  声明一个新线程以进行首选项检查[检查是否进入过主界面,如果没有进入过,则进入引导页]
         new Thread(new CheckInit(this)).start();
-
-//        seekBar = findViewById(R.id.size_seekbar);
-        // perform seek bar change listener event used for getting the progress value
-//        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-//            int progressChangedValue = seekBar.getProgress();
-//
-//            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-//                progressChangedValue = progress;
-//            }
-//
-//            public void onStartTrackingTouch(SeekBar seekBar) {
-//
-//            }
-//
-//            public void onStopTrackingTouch(SeekBar seekBar) {
-////                Toast.makeText(MainActivity.this, "Seek bar progress is :" + progressChangedValue,
-////                        Toast.LENGTH_SHORT).show();
-//                SavePreferences("SIZE", progressChangedValue);
-//
-//
-//            }
-//        });
-
-//        radioGroupColour = findViewById(R.id.radiogroupcolour);
-//        radioGroupColour.setOnCheckedChangeListener(radioGroupOnCheckedChangeListenerColour);
-//
-//        radioGroupLayout = findViewById(R.id.radiogrouplayout);
-//        radioGroupLayout.setOnCheckedChangeListener(radioGroupOnCheckedChangeListenerLayout);
-
-
 
     }
 

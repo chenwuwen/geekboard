@@ -65,6 +65,8 @@ public class CheckVersion extends AsyncTask<Activity, Void, Void> {
     private String responseText;
     private Context context;
 
+
+
     public CheckVersion(Context context) {
         this.context = context;
     }

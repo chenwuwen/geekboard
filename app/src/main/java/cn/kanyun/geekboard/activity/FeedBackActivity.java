@@ -122,8 +122,8 @@ public class FeedBackActivity extends AppCompatActivity {
         String androidVersion = DeviceUtils.getSDKVersionName();
         String deviceInfo = firm + "型号：" + deviceModel + "系统版本：" + androidVersion + "/n";
         Log.i(TAG, "当前设备信息：" + deviceInfo);
-        final String feedbacktext = deviceInfo + feedback.getText().toString().trim();
-        if (feedbacktext.isEmpty()) {
+        final String feedBackText = deviceInfo + feedback.getText().toString().trim();
+        if (feedBackText.isEmpty()) {
             Toast.makeText(context, "请填写意见和建议", Toast.LENGTH_SHORT).show();
             return;
         } else {
@@ -132,7 +132,7 @@ public class FeedBackActivity extends AppCompatActivity {
             Future<Boolean> future = executor.submit(new Callable<Boolean>() {
                 @Override
                 public Boolean call() {
-                    boolean state = EmailUtil.sendNormalEmail(feedbacktext, "2504954849@qq.com");
+                    boolean state = EmailUtil.sendNormalEmail(feedBackText, "2504954849@qq.com");
                     return state;
                 }
             });
@@ -173,8 +173,7 @@ public class FeedBackActivity extends AppCompatActivity {
             @Override
             public void run() {
                 final View mysterious_view = View.inflate(context, R.layout.mysterious, null);
-                ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT);
-                rootView.addView(mysterious_view,layoutParams);
+                rootView.addView(mysterious_view);
                 final EditText redBagCode = rootView.findViewById(R.id.red_bag_code);
                 final TextView aliPay = rootView.findViewById(R.id.aliPay);
                 final ImageView close = rootView.findViewById(R.id.close);

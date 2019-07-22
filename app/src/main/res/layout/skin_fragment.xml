@@ -14,27 +14,40 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_marginTop="5dp">
 
-    <top.androidman.superbutton.SuperButton
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:drawable_left="@drawable/ic_camera"
-        android:gravity="center"
-        android:layout_weight="1"
-        android:background="@color/white"
-        android:text="拍照做皮肤"
-        android:layout_margin="5dp"/>
+        <top.androidman.SuperButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="8dp"
+            android:paddingVertical="7dp"
+            app:color_normal="@color/white"
+            app:corner="2dp"
+            app:drawable_padding="10dp"
+            android:layout_weight="1"
+            app:drawable_left="@drawable/ic_camera"
+            app:text="拍照做皮肤"
+            app:textColor="#494949"
+            app:color_pressed="#d0dfe6"
+            app:textSize="15sp" />
 
-    <top.androidman.superbutton.SuperButton
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:gravity="center"
-        android:layout_weight="1"
-        android:drawable_left="@drawable/ic_photo"
-        android:text="照片做皮肤"
-        android:background="@color/white"
-        android:layout_margin="5dp"/>
+        <top.androidman.SuperButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="8dp"
+            android:paddingVertical="7dp"
+            app:color_normal="@color/white"
+            app:corner="2dp"
+            app:drawable_padding="10dp"
+            android:layout_weight="1"
+            app:drawable_left="@drawable/ic_photo"
+            app:text="照片做皮肤"
+            app:textColor="#494949"
+            app:color_pressed="#d0dfe6"
+            app:textSize="15sp" />
+
+
     </LinearLayout>
 
     <!--NestedScrollView替代了ScrollView 解决嵌套问题-->

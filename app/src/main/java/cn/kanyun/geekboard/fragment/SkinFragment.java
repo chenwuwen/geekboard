@@ -24,11 +24,14 @@ import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import cn.kanyun.geekboard.MyApplication;
 import cn.kanyun.geekboard.R;
 import cn.kanyun.geekboard.adapter.SkinPreviewAdapter;
 import cn.kanyun.geekboard.broadcast.SkinChangeReceiver;
 import cn.kanyun.geekboard.entity.Constant;
 import cn.kanyun.geekboard.entity.Skin;
+import cn.kanyun.geekboard.gen.SkinDao;
 
 /**
  * 皮肤Fragment
@@ -46,10 +49,7 @@ public class SkinFragment extends BaseFragment {
      */
     private List<Skin> list;
 
-    /**
-     * ImageLoader展示图片的工具
-     */
-    private DisplayImageOptions options;
+
 
     /**
      * RecyclerView 可以通过设置不同的 LayoutManager 来达到不同的布局效果，如线性布局，网格布局等
@@ -69,9 +69,35 @@ public class SkinFragment extends BaseFragment {
      */
     private IntentFilter intentFilter;
 
+    private MyApplication application;
+
 
     public static Fragment newInstance() {
         return new SkinFragment();
+    }
+
+    /**
+     * 系统会在创建Fragment时调用此方法。可以初始化一段资源文件等等
+     * 此方法在onCreateView方法前执行
+     * @param savedInstanceState
+     */
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        context = getContext();
+
+        application = (MyApplication) MyApplication.getInstance();
+
+//        初始化本地数据
+        initSkinPreview();
+
+//        注册广播接受者(动态注册)
+        skinChangeReceiver = new SkinChangeReceiver();
+        intentFilter = new IntentFilter();
+        intentFilter.addAction(Constant.BOARD_SKIN_SWITCH);
+        context.registerReceiver(skinChangeReceiver, intentFilter);
+
     }
 
     /**
@@ -88,6 +114,7 @@ public class SkinFragment extends BaseFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.skin_fragment, container, false);
+
 
 //        这个ID是在Fragment中设置的RecycleView的ID
         skinPreView = view.findViewById(R.id.skin_preview_recycler_view);
@@ -110,35 +137,7 @@ public class SkinFragment extends BaseFragment {
         return view;
     }
 
-    /**
-     * 系统会在创建Fragment时调用此方法。可以初始化一段资源文件等等
-     * 此方法在onCreateView方法前执行
-     * @param savedInstanceState
-     */
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
 
-        context = getContext();
-
-//        加载本地图片，不缓存，不存储
-        options = new DisplayImageOptions.Builder()
-                .cacheOnDisk(false).cacheInMemory(false)
-                .imageScaleType(ImageScaleType.EXACTLY)
-                .bitmapConfig(Bitmap.Config.RGB_565)
-                .considerExifParams(true)
-                .build();
-
-//        初始化本地数据
-        initSkinPreview();
-
-//        注册广播接受者(动态注册)
-        skinChangeReceiver = new SkinChangeReceiver();
-        intentFilter = new IntentFilter();
-        intentFilter.addAction(Constant.BOARD_SKIN_SWITCH);
-        context.registerReceiver(skinChangeReceiver, intentFilter);
-
-    }
 
 
     @Override
@@ -175,7 +174,6 @@ public class SkinFragment extends BaseFragment {
      */
     private void initSkinPreview() {
 
-        list = new ArrayList();
 //        int uri = R.drawable.intro3;
 //        FutureTarget<Bitmap> futureTarget  = GlideApp.with(context).asBitmap().load(uri).submit(100,200);
 //        Bitmap bm = null;
@@ -186,40 +184,10 @@ public class SkinFragment extends BaseFragment {
 //        } catch (InterruptedException e) {
 //            e.printStackTrace();
 //        }
-//        此方法需要注意：取到的可能有空,因为涉及IO操作(包括网络IO)需要开线程，4.0以后的这个方法获取为空,可以通过添加option获取
-        String uri = "drawable://" + R.drawable.intro3;
-        Bitmap bm = ImageLoader.getInstance().loadImageSync(uri, options);
 
-        Skin skin1 = new Skin();
-        skin1.setName("material黑");
-        skin1.setPreviewImg(bm);
+        SkinDao skinDao = application.getDaoSession().getSkinDao();
+        list =  skinDao.loadAll();
 
-        Skin skin2 = new Skin();
-        skin2.setName("material白");
-        skin2.setPreviewImg(bm);
-
-        Skin skin3 = new Skin();
-        skin3.setName("纯白");
-        skin3.setPreviewImg(bm);
-
-        Skin skin4 = new Skin();
-        skin4.setName("蓝色");
-        skin4.setPreviewImg(bm);
-
-        Skin skin5 = new Skin();
-        skin5.setName("紫色");
-        skin5.setPreviewImg(bm);
-
-        Skin skin6 = new Skin();
-        skin6.setName("纯黑");
-        skin6.setPreviewImg(bm);
-
-        list.add(skin1);
-        list.add(skin2);
-        list.add(skin3);
-        list.add(skin4);
-        list.add(skin5);
-        list.add(skin6);
 
     }
 }

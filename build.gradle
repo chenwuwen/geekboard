@@ -12,6 +12,7 @@ buildscript {
         mavenLocal()
         mavenCentral()
         jcenter()
+        maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }
         maven { url "https://plugins.gradle.org/m2/" }
         maven { url "http://dl.bintray.com/populov/maven" }
         maven { url "https://jitpack.io" }
@@ -25,7 +26,9 @@ buildscript {
         classpath 'com.android.tools.build:gradle:3.4.1'
         classpath 'com.jakewharton:butterknife-gradle-plugin:10.1.0'
 //        Android集成GraphQL
-//        classpath 'com.apollographql.apollo:apollo-gradle-plugin:1.0.1-SNAPSHOT'
+        classpath 'com.apollographql.apollo:apollo-gradle-plugin:1.0.1-SNAPSHOT'
+//        添加GreenDao插件依赖
+        classpath 'org.greenrobot:greendao-gradle-plugin:3.2.2'
     }
 
 
@@ -57,5 +60,4 @@ dependencies {
 
 }
 
-task assemble{}
 

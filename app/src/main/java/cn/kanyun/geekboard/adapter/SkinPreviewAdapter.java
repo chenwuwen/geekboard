@@ -1,23 +1,15 @@
 package cn.kanyun.geekboard.adapter;
 
 import android.content.Context;
-import android.graphics.Color;
-import android.nfc.Tag;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import cn.kanyun.geekboard.R;
@@ -58,10 +50,10 @@ public class SkinPreviewAdapter extends RecyclerView.Adapter<SkinPreviewAdapter.
     Context context;
 
     /**
-     * SharedPreferences中保存的皮肤名称,如果没有找不到
+     * SharedPreferences中保存的皮肤Id,如果没有找不到
      * 则返回dataList中的第一个
      */
-    private String lastSkinName;
+    private long lastSkinId;
 
 
     public SkinPreviewAdapter(List list) {
@@ -81,8 +73,8 @@ public class SkinPreviewAdapter extends RecyclerView.Adapter<SkinPreviewAdapter.
     public SkinPreviewAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         context = parent.getContext();
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.skin_preview_item, parent, false);
-//        获得SharedPreferences中记录上次选择的皮肤名称(找不到返回默认值)
-        lastSkinName = (String) SPUtils.get(context, Constant.BOARD_SKIN, dataList.get(0).getName());
+//        获得SharedPreferences中记录上次选择的皮肤ID(找不到返回默认值)
+        lastSkinId = (long) SPUtils.get(context, Constant.BOARD_SKIN, dataList.get(0).getId());
         ViewHolder holder = new ViewHolder(view);
 
         return holder;
@@ -92,6 +84,7 @@ public class SkinPreviewAdapter extends RecyclerView.Adapter<SkinPreviewAdapter.
      * 填充视图
      * 将数据与界面进行绑定的操作
      * 这个方法将会遍历,遍历此时为dataList.size()
+     *
      * @param holder
      * @param position
      */
@@ -100,13 +93,18 @@ public class SkinPreviewAdapter extends RecyclerView.Adapter<SkinPreviewAdapter.
 
 //        获取当前遍历得到的皮肤名称
         String currentSkinName = dataList.get(position).getName();
+//        获取当前遍历得到的皮肤Id
+        long currentSkinId = dataList.get(position).getId();
 
 //      holder后面的属性是当前类中的静态内部类的私有属性
         holder.button.setText(dataList.get(position).getName());
         holder.button.setImageResource(dataList.get(position).getPreviewImg());
 
 //      如果SharedPreferences中记录上次选择的皮肤名称与当前皮肤名称一致,则将其标注为已启用状态
-        if (lastSkinName.equals(currentSkinName)) {
+        if (lastSkinId == currentSkinId) {
+//            将皮肤预览按钮点击监听器的最后一个索引设置为当前索引
+            SkinSwitchListener.lastIndex = position;
+//            将被选中的的按钮添加角标
             ConstraintLayout layout = (ConstraintLayout) holder.itemView;
             ImageView enable = layout.findViewById(R.id.skin_enable);
             enable.setVisibility((View.VISIBLE));
@@ -117,8 +115,8 @@ public class SkinPreviewAdapter extends RecyclerView.Adapter<SkinPreviewAdapter.
 //        holder.button.setOnClickListener(v -> {
 //            Log.i(TAG, "点击了皮肤:"+dataList.get(position).getName());
 //        });
-        holder.button.setOnClickListener(new SkinSwitchListener(dataList.get(position).getName(), position));
-        holder.button.setOnTouchListener(new SkinSwitchListener(dataList.get(position).getName(), position));
+        holder.button.setOnClickListener(new SkinSwitchListener(dataList.get(position).getName(), dataList.get(position).getId(), position));
+        holder.button.setOnTouchListener(new SkinSwitchListener(dataList.get(position).getName(), dataList.get(position).getId(), position));
 
     }
 

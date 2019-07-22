@@ -1,3 +1,4 @@
+#检测新版本
 query CheckVersion($owner: String!, $name: String!, $releasesLast: Int = 1, $releaseAssetsFirst: Int = 1) {
   repository(owner: $owner, name: $name) {
     releases(last: $releasesLast) {
