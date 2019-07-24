@@ -54,16 +54,18 @@
             android:textColor="@color/white" />
     </LinearLayout>
 
-    <Button
+    <top.androidman.SuperButton
         android:id="@+id/skip_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:height="0dp"
         android:layout_marginBottom="10dp"
         android:layout_marginRight="10dp"
-        android:text="跳过"
-        android:textColor="@color/white"
-        android:background="@drawable/skip_verify_button_border"
+        app:shape="CIRCLE"
+        app:drawable_middle_height="30dp"
+        app:drawable_middle_width="30dp"
+        app:drawable_middle="@drawable/ic_skip"
+        app:color_pressed="@color/color_grey_divider_line"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 

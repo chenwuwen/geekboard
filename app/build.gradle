@@ -312,13 +312,20 @@ dependencies {
 //    SwitchButton开关按钮  https://github.com/kyleduo/SwitchButton
     implementation 'com.kyleduo.switchbutton:library:2.0.0'
 
-//    动态权限库  https://github.com/tbruyelle/RxPermissions
-    implementation 'com.github.tbruyelle:rxpermissions:0.10.2'
+//    动态权限库(同类还有RxPermissions)  https://github.com/googlesamples/easypermissions
+    implementation 'pub.devrel:easypermissions:2.0.1'
 
 //    好用的按钮组件：https://github.com/ansnail/SuperButton
     implementation 'top.androidman:superbutton:1.0.1'
 
+//    orm框架
     implementation 'org.greenrobot:greendao:3.2.2'
+//    日志框架：功能包括 a、打印线程的信息 b、打印类的信息 c、打印方法的信息 d、可以打印list、map、json、xml e、不必每次输入TAG f、信息过长会自动换行 g、从日志直接跳转到源码
+    implementation 'com.orhanobut:logger:2.2.0'
+
+//    图片裁剪库 https://github.com/Yalantis/uCrop
+    implementation 'com.github.yalantis:ucrop:2.2.3'
+
 
 
 }

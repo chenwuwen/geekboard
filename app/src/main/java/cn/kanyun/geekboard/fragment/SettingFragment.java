@@ -14,9 +14,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,22 +22,19 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.blankj.utilcode.util.AppUtils;
-import com.blankj.utilcode.util.TimeUtils;
 import com.google.android.material.snackbar.Snackbar;
 
-import java.util.concurrent.TimeUnit;
-
+import cn.kanyun.geekboard.R;
 import cn.kanyun.geekboard.activity.BoardSettingActivity;
 import cn.kanyun.geekboard.activity.FeedBackActivity;
 import cn.kanyun.geekboard.activity.GuideActivity;
-import cn.kanyun.geekboard.R;
 import cn.kanyun.geekboard.sync.CheckVersion;
 import cn.kanyun.geekboard.widget.SharePopup;
+import top.androidman.SuperButton;
 
 /**
  * 设置Fragment
@@ -72,17 +67,17 @@ public class SettingFragment extends BaseFragment {
 //        Fragment无法使用onClick来处理点击事件,只能将点击事件放在onActivityCreated中
 //        原因在于：Fragment不是布局器，不具备渲染视图的能力，虽然可以管理布局器，但它管理的布局器最终要加载到一个ViewGroup对象内，由ViewGroup对象来渲染，而ViewGroup并不知道每一个子控件来源于哪里。
 
-        Button shareButton = getActivity().findViewById(R.id.share);
+        SuperButton shareButton = getActivity().findViewById(R.id.share);
 
-        Button updateButton = getActivity().findViewById(R.id.check_update);
+        SuperButton updateButton = getActivity().findViewById(R.id.check_update);
 
-        Button aboutButton = getActivity().findViewById(R.id.about_me);
+        SuperButton aboutButton = getActivity().findViewById(R.id.about_me);
 
-        Button boardSetButton = getActivity().findViewById(R.id.board_set);
+        SuperButton boardSetButton = getActivity().findViewById(R.id.board_set);
 
-        Button introButton = getActivity().findViewById(R.id.intro);
+        SuperButton introButton = getActivity().findViewById(R.id.intro);
 
-        Button feedbackButton = getActivity().findViewById(R.id.feedback);
+        SuperButton feedbackButton = getActivity().findViewById(R.id.feedback);
 
 //        分享
         shareButton.setOnClickListener(v -> share(v));

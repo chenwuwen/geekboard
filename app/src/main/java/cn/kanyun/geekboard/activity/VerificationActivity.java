@@ -27,6 +27,7 @@ import java.util.stream.Stream;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import cn.kanyun.geekboard.MainActivity;
 import cn.kanyun.geekboard.R;
 import cn.kanyun.geekboard.broadcast.InputMethodChangeReceiver;
@@ -60,12 +61,6 @@ public class VerificationActivity extends AppCompatActivity {
     @BindView(R.id.switch_button_intro)
     Button switchButtonIntro;
 
-
-    /**
-     * 切换键盘按钮
-     */
-    @BindView(R.id.skip_button)
-    Button skipButtonIntro;
 
     Context context;
 
@@ -104,11 +99,6 @@ public class VerificationActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         context = this;
 
-
-        skipButtonIntro.setOnClickListener(v -> {
-            Intent intent = new Intent(context, MainActivity.class);
-            startActivity(intent);
-        });
 
 //        注册输入法激活观察者 (handler为构建UI线程的handler)
         settingValueChangeContentObserver = new SettingValueChangeContentObserver(handler, context);
@@ -232,6 +222,14 @@ public class VerificationActivity extends AppCompatActivity {
         }
     };
 
-
+    /**
+     * 跳过验证页面
+     * 这里@OnClick是ButterKnife的注解
+     */
+    @OnClick(R.id.skip_button)
+    public void skipButtonIntro() {
+        Intent intent = new Intent(context, MainActivity.class);
+        startActivity(intent);
+    }
 }
 

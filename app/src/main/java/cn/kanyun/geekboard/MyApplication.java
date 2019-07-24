@@ -5,6 +5,8 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.orhanobut.logger.AndroidLogAdapter;
+import com.orhanobut.logger.Logger;
 import com.zhy.autolayout.config.AutoLayoutConifg;
 
 import cn.kanyun.geekboard.entity.Skin;
@@ -35,6 +37,9 @@ public class MyApplication extends Application {
         mInstance = this;
 //        AutoLayoutConifg库来实现自适应,当有些尺寸只能使用dp或px时,使用该库可以根据当前设备进行适配,需要在AndroidManifest.xml中配置meta-data,否则会报错
         AutoLayoutConifg.getInstance().useDeviceSize().init(this);
+
+//        初始化Logger 使用时：Logger.d("hello");
+        Logger.addLogAdapter(new AndroidLogAdapter());
 
 //        ImageLoader的三大组件：
 //        ImageLoaderConfiguration——对图片缓存进行总体配置，包挎内存缓存的大小、本地缓存的大小和位置、日志、下载策略（FIFO还是LIFO）等等。

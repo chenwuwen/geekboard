@@ -8,3 +8,4 @@ release/
 debug/
 */build/
 captures/*
+app/src/main/java/cn/kanyun/geekboard/gen/*

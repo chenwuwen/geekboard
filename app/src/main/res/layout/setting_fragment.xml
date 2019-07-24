@@ -1,52 +1,76 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/setting"
     android:background="#F0EFF5"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:layout_gravity="left">
 
-    <Button
+    <top.androidman.SuperButton
         android:id="@+id/board_set"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="键盘设置"
         android:layout_marginBottom="16dp"
-        android:drawableStart="@drawable/ic_setting"
-        android:background="@drawable/setting_item_border"/>
+        android:paddingVertical="5dp"
+        android:textAlignment="textStart"
+        app:drawable_left="@drawable/ic_setting"
+        app:drawable_padding="13dp"
+        app:text="键盘设置"
+        app:textColor="@color/color_text_black"
+        app:textSize="20sp" />
 
 
-    <Button
+    <top.androidman.SuperButton
         android:id="@+id/feedback"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="意见反馈"
-        android:drawableStart="@drawable/ic_feedback"
-        android:background="@drawable/setting_item_border"/>
+        android:paddingVertical="5dp"
+        app:text="意见反馈"
+        app:textSize="20sp"
+        app:drawable_padding="13dp"
+        app:textColor="@color/color_text_black"
+        app:drawable_left="@drawable/ic_feedback" />
 
-    <Button
+    <top.androidman.SuperButton
         android:id="@+id/intro"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
-        android:text="开始向导"
-        android:drawableStart="@drawable/ic_intro"
+        android:paddingVertical="5dp"
+        android:layout_marginTop="0.5dp"
+        app:textSize="20sp"
+        app:textColor="@color/color_text_black"
+        app:text="开始向导"
+        app:drawable_padding="13dp"
+        app:drawable_left="@drawable/ic_intro"
         android:background="@drawable/setting_item_border"/>
 
 
-    <Button
+    <top.androidman.SuperButton
         android:id="@+id/share"
         android:layout_width="match_parent"
+        android:paddingVertical="5dp"
         android:layout_height="wrap_content"
-        android:text="分享"
-        android:drawableStart="@drawable/ic_share"
+        app:text="分享"
+        app:textSize="20sp"
+        app:drawable_padding="13dp"
+        android:layout_marginTop="0.5dp"
+        app:textColor="@color/color_text_black"
+        app:drawable_left="@drawable/ic_share"
         android:background="@drawable/setting_item_border"/>
 
-    <Button
+    <top.androidman.SuperButton
         android:id="@+id/check_update"
+        android:paddingVertical="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="更新升级"
-        android:drawableStart="@drawable/ic_update"
+        app:text="更新升级"
+        app:textSize="20sp"
+        app:drawable_padding="13dp"
+        android:layout_marginTop="0.5dp"
+        app:textColor="@color/color_text_black"
+        app:drawable_left="@drawable/ic_update"
         android:background="@drawable/setting_item_border"/>
 
     <!--<Button-->
@@ -56,12 +80,17 @@
         <!--android:onClick="openUserHome"-->
         <!--android:text="个人主页" />-->
 
-    <Button
+    <top.androidman.SuperButton
         android:id="@+id/about_me"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="关于"
-        android:drawableStart="@drawable/ic_about"
+        android:paddingVertical="5dp"
+        app:text="关于"
+        android:layout_marginTop="0.5dp"
+        app:textSize="20sp"
+        app:textColor="@color/color_text_black"
+        app:drawable_padding="13dp"
+        app:drawable_left="@drawable/ic_about"
         android:background="@drawable/setting_item_border"/>
 
 </LinearLayout>

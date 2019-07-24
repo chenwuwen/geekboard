@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <TextView
+        android:id="@+id/yu_lan_tu_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="预览图"
+        android:textSize="30dp"
+        android:textColor="#161515"
+        android:textAlignment="center"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/yu_lan_tu_img"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:scaleType="fitXY"
+        android:layout_marginHorizontal="20dp"
+        app:layout_constraintTop_toBottomOf="@+id/yu_lan_tu_text"
+        tools:src="@drawable/intro3" />
+
+    <androidx.core.widget.NestedScrollView
+        app:layout_constraintTop_toBottomOf="@+id/yu_lan_tu_img"
+        android:layout_width="match_parent"
+        android:layout_height="0dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <!--键盘透明度-->
+        <LinearLayout
+            android:layout_marginHorizontal="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingVertical="10dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="键盘透明度"/>
+
+
+            <SeekBar
+                android:id="@+id/skin_transparent_seekbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusable="true"
+                android:maxHeight="4.0dip"
+                android:minHeight="4.0dip"
+                android:paddingLeft="16.0dp"
+                />
+
+        </LinearLayout>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <top.androidman.SuperButton
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:textSize="20sp"
+        app:textColor="#000000"
+        app:color_normal="@color/color_accent"
+        app:corner="10dp"
+        android:paddingVertical="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:text="体验"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

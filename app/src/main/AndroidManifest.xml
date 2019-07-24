@@ -25,7 +25,7 @@
     <application
         android:name=".MyApplication"
         android:sharedUserId="android.uid.system"
-        android:allowBackup="true"
+        android:allowBackup="false"
         android:hardwareAccelerated="false"
         android:icon="@drawable/icon"
         android:label="@string/app_name"
@@ -67,6 +67,17 @@
             <!--android:exported="true">-->
         <!--</receiver>-->
 
+        <!--添加7.0以上文件访问授权-->
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="cn.kanyun.geekboard.fileProvider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
         <!--此处配置所有Activity,具体Activity的配置放在intent-filter配置中-->
         <activity
             android:name=".MainActivity"
@@ -87,6 +98,13 @@
         <activity android:name=".activity.FeedBackActivity" />
         <activity android:name=".activity.BoardSettingActivity" />
         <activity android:name=".activity.VerificationActivity" />
+        <activity android:name=".activity.AdjustCustomSkinActivity" />
+
+        <!--图片裁剪库Activity 固定写法,该activity是裁剪界面-->
+        <activity
+            android:name="com.yalantis.ucrop.UCropActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
 
     </application>
 
