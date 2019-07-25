@@ -2,11 +2,10 @@
 <TextView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="15sp"
     android:layout_height="15sp"
+    android:background="@drawable/purple_key"
+    android:gravity="center_horizontal"
     android:textColor="#FFF"
     android:textSize="20sp"
-    android:gravity="center_horizontal"
-    android:background="@drawable/purple_key"
-    android:textStyle="bold"
-    >
+    android:textStyle="bold">
 
 </TextView>

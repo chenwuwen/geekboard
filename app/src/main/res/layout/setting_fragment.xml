@@ -1,11 +1,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/setting"
-    android:background="#F0EFF5"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:layout_gravity="left">
+    android:layout_gravity="left"
+    android:background="#F0EFF5"
+    android:orientation="vertical">
 
     <top.androidman.SuperButton
         android:id="@+id/board_set"
@@ -26,71 +26,71 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingVertical="5dp"
-        app:text="意见反馈"
-        app:textSize="20sp"
+        app:drawable_left="@drawable/ic_feedback"
         app:drawable_padding="13dp"
+        app:text="意见反馈"
         app:textColor="@color/color_text_black"
-        app:drawable_left="@drawable/ic_feedback" />
+        app:textSize="20sp" />
 
     <top.androidman.SuperButton
         android:id="@+id/intro"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:paddingVertical="5dp"
         android:layout_marginTop="0.5dp"
-        app:textSize="20sp"
-        app:textColor="@color/color_text_black"
-        app:text="开始向导"
-        app:drawable_padding="13dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/setting_item_border"
+        android:paddingVertical="5dp"
         app:drawable_left="@drawable/ic_intro"
-        android:background="@drawable/setting_item_border"/>
+        app:drawable_padding="13dp"
+        app:text="开始向导"
+        app:textColor="@color/color_text_black"
+        app:textSize="20sp" />
 
 
     <top.androidman.SuperButton
         android:id="@+id/share"
         android:layout_width="match_parent"
-        android:paddingVertical="5dp"
         android:layout_height="wrap_content"
-        app:text="分享"
-        app:textSize="20sp"
-        app:drawable_padding="13dp"
         android:layout_marginTop="0.5dp"
-        app:textColor="@color/color_text_black"
+        android:background="@drawable/setting_item_border"
+        android:paddingVertical="5dp"
         app:drawable_left="@drawable/ic_share"
-        android:background="@drawable/setting_item_border"/>
+        app:drawable_padding="13dp"
+        app:text="分享"
+        app:textColor="@color/color_text_black"
+        app:textSize="20sp" />
 
     <top.androidman.SuperButton
         android:id="@+id/check_update"
-        android:paddingVertical="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:text="更新升级"
-        app:textSize="20sp"
-        app:drawable_padding="13dp"
         android:layout_marginTop="0.5dp"
-        app:textColor="@color/color_text_black"
+        android:background="@drawable/setting_item_border"
+        android:paddingVertical="5dp"
         app:drawable_left="@drawable/ic_update"
-        android:background="@drawable/setting_item_border"/>
+        app:drawable_padding="13dp"
+        app:text="更新升级"
+        app:textColor="@color/color_text_black"
+        app:textSize="20sp" />
 
     <!--<Button-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_marginBottom="16dp"-->
-        <!--android:onClick="openUserHome"-->
-        <!--android:text="个人主页" />-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginBottom="16dp"-->
+    <!--android:onClick="openUserHome"-->
+    <!--android:text="个人主页" />-->
 
     <top.androidman.SuperButton
         android:id="@+id/about_me"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingVertical="5dp"
-        app:text="关于"
         android:layout_marginTop="0.5dp"
-        app:textSize="20sp"
-        app:textColor="@color/color_text_black"
-        app:drawable_padding="13dp"
+        android:background="@drawable/setting_item_border"
+        android:paddingVertical="5dp"
         app:drawable_left="@drawable/ic_about"
-        android:background="@drawable/setting_item_border"/>
+        app:drawable_padding="13dp"
+        app:text="关于"
+        app:textColor="@color/color_text_black"
+        app:textSize="20sp" />
 
 </LinearLayout>

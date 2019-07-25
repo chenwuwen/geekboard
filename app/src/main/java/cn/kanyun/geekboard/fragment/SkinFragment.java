@@ -339,10 +339,13 @@ public class SkinFragment extends BaseFragment implements View.OnClickListener, 
         startActivityForResult(intent, REQUEST_CODE_CAMERA);
     }
 
+    /**
+     * 进入相册
+     */
     private void usePhotoAlbum() {
         Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         intent.setType("image/*");
-        startActivityForResult(Intent.createChooser(intent, "选择图片"), REQUEST_CODE_PHOTO);
+        startActivityForResult(Intent.createChooser(intent, "选择一张图片用作皮肤"), REQUEST_CODE_PHOTO);
     }
 
 
@@ -379,6 +382,11 @@ public class SkinFragment extends BaseFragment implements View.OnClickListener, 
 //            PhotoUtil.toCrop(sourceUri, getActivity());
 //            在Fragment中使用uCrop,需要使用 uCrop.start(context,fragment)方法
             PhotoUtil.toCrop(sourceUri, this, context);
+        } else if (requestCode == REQUEST_CODE_PHOTO) {
+            Logger.d("进到这里说明,请求相册返回了");
+            String uriStr = PhotoUtil.getPath(context, data.getData());
+            Uri sourceUri = Uri.parse(uriStr);
+            PhotoUtil.toCrop(sourceUri, this, context);
         } else if (resultCode == RESULT_OK) {
             Logger.d("进入这里说明Activity调用成功");
             if (requestCode == UCrop.RESULT_ERROR) {
@@ -394,11 +402,9 @@ public class SkinFragment extends BaseFragment implements View.OnClickListener, 
                 startActivity(intent);
                 return;
             }
-        } else if (requestCode == REQUEST_CODE_PHOTO) {
-            Logger.d("进到这里说明,请求相册返回了");
-            String uriStr = PhotoUtil.getPath(context, data.getData());
-            Uri sourceUri = Uri.parse(uriStr);
-            PhotoUtil.toCrop(sourceUri, this, context);
+        } else {
+//            进到这里,也说明了 resultCode != -1 表明Activity跳转出现了问题
+            ToastUtils.showLong("Activity跳转出错");
         }
     }
 
@@ -434,7 +440,7 @@ public class SkinFragment extends BaseFragment implements View.OnClickListener, 
         if (EasyPermissions.hasPermissions(context, perms)) {
             // 已经赋予了权限
             Logger.d("被@AfterPermissionGranted注解的方法被执行,且已经获取到权限");
-            PhotoUtil.toAlbum(getActivity());
+            usePhotoAlbum();
         } else {
             Logger.d("被@AfterPermissionGranted注解的方法被执行,但是没有获取到权限");
             // 没有赋予权限，此时请求权限

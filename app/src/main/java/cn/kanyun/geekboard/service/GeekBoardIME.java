@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.inputmethodservice.InputMethodService;
 import android.inputmethodservice.Keyboard;
 import android.inputmethodservice.KeyboardView;
+import android.media.AudioAttributes;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Vibrator;
@@ -17,7 +18,6 @@ import android.view.inputmethod.InputConnection;
 import android.view.inputmethod.InputMethodManager;
 import android.media.MediaPlayer; // for keypress sound
 
-import com.blankj.utilcode.util.StringUtils;
 
 import java.util.List;
 import java.util.Timer;
@@ -506,6 +506,14 @@ public class GeekBoardIME extends InputMethodService
         if (soundOn) {
 //            声音控制
             MediaPlayer keyPressSoundPlayer = MediaPlayer.create(this, R.raw.keypress_sound);
+//            设置声音
+            AudioAttributes.Builder builder = new AudioAttributes.Builder();
+            builder.setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                    .setFlags(AudioAttributes.FLAG_AUDIBILITY_ENFORCED)
+                    .setLegacyStreamType(2)
+                    .setUsage(AudioAttributes.USAGE_MEDIA);
+            AudioAttributes audio = builder.build();
+            keyPressSoundPlayer.setAudioAttributes(audio);
             keyPressSoundPlayer.start();
             keyPressSoundPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
                 public void onCompletion(MediaPlayer mp) {
@@ -857,6 +865,7 @@ public class GeekBoardIME extends InputMethodService
 
 
     }
+
 }
 
 

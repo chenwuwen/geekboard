@@ -14,6 +14,7 @@ import com.orhanobut.logger.Logger;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import cn.kanyun.geekboard.GlideApp;
 import cn.kanyun.geekboard.R;
 import cn.kanyun.geekboard.util.PhotoUtil;
@@ -78,5 +79,13 @@ public class AdjustCustomSkinActivity extends AppCompatActivity implements SeekB
     @Override
     public void onStopTrackingTouch(SeekBar seekBar) {
 
+    }
+
+    /**
+     * 体验按钮
+     */
+    @OnClick(R.id.experience)
+    public void experience() {
+        finish();
     }
 }
