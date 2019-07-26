@@ -19,6 +19,8 @@ import android.view.inputmethod.InputMethodManager;
 import android.media.MediaPlayer; // for keypress sound
 
 
+import com.orhanobut.logger.Logger;
+
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -61,7 +63,8 @@ public class GeekBoardIME extends InputMethodService
     private Keyboard keyboard;
 
     /**
-     * 描述文本编辑对象的几个属性
+     * 描述文本编辑对象的几个属性:包含的文本内容类型和当前光标位置
+     * 输入方法正在与（通常是EditText）通信
      */
     EditorInfo sEditorInfo;
 
@@ -112,45 +115,45 @@ public class GeekBoardIME extends InputMethodService
         switch (code) {
             case 'a':
             case 'A':
-                if (sEditorInfo.imeOptions == 1342177286)//fix for DroidEdit
-                {
+                if (sEditorInfo.imeOptions == 1342177286) {
                     getCurrentInputConnection().performContextMenuAction(android.R.id.selectAll);
-                } else
+                } else {
                     ic.sendKeyEvent(new KeyEvent(now2 + 1, now2 + 1, KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_A, 0, META_CTRL_ON));
+                }
                 break;
             case 'c':
             case 'C':
-                if (sEditorInfo.imeOptions == 1342177286)//fix for DroidEdit
-                {
+                if (sEditorInfo.imeOptions == 1342177286) {
                     getCurrentInputConnection().performContextMenuAction(android.R.id.copy);
-                } else
+                } else {
                     ic.sendKeyEvent(new KeyEvent(now2 + 1, now2 + 1, KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_C, 0, META_CTRL_ON));
+                }
                 break;
             case 'v':
             case 'V':
-                if (sEditorInfo.imeOptions == 1342177286)//fix for DroidEdit
-                {
+                if (sEditorInfo.imeOptions == 1342177286) {
                     getCurrentInputConnection().performContextMenuAction(android.R.id.paste);
-                } else
+                } else {
                     ic.sendKeyEvent(new KeyEvent(now2 + 1, now2 + 1, KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_V, 0, META_CTRL_ON));
+                }
                 break;
             case 'x':
             case 'X':
-                if (sEditorInfo.imeOptions == 1342177286)//fix for DroidEdit
-                {
+                if (sEditorInfo.imeOptions == 1342177286) {
                     getCurrentInputConnection().performContextMenuAction(android.R.id.cut);
-                } else
+                } else {
                     ic.sendKeyEvent(new KeyEvent(now2 + 1, now2 + 1, KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_X, 0, META_CTRL_ON));
+                }
                 break;
             case 'z':
             case 'Z':
                 if (shift) {
                     if (ic != null) {
-                        if (sEditorInfo.imeOptions == 1342177286)//fix for DroidEdit
-                        {
+                        if (sEditorInfo.imeOptions == 1342177286) {
                             getCurrentInputConnection().performContextMenuAction(android.R.id.redo);
-                        } else
+                        } else {
                             ic.sendKeyEvent(new KeyEvent(now2 + 1, now2 + 1, KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_Z, 0, META_CTRL_ON | META_SHIFT_ON));
+                        }
 
                         long nowS = System.currentTimeMillis();
                         shift = false;
@@ -161,11 +164,11 @@ public class GeekBoardIME extends InputMethodService
                     }
                 } else {
                     //Log.e("ctrl", "z");
-                    if (sEditorInfo.imeOptions == 1342177286)//fix for DroidEdit
-                    {
+                    if (sEditorInfo.imeOptions == 1342177286) {
                         getCurrentInputConnection().performContextMenuAction(android.R.id.undo);
-                    } else
+                    } else {
                         ic.sendKeyEvent(new KeyEvent(now2 + 1, now2 + 1, KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_Z, 0, META_CTRL_ON));
+                    }
 
                 }
 
@@ -318,8 +321,6 @@ public class GeekBoardIME extends InputMethodService
                         long nowS = System.currentTimeMillis();
                         shift = false;
                         ic.sendKeyEvent(new KeyEvent(nowS, nowS, KeyEvent.ACTION_UP, KeyEvent.KEYCODE_SHIFT_LEFT, 0, META_SHIFT_ON));
-
-                        //Log.e("GeekBoardIME", "Unshifted b/c no lock");
                     }
                     shiftKeyUpdateView();
                 }
@@ -372,20 +373,20 @@ public class GeekBoardIME extends InputMethodService
                 sendDownUpKeyEvents(KeyEvent.KEYCODE_ENTER);
                 break;
 
-            case 27:
-                //Escape
+            case 27: //Escape(Esc键)
                 long now = System.currentTimeMillis();
                 ic.sendKeyEvent(new KeyEvent(now, now, KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_ESCAPE, 0, KeyEvent.META_CTRL_ON | KeyEvent.META_CTRL_LEFT_ON));
-
                 break;
 
             case -13:
                 InputMethodManager imm = (InputMethodManager)
                         getSystemService(Context.INPUT_METHOD_SERVICE);
-                if (imm != null)
+                if (imm != null){
                     imm.showInputMethodPicker();
+                }
                 break;
-            case -15:
+
+            case -15:  // 切换键
                 if (kv != null) {
                     if (mKeyboardState == R.integer.keyboard_normal) {
                         //change to symbol keyboard_material_dark
@@ -403,13 +404,11 @@ public class GeekBoardIME extends InputMethodService
                     }
                     controlKeyUpdateView();
                     shiftKeyUpdateView();
-
                 }
 
                 break;
 
-            case 17:
-//              ctrl key
+            case 17: //ctrl 键
                 long nowCtrl = System.currentTimeMillis();
                 if (ctrl) {
 //                    长按Ctrl走这里
@@ -423,9 +422,7 @@ public class GeekBoardIME extends InputMethodService
                 controlKeyUpdateView();
                 break;
 
-            case 16:
-                // Log.e("GeekBoardIME", "onKey" + Boolean.toString(shiftLock));
-                //Shift - runs after long press, so shiftlock may have just been activated
+            case 16:  //Shift键
                 long nowShift = System.currentTimeMillis();
                 if (shift) {
 //                    短按Shift走这里
@@ -445,13 +442,11 @@ public class GeekBoardIME extends InputMethodService
 
                 break;
 
-            case 9:
-                //tab
-                // ic.commitText("\u0009", 1);
+            case 9:  //Tab键盘
                 sendDownUpKeyEvents(KeyEvent.KEYCODE_TAB);
                 break;
 
-            case 5000:
+            case 5000: //左方向键(自定义函数处理)
                 handleArrow(KeyEvent.KEYCODE_DPAD_LEFT);
                 break;
             case 5001:  //下方向键 (交由系统函数处理)
@@ -460,7 +455,7 @@ public class GeekBoardIME extends InputMethodService
             case 5002: //上方向键 (交由系统函数处理)
                 sendDownUpKeyEvents(KeyEvent.KEYCODE_DPAD_UP);
                 break;
-            case 5003:
+            case 5003: //右方向键(自定义函数处理)
                 handleArrow(KeyEvent.KEYCODE_DPAD_RIGHT);
                 break;
 
@@ -486,7 +481,6 @@ public class GeekBoardIME extends InputMethodService
                         shift = false;
                         ic.sendKeyEvent(new KeyEvent(nowS, nowS, KeyEvent.ACTION_UP, KeyEvent.KEYCODE_SHIFT_LEFT, 0, META_SHIFT_ON));
 
-                        //Log.e("GeekBoardIME", "Unshifted b/c no lock");
                     }
 
                     shiftKeyUpdateView();
@@ -527,8 +521,10 @@ public class GeekBoardIME extends InputMethodService
             if (vibrator != null)
                 vibrator.vibrate(40);
         }
-        if (timerLongPress != null)
+        if (timerLongPress != null) {
+//            终止Timer任务,不影响正在执行的任务
             timerLongPress.cancel();
+        }
 
         timerLongPress = new Timer();
 
@@ -551,7 +547,7 @@ public class GeekBoardIME extends InputMethodService
                                 GeekBoardIME.this.onKeyLongPress(primaryCode);
 
                             } catch (Exception e) {
-                                Log.e(GeekBoardIME.class.getSimpleName(), "uiHandler.run: " + e.getMessage(), e);
+                                Logger.e("uiHandler.run: " + e.getMessage(), e);
                             }
 
                         }
@@ -560,7 +556,7 @@ public class GeekBoardIME extends InputMethodService
                     uiHandler.post(runnable);
 
                 } catch (Exception e) {
-                    Log.e(GeekBoardIME.class.getSimpleName(), "Timer.run: " + e.getMessage(), e);
+                    Logger.e("Timer.run: " + e.getMessage(), e);
                 }
             }
 
@@ -568,6 +564,13 @@ public class GeekBoardIME extends InputMethodService
 
     }
 
+    /**
+     * 释放按键事件
+     * 该事件是在onKey事件结束后调用
+     * 对于重复的键只调用一次
+     *
+     * @param primaryCode
+     */
     @Override
     public void onRelease(int primaryCode) {
         if (timerLongPress != null)
@@ -582,13 +585,12 @@ public class GeekBoardIME extends InputMethodService
      * @param keyCode
      */
     public void onKeyLongPress(int keyCode) {
-        // Process long-click here
+//         长按Shift键,将启用大写锁定(或者解锁大写锁定)
         if (keyCode == 16) {
             shiftLock = !shiftLock;
-            //Log.e("GeekBoardIME", "long press" + Boolean.toString(shiftLock));
-            //and onKey will now happen
         }
 
+//        长按空格键切换成其他输入法
         if (keyCode == 32) {
             InputMethodManager imm = (InputMethodManager)
                     getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -597,6 +599,7 @@ public class GeekBoardIME extends InputMethodService
             switchedKeyboard = true;
         }
 
+//        长按产生振动
         Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         if (vibrator != null)
             vibrator.vibrate(50);
@@ -628,9 +631,12 @@ public class GeekBoardIME extends InputMethodService
      */
     @Override
     public void swipeDown() {
-
-        kv.closing();
-
+        Logger.d("手指在键盘上,使用下滑手势操作");
+//        closing方法并不是关闭键盘的方法,他清除键盘缓存,即在键盘中使用的位图图像
+//        kv.closing();
+        View view = (View) kv.getParent();
+        InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
     /**
@@ -656,6 +662,15 @@ public class GeekBoardIME extends InputMethodService
 
     }
 
+    /**
+     * 切换键盘(将普通键盘布局切换到带有快捷键的键盘)
+     *
+     * @param layout 键盘布局
+     * @param toprow 快捷键状态
+     * @param size   键盘尺寸
+     * @param mode   模式(当前键盘状态,是否是在快捷键页面(mode为1),还是普通字符页面(mode为0),这个mode的改变时点击切换键时改变的)
+     * @return
+     */
     public Keyboard chooseKB(int layout, int toprow, int size, int mode) {
         Keyboard keyboard;
         if (layout == 0) {
@@ -668,7 +683,9 @@ public class GeekBoardIME extends InputMethodService
                     keyboard = new Keyboard(this, R.xml.qwerty1r, mode);
                 } else if (size == 2) {
                     keyboard = new Keyboard(this, R.xml.qwerty2r, mode);
-                } else keyboard = new Keyboard(this, R.xml.qwerty3r, mode);
+                } else {
+                    keyboard = new Keyboard(this, R.xml.qwerty3r, mode);
+                }
             } else {
 
                 if (size == 0) {
@@ -687,7 +704,9 @@ public class GeekBoardIME extends InputMethodService
                     keyboard = new Keyboard(this, R.xml.azerty1r, mode);
                 } else if (size == 2) {
                     keyboard = new Keyboard(this, R.xml.azerty2r, mode);
-                } else keyboard = new Keyboard(this, R.xml.azerty3r, mode);
+                } else {
+                    keyboard = new Keyboard(this, R.xml.azerty3r, mode);
+                }
             } else {
                 if (size == 0) {
                     keyboard = new Keyboard(this, R.xml.azerty0e, mode);
@@ -695,7 +714,9 @@ public class GeekBoardIME extends InputMethodService
                     keyboard = new Keyboard(this, R.xml.azerty1e, mode);
                 } else if (size == 2) {
                     keyboard = new Keyboard(this, R.xml.azerty2e, mode);
-                } else keyboard = new Keyboard(this, R.xml.azerty3e, mode);
+                } else {
+                    keyboard = new Keyboard(this, R.xml.azerty3e, mode);
+                }
             }
         }
         return keyboard;
@@ -757,9 +778,13 @@ public class GeekBoardIME extends InputMethodService
         ctrl = false;
 
 //        键盘布局
-        mLayout = (int) SPUtils.get(context, "RADIO_INDEX_LAYOUT", 0);
+        if (SPUtils.get(context, Constant.BOARD_LAYOUT, "Qwerty").equals("Qwerty")) {
+            mLayout = 0;
+        } else {
+            mLayout = 1;
+        }
 //        键盘尺寸
-        mSize = (int) SPUtils.get(context, "SIZE", 2);
+        mSize = (int) SPUtils.get(context, Constant.BOARD_SIZE, 2);
 //        快捷键
         if (SPUtils.get(context, Constant.BOARD_QUICK, "关闭").equals("开启")) {
             mToprow = 0;
@@ -767,7 +792,6 @@ public class GeekBoardIME extends InputMethodService
             mToprow = 1;
         }
         mKeyboardState = R.integer.keyboard_normal;
-        //reset to normal
 
         Keyboard keyboard = chooseKB(mLayout, mToprow, mSize, mKeyboardState);
         kv.setKeyboard(keyboard);
@@ -785,6 +809,9 @@ public class GeekBoardIME extends InputMethodService
 
     }
 
+    /**
+     * 改变ctrl键的显示,由小写变大写,或者由大写变小写
+     */
     public void controlKeyUpdateView() {
         keyboard = kv.getKeyboard();
         int i;
@@ -805,19 +832,22 @@ public class GeekBoardIME extends InputMethodService
         kv.invalidateKey(i);
     }
 
+    /**
+     * 改变Shift键的表现形式,由大写变成小写或者由小写变成大写
+     */
     public void shiftKeyUpdateView() {
 
         keyboard = kv.getKeyboard();
         List<Keyboard.Key> keys = keyboard.getKeys();
         for (int i = 0; i < keys.size(); i++) {
             if (shift) {
-                if (keys.get(i).label != null && keys.get(i).label.equals("Shft")) {
-                    keys.get(i).label = "SHFT";
+                if (keys.get(i).label != null && keys.get(i).label.equals("Shift")) {
+                    keys.get(i).label = "SHIFT";
                     break;
                 }
             } else {
-                if (keys.get(i).label != null && keys.get(i).label.equals("SHFT")) {
-                    keys.get(i).label = "Shft";
+                if (keys.get(i).label != null && keys.get(i).label.equals("SHIFT")) {
+                    keys.get(i).label = "Shift";
                     break;
                 }
             }
@@ -837,18 +867,26 @@ public class GeekBoardIME extends InputMethodService
         Long now2 = System.currentTimeMillis();
         if (ctrl && shift) {
             ic.sendKeyEvent(new KeyEvent(now2, now2, KeyEvent.ACTION_DOWN, KEYCODE_CTRL_LEFT, 0, META_SHIFT_ON | META_CTRL_ON));
+//            当shift和ctrl都为true时,点击左右方向键,会选中从当前光标处到最左或最右的所有字符
             moveSelection(keyCode);
             ic.sendKeyEvent(new KeyEvent(now2, now2, KeyEvent.ACTION_UP, KEYCODE_CTRL_LEFT, 0, META_SHIFT_ON | META_CTRL_ON));
-
-        } else if (shift)
+        } else if (shift) {
+//            当shift为true时,点击左右方向键,会选中当前光标处左或者右处的一个字符
             moveSelection(keyCode);
-        else if (ctrl)
+        } else if (ctrl) {
+//            当ctrl为true时,点击左右方向键,光标会移动到最左/右处
             ic.sendKeyEvent(new KeyEvent(now2, now2, KeyEvent.ACTION_DOWN, keyCode, 0, META_CTRL_ON));
-        else {
+        } else {
             sendDownUpKeyEvents(keyCode);
         }
     }
 
+    /**
+     * 移动选中
+     * 在Shift键为true时 触发，且当前触发的按键为左右方向键
+     *
+     * @param keyCode
+     */
     private void moveSelection(int keyCode) {
 //        inputMethodService.sendDownKeyEvent(KeyEvent.KEYCODE_SHIFT_LEFT, 0);
 //        inputMethodService.sendDownAndUpKeyEvent(dpad_keyCode, 0);

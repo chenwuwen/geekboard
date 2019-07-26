@@ -308,28 +308,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
 
     /**
-     * 振动开关
-     *
-     * @param v
-     */
-    public void vibratorToggle(View v) {
-        CheckBox preview = findViewById(R.id.check_vibrator);
-        if (preview.isChecked()) {
-            SavePreferences("VIBRATE", 1);
-        } else SavePreferences("VIBRATE", 0);
-        closeKeyboard(v);
-    }
-
-    public void arrowToggle(View v) {
-        CheckBox preview = findViewById(R.id.check_no_arrow);
-        if (preview.isChecked()) {
-            SavePreferences("ARROW_ROW", 0);
-        } else SavePreferences("ARROW_ROW", 1);
-        closeKeyboard(v);
-    }
-
-
-    /**
      * 从窗口关闭软键盘
      *
      * @param v

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <!--Material黑皮肤-->
+<!--https://blog.csdn.net/qq_21763489/article/details/53292926-->
 <android.inputmethodservice.KeyboardView
 
     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -8,9 +9,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_alignParentBottom="true"
-    android:keyPreviewOffset="40dp"
-    android:keyPreviewLayout="@layout/preview0"
     android:background="#263238"
     android:keyBackground="@drawable/key_background_material_dark"
-    android:popupLayout="@layout/popup0"
-    />
+    android:keyPreviewLayout="@layout/preview0"
+    android:keyPreviewOffset="40dp"
+    android:popupLayout="@layout/popup0" />

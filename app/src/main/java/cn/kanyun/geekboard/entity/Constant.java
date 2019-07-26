@@ -12,7 +12,7 @@ public class Constant {
     public static final String BOARD_SKIN = "BOARD_SKIN_NAME";
 
     /**
-     * 键盘布局
+     * 键盘布局 Query 布局还是 Azerty布局
      */
     public static final String BOARD_LAYOUT = "BOARD_LAYOUT";
 

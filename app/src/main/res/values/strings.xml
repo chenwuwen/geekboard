@@ -7,4 +7,27 @@
     <string name="scanf">scanf(\"\");</string>
     <string name="for_">for(;;){\n\t}</string>
     <string name="app_intro">GeekBoard - Intro</string>
+    <!--键盘上显示的字符-空格键-->
+    <string name="keyboard_str_space">GeekBoard - Intro</string>
+    <!--键盘上显示的字符-删除键-->
+    <string name="keyboard_str_delete">sss</string>
+    <!--键盘上显示的字符-切换键-->
+    <string name="keyboard_str_switch">☯</string>
+    <!--键盘上显示的字符-上方向键-->
+    <string name="keyboard_str_top_arrow">↑</string>
+    <!--键盘上显示的字符-下方向键-->
+    <string name="keyboard_str_bottom_arrow">↓</string>
+    <!--键盘上显示的字符-左方向键-->
+    <string name="keyboard_str_left_arrow">←</string>
+    <!--键盘上显示的字符-右方向键-->
+    <string name="keyboard_str_right_arrow">→</string>
+    <string name="app_intro_quick_text">
+        1.长按空格键,弹出切换其他输入法
+        2.点击☯切换到快捷键布局
+        3.点击Shift键,首字符大写,长按切换到大写模式
+        4.点击Ctrl键,可以锁定Ctrl键,同时Ctrl显示成CTRL,此时可以结合C键/Z键 等等实现一些快捷功能
+        5.当Ctrl键为锁定状态,点击左右方向键,可以快速移动到文档开头或者结尾
+        6.当Shift键为锁定状态,点击左右方向键,可以实现向左向右选中字符
+        7.当Ctrl、Shift键同时为锁定状态,点击左右方向键,可以快速选中光标所在处到文档开头或者结尾处的所有字符
+    </string>
 </resources>
