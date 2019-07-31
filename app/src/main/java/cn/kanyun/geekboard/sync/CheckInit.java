@@ -1,12 +1,9 @@
 package cn.kanyun.geekboard.sync;
 
 import android.app.Activity;
-import android.app.Application;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import android.view.View;
-import android.widget.Button;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,8 +12,8 @@ import cn.kanyun.geekboard.MyApplication;
 import cn.kanyun.geekboard.R;
 import cn.kanyun.geekboard.activity.GuideActivity;
 import cn.kanyun.geekboard.entity.Skin;
-import cn.kanyun.geekboard.gen.DaoSession;
 import cn.kanyun.geekboard.gen.SkinDao;
+import cn.kanyun.geekboard.util.SPUtils;
 
 /**
  * 检测是否是首次进入主页面
@@ -31,11 +28,13 @@ public class CheckInit implements Runnable {
 
     @Override
     public void run() {
-//          初始化 SharedPreferences
-        SharedPreferences getPrefs = PreferenceManager.getDefaultSharedPreferences(activity.getBaseContext());
+//          初始化 SharedPreferences(初始化生成的SharedPreferences文件名是：包名+应用名_preferences.xml 为了缩减SharedPreference文件数量,统一把配置放到一个SharedPreference文件中)
+//        SharedPreferences getPrefs = PreferenceManager.getDefaultSharedPreferences(activity.getBaseContext());
 //      创建新的布尔值(boolean)和首选项(preference)并将其设置为true
 //      getBoolean()参数:key检索，defValue：存在值就返回该值否则返回defValue，如果第一次使用getBoolean()通过key检索不到，直接返回 defValue
-        boolean isFirstStart = getPrefs.getBoolean("firstEnter", true);
+//        boolean isFirstStart = getPrefs.getBoolean("firstEnter", true);
+
+        boolean isFirstStart = (boolean) SPUtils.get(activity.getBaseContext(), "firstEnter", true);
 
 //       如果activity以前从未开始过(从来没有进入过该activity),那么进入使用向导activity
         if (isFirstStart) {
@@ -50,13 +49,15 @@ public class CheckInit implements Runnable {
             activity.startActivity(i);
 
 //         创建新的 SharedPreferences editor
-            SharedPreferences.Editor e = getPrefs.edit();
+//            SharedPreferences.Editor e = getPrefs.edit();
 
 //         编辑SharedPreferences文件并且使变量boolean值为false,这样以后再次进入主界面就不会跳到使用向导了
-            e.putBoolean("firstEnter", false);
+//            e.putBoolean("firstEnter", false);
+
+            SPUtils.put(activity.getBaseContext(), "firstEnter", false);
 
 //          应用更改
-            e.apply();
+//            e.apply();
         }
     }
 
@@ -106,7 +107,6 @@ public class CheckInit implements Runnable {
         list.add(skin6);
 
         skinDao.insertInTx(list);
-
 
 
     }

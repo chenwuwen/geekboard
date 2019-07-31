@@ -16,33 +16,23 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.blankj.utilcode.util.PhoneUtils;
 import com.blankj.utilcode.util.ToastUtils;
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.FutureTarget;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.orhanobut.logger.Logger;
 import com.yalantis.ucrop.UCrop;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import cn.kanyun.geekboard.MainActivity;
 import cn.kanyun.geekboard.MyApplication;
 import cn.kanyun.geekboard.R;
 import cn.kanyun.geekboard.activity.AdjustCustomSkinActivity;
@@ -294,9 +284,11 @@ public class SkinFragment extends BaseFragment implements View.OnClickListener, 
                 EasyPermissions.requestPermissions(this, "hellp",
                         RC_CAMERA_AND_STORAGE, perms);
                 break;
-            default:
+            case R.id.photo:
                 EasyPermissions.requestPermissions(this, "hellp",
                         RC_STORAGE, perms);
+            default:
+//                截图,只截取键盘部分
         }
     }
 

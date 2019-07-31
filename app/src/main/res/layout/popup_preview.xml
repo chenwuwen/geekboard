@@ -34,5 +34,11 @@
             android:background="@drawable/feedback_input_border"
             android:hint="试试你的新皮肤吧"
             android:windowSoftInputMode="stateVisible" />
+
+        <Button
+            android:id="@+id/screenshot"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="截图"/>
     </LinearLayout>
 </FrameLayout>

@@ -24,11 +24,11 @@
     <!--android:visibility="gone" 隐藏 https://blog.csdn.net/caroline_wendy/article/details/40887373-->
     <ImageView
         android:id="@+id/skin_enable"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="50dp"
+        android:layout_height="30dp"
         android:src="@drawable/skin_enable"
         skinPreviewButton:layout_constraintRight_toRightOf="parent"
         skinPreviewButton:layout_constraintTop_toTopOf="@+id/skin_preview_item_button"
-        android:layout_marginTop="7.2dp"
+        android:layout_marginTop="9.2dp"
         android:visibility="gone"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

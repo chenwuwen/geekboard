@@ -48,21 +48,26 @@ import cn.kanyun.geekboard.sync.CheckInit;
  * https://www.jianshu.com/p/9d590c478828
  */
 public class MainActivity extends FragmentActivity implements View.OnClickListener {
-    RadioGroup radioGroupColour, radioGroupLayout;
-    SeekBar seekBar;
+
     Context context;
 
 
     /**
-     * fragment
+     * 设置/关于/反馈等fragment
      */
     Fragment settingFragment;
+
+    /**
+     * 皮肤fragment
+     */
     Fragment skinFragment;
+
     /**
      * tab按钮
      */
     ImageButton skinImgButton;
     ImageButton setImgButton;
+
     /**
      * 按钮文字布局
      */

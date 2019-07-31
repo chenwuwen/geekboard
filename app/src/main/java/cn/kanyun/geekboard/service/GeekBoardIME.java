@@ -7,6 +7,7 @@ import android.inputmethodservice.Keyboard;
 import android.inputmethodservice.KeyboardView;
 import android.media.AudioAttributes;
 import android.os.Handler;
+import android.os.IBinder;
 import android.os.Looper;
 import android.os.Vibrator;
 import android.util.Log;
@@ -19,6 +20,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.media.MediaPlayer; // for keypress sound
 
 
+import com.blankj.utilcode.util.KeyboardUtils;
 import com.orhanobut.logger.Logger;
 
 import java.util.List;
@@ -381,24 +383,22 @@ public class GeekBoardIME extends InputMethodService
             case -13:
                 InputMethodManager imm = (InputMethodManager)
                         getSystemService(Context.INPUT_METHOD_SERVICE);
-                if (imm != null){
+                if (imm != null) {
                     imm.showInputMethodPicker();
                 }
                 break;
 
             case -15:  // 切换键
                 if (kv != null) {
+//                    mKeyboardState只有两种状态：0:普通布局状态 ,1:有快捷键状态
                     if (mKeyboardState == R.integer.keyboard_normal) {
-                        //change to symbol keyboard_material_dark
+                        //切换键盘布局,从普通布局切换到有快捷键的布局
                         Keyboard symbolKeyboard = chooseKB(mLayout, mToprow, mSize, R.integer.keyboard_sym);
-
                         kv.setKeyboard(symbolKeyboard);
-
                         mKeyboardState = R.integer.keyboard_sym;
-                    } else if (mKeyboardState == R.integer.keyboard_sym) {
-                        //change to normal keyboard_material_dark
+                    } else  {
+                        //切换键盘布局,从有快捷键的布局切换到普通布局
                         Keyboard normalKeyboard = chooseKB(mLayout, mToprow, mSize, R.integer.keyboard_normal);
-
                         kv.setKeyboard(normalKeyboard);
                         mKeyboardState = R.integer.keyboard_normal;
                     }
@@ -634,17 +634,20 @@ public class GeekBoardIME extends InputMethodService
         Logger.d("手指在键盘上,使用下滑手势操作");
 //        closing方法并不是关闭键盘的方法,他清除键盘缓存,即在键盘中使用的位图图像
 //        kv.closing();
-        View view = (View) kv.getParent();
-        InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        View view = kv.getRootView();
+        InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+//        IBinder binder = view.getApplicationWindowToken();
+//        imm.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, InputMethodManager.HIDE_NOT_ALWAYS);
+//        imm.hideSoftInputFromWindow(binder, InputMethodManager.HIDE_NOT_ALWAYS);
     }
+
 
     /**
      * 左滑
      */
     @Override
     public void swipeLeft() {
-
+        Logger.d("手指在键盘上,使用左滑手势操作");
     }
 
     /**
@@ -652,6 +655,7 @@ public class GeekBoardIME extends InputMethodService
      */
     @Override
     public void swipeRight() {
+        Logger.d("手指在键盘上,使用右滑手势操作");
     }
 
     /**
@@ -659,7 +663,7 @@ public class GeekBoardIME extends InputMethodService
      */
     @Override
     public void swipeUp() {
-
+        Logger.d("手指在键盘上,使用上滑手势操作");
     }
 
     /**
@@ -750,7 +754,7 @@ public class GeekBoardIME extends InputMethodService
         } catch (Exception e) {
 
         }
-//        键盘皮肤
+//        选择键盘皮肤
 //        kv = (KeyboardView) getLayoutInflater().inflate(R.layout.keyboard_material_dark, null);
         kv = (KeyboardView) getLayoutInflater().inflate(resourceId, null);
 
