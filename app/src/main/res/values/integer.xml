@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!--正常布局键盘-->
     <integer name="keyboard_normal">0</integer>
+    <!--带有快捷键/符号的键盘布局-->
     <integer name="keyboard_sym">1</integer>
 </resources>

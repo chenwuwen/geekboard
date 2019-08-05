@@ -669,7 +669,7 @@ public class GeekBoardIME extends InputMethodService
     /**
      * 切换键盘(将普通键盘布局切换到带有快捷键的键盘)
      *
-     * @param layout 键盘布局
+     * @param layout 键盘布局(QWERTY布局/AZERTY布局)
      * @param toprow 快捷键状态
      * @param size   键盘尺寸
      * @param mode   模式(当前键盘状态,是否是在快捷键页面(mode为1),还是普通字符页面(mode为0),这个mode的改变时点击切换键时改变的)
@@ -758,7 +758,7 @@ public class GeekBoardIME extends InputMethodService
 //        kv = (KeyboardView) getLayoutInflater().inflate(R.layout.keyboard_material_dark, null);
         kv = (KeyboardView) getLayoutInflater().inflate(resourceId, null);
 
-//        按键气泡
+//        按键气泡(按键气泡其实就是按键回显)
         if (SPUtils.get(context, Constant.BOARD_BUBBLE, "关闭").equals("开启")) {
             kv.setPreviewEnabled(true);
         } else {

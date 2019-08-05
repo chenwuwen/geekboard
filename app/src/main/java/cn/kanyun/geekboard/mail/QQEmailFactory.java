@@ -8,7 +8,7 @@ public class QQEmailFactory implements IEmailFactory {
 //    用户名
     private static final String USER_NAME = "949955482@qq.com";
 //    SMTP授权码
-    private static final String AUTH_CODE = "wmhuixkhfyxfbbdj";
+    private static final String AUTH_CODE = "vhfsytgpuxcdbgba";
     //发送方的邮箱
     private static final String FROM_EMAIL = "949955482@qq.com";
     //发送方姓名

@@ -31,4 +31,6 @@
         6.当Shift键为锁定状态,点击左右方向键,可以实现向左向右选中字符
         7.当Ctrl、Shift键同时为锁定状态,点击左右方向键,可以快速选中光标所在处到文档开头或者结尾处的所有字符
     </string>
+    <string name="feed_back_hint_str">所遇到问题的功能名称,以及问题现象,或者说需要改进的地方(必填)</string>
+    <string name="mysterious_title_str">彩蛋</string>
 </resources>

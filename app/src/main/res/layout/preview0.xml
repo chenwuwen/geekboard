@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--按键回显,也就是按键气泡-->
 <TextView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="15sp"
     android:layout_height="15sp"
     android:background="@drawable/dark_key"
     android:gravity="center_horizontal"
-    android:textColor="#FFFF"
+    android:textColor="#FFF"
     android:textSize="20sp"
     android:textStyle="bold">
 

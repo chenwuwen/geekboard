@@ -11,13 +11,10 @@
 
         <Key
             android:codes="27"
-            android:keyWidth="13%p"
+            android:keyWidth="18%p"
             android:keyEdgeFlags="left"
             android:keyLabel="Esc" />
-        <Key
-            android:codes="9"
-            android:keyWidth="13%p"
-            android:keyLabel="Tab" />
+
         <Key
             android:codes="5000"
             android:isRepeatable="true"
@@ -41,7 +38,7 @@
             android:keyLabel="@string/keyboard_str_right_arrow" />
         <Key
             android:codes="-15"
-            android:keyWidth="14%p"
+            android:keyWidth="28%p"
             android:keyLabel="@string/keyboard_str_switch" />
 
     </Row>
@@ -53,12 +50,12 @@
         android:rowEdgeFlags="top">
         <Key
             android:codes="27"
-            android:keyWidth="13%p"
+            android:keyWidth="14%p"
             android:keyEdgeFlags="left"
             android:keyLabel="Esc" />
         <Key
             android:codes="9"
-            android:keyWidth="13%p"
+            android:keyWidth="14%p"
             android:keyLabel="Tab" />
         <Key
             android:codes="5000"
@@ -83,7 +80,7 @@
             android:keyLabel="@string/keyboard_str_right_arrow" />
         <Key
             android:codes="-15"
-            android:keyWidth="14%p"
+            android:keyWidth="18%p"
             android:keyLabel="@string/keyboard_str_switch" />
 
     </Row>
@@ -220,11 +217,12 @@
         android:keyWidth="9%p"
         android:keyHeight="7%p"
         android:keyboardMode="@integer/keyboard_normal">
+
         <Key
-            android:codes="33"
-            android:keyWidth="7%p"
+            android:codes="9"
+            android:keyWidth="10%p"
             android:keyEdgeFlags="left"
-            android:keyLabel="!" />
+            android:keyLabel="Tab" />
         <Key
             android:codes="97"
             android:keyLabel="a" />
@@ -419,10 +417,18 @@
             android:codes="124"
             android:keyWidth="6%p"
             android:keyLabel="|" />
+
+        <Key
+            android:codes="33"
+            android:keyWidth="7%p"
+            android:keyEdgeFlags="left"
+            android:keyLabel="!" />
+
         <Key
             android:codes="32"
-            android:keyWidth="26%p"
+            android:keyWidth="19%p"
             android:keyLabel="@string/keyboard_str_space" />
+
         <Key
             android:codes="60"
             android:keyWidth="7%p"

@@ -18,7 +18,7 @@
         android:layout_weight="1"
         android:background="@drawable/feedback_input_border"
         android:gravity="top"
-        android:hint="请备注好：手机机型及安卓版本" />
+        android:hint="@string/feed_back_hint_str" />
 
     <Button
         android:layout_marginHorizontal="20dp"

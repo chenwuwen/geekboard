@@ -61,7 +61,7 @@ public class FeedBackActivity extends AppCompatActivity {
      * 同时需要注意的是：被注解的变量的类型要与layout.xml中配置的一致
      * 否则会报错,判断方法,可以在layout.xml中 找到对应组件,点进去看看使用的是
      * 哪个包下的哪个组件,再在该注解下点击变量类型看看是哪个包下的组件,判断他们是否一致
-     *
+     * <p>
      * 同时在使用该注解时,还需要在onCreate方法中添加 ButterKnife.bind(this);
      * 并且注意添加的位置
      */
@@ -120,9 +120,9 @@ public class FeedBackActivity extends AppCompatActivity {
         String firm = DeviceUtils.getManufacturer();
 //        安卓系统版本
         String androidVersion = DeviceUtils.getSDKVersionName();
-        String deviceInfo = firm + "型号：" + deviceModel + "系统版本：" + androidVersion + "/n";
-        Log.i(TAG, "当前设备信息：" + deviceInfo);
-        final String feedBackText = deviceInfo + feedback.getText().toString().trim();
+        String deviceInfo = firm + "型号：" + deviceModel + "系统版本：" + androidVersion;
+        Log.d(TAG, "当前设备信息：" + deviceInfo);
+        final String feedBackText = deviceInfo + "\n" + feedback.getText().toString().trim();
         if (feedBackText.isEmpty()) {
             Toast.makeText(context, "请填写意见和建议", Toast.LENGTH_SHORT).show();
             return;
@@ -197,13 +197,14 @@ public class FeedBackActivity extends AppCompatActivity {
                         openAliPay();
                     }
                 });
+//                点击尴尬添加的View的上面的关闭按钮
                 close.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         rootView.removeView(mysterious_view);
                     }
                 });
-
+//                长按图片保存图片到本地
                 aliPayCodeImg.setOnLongClickListener(new View.OnLongClickListener() {
                     @Override
                     public boolean onLongClick(View v) {
@@ -211,6 +212,7 @@ public class FeedBackActivity extends AppCompatActivity {
                         return true;
                     }
                 });
+//                长按图片保存图片到本地
                 weChatCodeImg.setOnLongClickListener(new View.OnLongClickListener() {
                     @Override
                     public boolean onLongClick(View v) {

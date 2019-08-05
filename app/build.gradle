@@ -228,6 +228,8 @@ android {
  * dependencies {}块指定模块需要添加的依赖
  */
 dependencies {
+//    项目中lib目录下的jar依赖
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
     api 'androidx.appcompat:appcompat:1.0.0'
     api 'androidx.legacy:legacy-support-v13:1.0.0'
 //    AppIntro是一个APP启动页开源库
