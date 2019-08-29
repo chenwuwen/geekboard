@@ -4,5 +4,5 @@
     <!--name：就是你给这个访问路径起个名字-->
     <!--external-path 表示 Environment.getExternalStorageDirectory()目录-->
     <!--path 表示Environment.getExternalStorageDirectory()目录下的skin文件夹-->
-    <external-path name="external-path" path="skin" />
+    <external-path name="skin-path" path="skin" />
 </paths>
